@@ -46,6 +46,7 @@ brew install ack
 brew install awscli
 brew install casperjs
 brew install cmatrix
+brew install dockutil
 brew install ffmpeg --with-libvpx
 brew install git
 brew install imagemagick --with-webp
