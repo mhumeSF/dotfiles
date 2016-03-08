@@ -92,8 +92,11 @@ defaults write com.apple.dock mineffect -string genie
 # Effin' duck!
 defaults write com.apple.dock autohide -bool TRUE
 
-# Dark Mode
+# Use dark menu bar and Dock
 defaults write NSGlobalDomain AppleInterfaceStyle Dark
+
+# Automatically hide and show the menu bar
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
 defaults write com.apple.dock orientation left
 
@@ -104,12 +107,11 @@ dockutil --remove all
 dockutil --add '~/Downloads' --view grid --display folder
 
 # https://github.com/boxen/puppet-osx/blob/master/manifests/keyboard/capslock_to_control.pp
-
-# Disable capslock key (ty https://github.com/slawekkolodziej/dotfiles/blob/master/scripts/osx.sh)
+# Capslock to control; Control to No Action
 vendorId=`ioreg -n IOHIDKeyboard -r | sed -n 's/.*"VendorID" = \([0-9]*\)/\1/p'`
 productId=`ioreg -n IOHIDKeyboard -r | sed -n 's/.*"ProductID" = \([0-9]*\)/\1/p'`
 defaults -currentHost write NSGlobalDomain com.apple.keyboard.modifiermapping.$vendorId-$productId-0 -array \
-  '<dict><key>HIDKeyboardModifierMappingDst</key><integer>-1</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
+  '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
 
 ###############################################################################
 # Safari & WebKit                                                             #
