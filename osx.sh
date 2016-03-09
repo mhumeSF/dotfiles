@@ -144,7 +144,8 @@ defaults write com.apple.Terminal AppleShowScrollbars WhenScrolling
 
 open `pwd`/dirty-sneaker-summer.terminal
 
-defaults write com.apple.Terminal Default "Window Settings" -string "Dirty Sneaker Summer"
+defaults write com.apple.Terminal "Default Window Settings" -string "dirty-sneaker-summer"
+defaults write com.apple.Terminal "Startup Window Settings" -string "dirty-sneaker-summer"
 
 ###############################################################################
 # Time Machine                                                                #
