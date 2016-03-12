@@ -60,6 +60,8 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 # Show Full Path in Finder Title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
+# Ask for password immediately after sleep
+defaults write com.apple.screensaver.plist askForPasswordDelay 0.0
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -112,6 +114,10 @@ vendorId=`ioreg -n IOHIDKeyboard -r | sed -n 's/.*"VendorID" = \([0-9]*\)/\1/p'`
 productId=`ioreg -n IOHIDKeyboard -r | sed -n 's/.*"ProductID" = \([0-9]*\)/\1/p'`
 defaults -currentHost write NSGlobalDomain com.apple.keyboard.modifiermapping.$vendorId-$productId-0 -array \
   '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
+
+# Set Top-Right Corner to Mission Control
+defaults write com.apple.docker.plist wvous-tr-corner 2
+defaults write com.apple.docker.plist wvous-tr-modifier 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
