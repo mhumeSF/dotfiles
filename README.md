@@ -2,7 +2,8 @@ For OSX:
 
 `git` to prompt xcode-select, then `./bootstrap.sh`
 
-TODO:
+# TODO:
+
 ### Auto-Update
 Figure away to auto upgrade pip, node, brew etc. Vim should run :bundleupdate,
 after so many runs
