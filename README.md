@@ -1,21 +1,38 @@
 For OSX:
 
-Git clone repo should prompt for Xcode to install
-- brew and cask sturfz to install
-- npm installation
-- osx & linux branches
-- vim config
-- zsh installation
-- env paths setupz and all
-- git
+`git` to prompt xcode-select, then `./bootstrap.sh`
 
 TODO:
 ### Auto-Update
-- Oh-my-zsh
-- pip and pip packages
-- vim packages
-- nodejs global packages
-- brew && brew cask
+Figure away to auto upgrade pip, node, brew etc. Vim should run :bundleupdate,
+after so many runs
+
+### Brew
+
+### Brew-Cask
+- Pritunl
+- Docker-for-mac
+- Wavebox
+- keepassx
+- Dropbox
+- Amazon-Cloud
+
+### OSX
+- Hot-Corner for expose
+- Fast-User switching
+- Default-Background
+- Two-finger tap for right click
+- Start Divvy at Startup
+- Start Moon at Startup
+- Start Viscosity at Startup
+- Start Pritunl at Startup
+
+### Misc
+- System-wide gitconfig && gitignore
+- Maybe some pip requirements like grip?
+
+_*Create curl install script*_
+
 
 
 ![I live, I die, I live again!!!](https://i.imgur.com/YabyY1w.jpg)
