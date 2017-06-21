@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir "${HOME}/.npm-packages"
 echo NPM_PACKAGES="${HOME}/.npm-packages" >> ${HOME}/.zshrc
 echo prefix=${HOME}/.npm-packages >> ${HOME}/.npmrc

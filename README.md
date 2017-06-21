@@ -22,10 +22,17 @@ after so many runs
 - Fast-User switching
 - Default-Background
 - Two-finger tap for right click
+- Bluetooth Mouse, "Secondary Click (Click on right side)"
+- Move left a space (Command - 1)
+- Move right a space (Command - 3)
 - Start Divvy at Startup
 - Start Moon at Startup
 - Start Viscosity at Startup
 - Start Pritunl at Startup
+
+- NPM Proper setup (Separate than what brew offers)
+- virtualenv and mkvirtualenv
+- General oh-my-zsh setup
 
 ### Misc
 - System-wide gitconfig && gitignore
