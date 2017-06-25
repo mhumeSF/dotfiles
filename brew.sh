@@ -50,10 +50,11 @@ brew install dockutil
 brew install ffmpeg --with-libvpx
 brew install git
 brew install imagemagick --with-webp
+brew install jq
 brew install md5sha1sum
 brew install mongodb
 brew install nmap
-brew install node --without-npm
+brew install node
 brew install pv
 brew install python
 brew install rename
