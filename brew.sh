@@ -1,8 +1,7 @@
 #!/bin/bash
 
+# Install Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-# Install command-line tools using Homebrew
 
 # Make sure we’re using the latest Homebrew
 brew update
@@ -23,10 +22,9 @@ brew install gnu-sed --default-names
 # Bash 4
 # Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before running `chsh`.
 brew install bash
-# regular bash-completion package is held back to an older release, so we get latest from versions.
-#   github.com/Homebrew/homebrew/blob/master/Library/Formula/bash-completion.rb#L3-L4
-brew tap homebrew/versions
-brew install homebrew/versions/bash-completion2
+
+brew install bash-completion
+brew install homebrew/completions/brew-cask-completion
 
 # generic colouriser  http://kassiopeia.juls.savba.sk/~garabik/software/grc/
 brew install grc
@@ -41,6 +39,11 @@ brew install homebrew/dupes/grep
 # mtr - ping & traceroute. best.
 brew install mtr
 
+    # allow mtr to run without sudo
+    mtrlocation=$(brew info mtr | grep Cellar | sed -e 's/ (.*//') #  e.g. `/Users/paulirish/.homebrew/Cellar/mtr/0.86`
+    sudo chmod 4755 $mtrlocation/sbin/mtr
+    sudo chown root $mtrlocation/sbin/mtr
+
 # Install other useful binaries
 brew install ack
 brew install awscli
@@ -48,13 +51,14 @@ brew install casperjs
 brew install cmatrix
 brew install dockutil
 brew install ffmpeg --with-libvpx
+brew install fzf
 brew install git
+brew install gpg
 brew install imagemagick --with-webp
 brew install jq
 brew install md5sha1sum
 brew install mongodb
 brew install nmap
-brew install node
 brew install pv
 brew install python
 brew install rename
@@ -68,11 +72,13 @@ brew install youtube-dl
 brew install zopfli
 brew install zsh
 
-# brew update --all && brew upgrade && brew cleanup
-
-# Disabled because Haskell takes FOREVER to compile (...like a day)
-#brew install pandoc
 
 # Ruby
 brew install rbenv ruby-build
 
+# Node
+brew install node
+npm install npm --global
+
+# Remove outdated versions from the cellar
+brew cleanup
