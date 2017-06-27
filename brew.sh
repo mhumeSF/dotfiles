@@ -68,6 +68,7 @@ brew install the_silver_searcher
 brew install tmux
 brew install tree
 brew install unrar
+brew install watch
 brew install youtube-dl
 brew install zopfli
 brew install zsh
