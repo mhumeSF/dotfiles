@@ -16,6 +16,7 @@ google-drive
 hipchat
 keyboard-cleaner
 pritunl
+selfcontrol
 sequel-pro
 skitch
 slack
