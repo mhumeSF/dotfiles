@@ -45,41 +45,47 @@ brew install mtr
     sudo chown root $mtrlocation/sbin/mtr
 
 # Install other useful binaries
-brew install ack
-brew install awscli
-brew install casperjs
-brew install cmatrix
-brew install dockutil
-brew install ffmpeg --with-libvpx
-brew install fzf
-brew install git
-brew install gpg
-brew install imagemagick --with-webp
-brew install jq
-brew install md5sha1sum
-brew install mongodb
-brew install nmap
-brew install pv
-brew install python
-brew install rename
-brew install task --with-gnutls
-brew install testdisk
-brew install the_silver_searcher
-brew install tmux
-brew install tree
-brew install unrar
-brew install watch
-brew install youtube-dl
-brew install zopfli
-brew install zsh
-
+brews=(
+ack
+awscli
+casperjs
+cmatrix
+dockutil
+docker-clean
+ffmpeg --with-libvpx
+fzf
+git
+gpg
+imagemagick --with-webp
+jq
+md5sha1sum
+mongodb
+nmap
+pv
+python
+rename
+task --with-gnutls
+testdisk
+the_silver_searcher
+tmux
+tree
+unrar
+watch
+youtube-dl
+zopfli
+zsh
+)
+for brew in "${brews[@]}"
+do
+  brew install "$brew"
+done
 
 # Ruby
 brew install rbenv ruby-build
 
-# Node
-brew install node
-npm install npm --global
+# Node and NPM
+# https://gist.github.com/DanHerbert/9520689#gistcomment-2129349
+brew install node npm install npm --global
 
 # Remove outdated versions from the cellar
 brew cleanup
