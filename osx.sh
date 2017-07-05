@@ -88,6 +88,10 @@ defaults write com.apple.dock mouse-over-hilite-stack -bool true
 # Set the icon size of Dock items to 36 pixels
 defaults write com.apple.dock tilesize -int 36
 
+# Lock docksize
+# https://www.macobserver.com/tmo/article/how-to-lock-the-dock-size-position-and-contents-in-os-x
+defaults write com.apple.Dock size-immutable -bool yes; killall Dock
+
 # Enable genie mode
 defaults write com.apple.dock mineffect -string genie
 
