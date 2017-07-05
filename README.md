@@ -23,7 +23,6 @@ after so many runs
 - Start Viscosity at Startup
 - Start Pritunl at Startup
 
-- NPM Proper setup (Separate than what brew offers)
 - virtualenv and mkvirtualenv
 - General oh-my-zsh setup
 
@@ -32,7 +31,6 @@ after so many runs
 - Maybe some pip requirements like grip?
 
 _*Create curl install script*_
-
 
 
 ![I live, I die, I live again!!!](https://i.imgur.com/YabyY1w.jpg)
