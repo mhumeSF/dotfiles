@@ -10,14 +10,6 @@ after so many runs
 
 ### Brew
 
-### Brew-Cask
-- Pritunl
-- Docker-for-mac
-- Wavebox
-- keepassx
-- Dropbox
-- Amazon-Cloud
-
 ### OSX
 - Hot-Corner for expose
 - Fast-User switching
