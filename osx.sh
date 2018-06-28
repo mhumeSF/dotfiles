@@ -61,7 +61,10 @@ defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 # Ask for password immediately after sleep
-defaults write com.apple.screensaver.plist askForPasswordDelay 0.0
+defaults write com.apple.screensaver askForPasswordDelay 0.0
+
+# Disable animation when switch screens
+defaults write com.apple.universalaccess reduceMotion -bool true
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -71,6 +74,11 @@ defaults write com.apple.screensaver.plist askForPasswordDelay 0.0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Enable two button mouse-click (Secondary click)
+defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string "TwoButton"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad MouseButtonMode -string "TwoButton"
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string "TwoButton"
 
 # Disable “natural” (Lion-style) scrolling
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
@@ -120,8 +128,8 @@ defaults -currentHost write NSGlobalDomain com.apple.keyboard.modifiermapping.$v
   '<dict><key>HIDKeyboardModifierMappingDst</key><integer>2</integer><key>HIDKeyboardModifierMappingSrc</key><integer>0</integer></dict>'
 
 # Set Top-Right Corner to Mission Control
-defaults write com.apple.docker.plist wvous-tr-corner 2
-defaults write com.apple.docker.plist wvous-tr-modifier 0
+defaults write com.apple.dockerwvous-tr-corner 2
+defaults write com.apple.docker wvous-tr-modifier 0
 
 ###############################################################################
 # Safari & WebKit                                                             #

@@ -11,8 +11,6 @@ echo prefix=${HOME}/.npm-packages >> ${HOME}/.npmrc
 # from @hughsw). In order to (hack)fix this you can do the following after
 # running the above npm install.sh script.
 
-curl -L https://www.npmjs.org/install.sh | sh
-
 curl -L https://registry.npmjs.org/npm/-/npm-5.2.0.tgz | tar xz
 rm -rf $NPM_PACKAGES/lib/node_modules/npm
 mv package $NPM_PACKAGES/lib/node_modules/npm
@@ -21,3 +19,5 @@ npm install -g npm
 echo NODE_PATH=\"\$NPM_PACKAGES/lib/node_modules:\$NODE_PATH\" >> ${HOME}/.zshrc
 echo PATH=\"\$NPM_PACKAGES/bin:\$PATH\" >> ${HOME}/.zshrc
 source ~/.zshrc
+
+
