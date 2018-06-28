@@ -1,36 +1,24 @@
 #!/bin/bash
 
-brew install caskroom/cask/brew-cask
 brew tap caskroom/versions
 brew tap caskroom/fonts
 
-apps=(
-appcleaner
-backblaze
-caffeine
-docker
-dropbox
-font-source-code-pro
-google-chrome
-google-drive
-hipchat
-keyboard-cleaner
-pritunl
-selfcontrol
-sequel-pro
-skitch
-slack
-spotify
-sqlitebrowser
-viscosity
-vlc
-wavebox
-zoomus
-)
-
-for app in "${apps[@]}"
-do
-  brew cask install "$app"
-done
-
+brew cask install appcleaner
+brew cask install backblaze
+brew cask install caffeine
+brew cask install docker
+brew cask install dropbox
+brew cask install font-source-code-pro
+brew cask install google-chrome
+brew cask install keyboard-cleaner
+brew cask install pritunl
+brew cask install selfcontrol
+brew cask install sequel-pro
+brew cask install skitch
+brew cask install slack
+brew cask install spotify
+brew cask install viscosity
+brew cask install vlc
+brew cask install wavebox
+brew cask install zoomus
 

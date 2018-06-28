@@ -1,12 +1,10 @@
 #!/bin/bash
 
-sh osx.sh
-
-# Oh-my-zsh setup
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+./xcode.sh
+./zsh.sh
+./homebrew.sh
+./osx.sh
+./npm-setup.sh
 
 # Vim Setup
 curl -L https://raw.github.com/zaiste/vimified/master/install.sh | sh
-
-sh brew.sh
-sh brew-cask.sh
