@@ -35,31 +35,37 @@ echo 'PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"' >> ~/.zshrc
 # Install other useful binaries
 #
 # sort "%!sort -k2nr"
-brew install ack
-brew install cmatrix
-brew install docker-clean
-brew install dockutil
-brew install fzf
-brew install git
-brew install gnupg2
-brew install go
-brew install hub
-brew install jq
-brew install md5sha1sum
-brew install mongodb
-brew install neovim
-brew install pv
-brew install python
-brew install rename
-brew install the_silver_searcher
-brew install tmux
-brew install tree
-brew install unrar
-brew install watch
-brew install wget
-brew install youtube-dl
-brew install zopfli
-brew install zsh
+tools=(
+    ack
+    cmatrix
+    docker-clean
+    dockutil
+    fzf
+    git
+    gnupg2
+    go
+    hub
+    jq
+    md5sha1sum
+    mongodb
+    neovim
+    pv
+    python
+    rename
+    the_silver_searcher
+    tmux
+    tree
+    unrar
+    watch
+    wget
+    youtube-dl
+    zopfli
+    zsh
+)
+for tool in ${tools[@]}
+do
+    brew install $tool
+done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Move to post-install 'cause deez guys super-slow
