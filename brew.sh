@@ -18,7 +18,7 @@ brew install findutils
 brew install gnu-sed
 # Install more recent versions of some OS X tools
 brew install grep
-echo 'PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"' >> ~/.zshrc
+echo 'PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >> ~/.zshrc
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # HAVEN'T NEEDED MTR IN PAST TWO YEARS

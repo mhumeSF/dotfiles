@@ -7,3 +7,5 @@ Bootstrap coc in nvim
 
 brew install goland
 go get ...things
+
+
