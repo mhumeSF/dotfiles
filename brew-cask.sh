@@ -13,6 +13,7 @@ apps=(
     dropbox
     font-source-code-pro
     google-chrome
+    hub
     keyboard-cleaner
     selfcontrol
     sequel-pro
