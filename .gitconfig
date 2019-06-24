@@ -1,11 +1,18 @@
+# user {{{
 [user]
     name = Mike Hume
     email = mhumesf@gmail.com
+#}}}
+# core {{{
 [core]
     whitespace = trailing-space,space-before-tab
     excludesfile = $HOME/.gitignore
 [merge]
     tool = vimdiff3
+[gpg]
+    program = $HOME/.homebrew/bin/gpg
+#}}}
+# color {{{
 [color]
     ui = true
 [color "diff-highlight"]
@@ -20,17 +27,10 @@
     old = red bold
     new = green bold
     whitespace = red reverse
-[gpg]
-    program = $HOME/.homebrew/bin/gpg
+#}}}
+# alias {{{
 [alias]
     ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
-[oh-my-zsh]
-    hide-status = 0
-[alias]
     empty = commit --allow-empty -m
     init = commit -m "Init commit 🍻"
+#}}}
