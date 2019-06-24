@@ -35,8 +35,7 @@ after so many runs
 - Bootstrap neovim
 - Bootstrap coc in nvim
 - go get ...things
-- aws-vault in prompt
-- kubernetes config in prompt
+- BrewFile https://github.com/Homebrew/homebrew-bundle
 
 _*Create curl install script*_
 
