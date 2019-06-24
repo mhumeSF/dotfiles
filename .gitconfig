@@ -31,3 +31,6 @@
     required = true
 [oh-my-zsh]
     hide-status = 0
+[alias]
+    empty = commit --allow-empty -m
+    init = commit -m "Init commit 🍻"
