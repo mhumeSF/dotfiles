@@ -29,7 +29,10 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  git
+  kube-ps1
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -77,6 +80,7 @@ function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 alias vi="nvim"
+alias k="kubectl"
 alias assume-role='function(){eval $(command assume-role -duration 12h0m0s $@);}'
 
 export AWS_VAULT_KEYCHAIN_NAME=login
@@ -93,7 +97,11 @@ function assume {
   aws --output text --query Arn sts get-caller-identity
 }
 
-
-PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"
 PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"
 if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+#
+# kubectl krew
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# PROMPT='$(kube_ps1)'$PROMPT
+
