@@ -21,7 +21,6 @@ after so many runs
 - Start Divvy at Startup
 - Start Moon at Startup
 - Start Viscosity at Startup
-- Start Pritunl at Startup
 
 - virtualenv and mkvirtualenv
 - General oh-my-zsh setup
@@ -29,6 +28,15 @@ after so many runs
 ### Misc
 - System-wide gitconfig && gitignore
 - Maybe some pip requirements like grip?
+
+### TODO
+- better bootstrap of homebrew
+- continue bootstrap if been cancelled
+- Bootstrap neovim
+- Bootstrap coc in nvim
+- go get ...things
+- aws-vault in prompt
+- kubernetes config in prompt
 
 _*Create curl install script*_
 
