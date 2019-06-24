@@ -1,6 +1,6 @@
 # zmodload zsh/zprof
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/finn/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="ys"
 
@@ -19,7 +19,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -35,8 +35,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-source $HOME/.aliases
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -49,11 +47,10 @@ else
   export EDITOR='nvim'
 fi
 
-NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
-NPM_PACKAGES=/Users/finn/.npm-packages
-PATH="$NPM_PACKAGES/bin:$PATH"
+# Home bin folder for various
+export PATH=$PATH:$HOME/bin
 
-PATH="/Users/finn/.homebrew/opt/grep/libexec/gnubin:$PATH"
+PATH="$(brew --prefix coreutils)/gnubin:$PATH"
 PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 
 export GPG_TTY="$(tty)"
@@ -76,3 +73,27 @@ export NVM_DIR="$HOME/.nvm"
 
 # zprof
 function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+alias vi="nvim"
+alias assume-role='function(){eval $(command assume-role -duration 12h0m0s $@);}'
+
+export AWS_VAULT_KEYCHAIN_NAME=login
+export AWS_SESSION_TTL=12h
+export AWS_ASSUME_ROLE_TTL=12h
+
+unset_aws() {
+  for i in AWS_ACCESS_KEY_ID AWS_DEFAULT_REGION AWS_REGION AWS_SECRET_ACCESS_KEY AWS_SECURITY_TOKEN AWS_SESSION_TOKEN AWS_VAULT; do unset $i; done
+}
+
+function assume {
+  unset_aws
+  eval $( aws-vault exec $@ -- env | grep -E "^AWS_" | sed -e "s/^/export\ /" )
+  aws --output text --query Arn sts get-caller-identity
+}
+
+
+PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix golang)/libexec/gnubin:$PATH"
+if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
