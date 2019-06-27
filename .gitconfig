@@ -10,7 +10,7 @@
 [merge]
     tool = vimdiff3
 [gpg]
-    program = $HOME/.homebrew/bin/gpg
+    program = /usr/local/bin/gpg
 [user]
     signingkey = 0x211A2F4F8337C791
 [commit]
