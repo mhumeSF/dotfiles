@@ -54,7 +54,6 @@ fi
 export PATH=$PATH:$HOME/bin
 
 PATH="$(brew --prefix coreutils)/gnubin:$PATH"
-PATH=$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH
 
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
