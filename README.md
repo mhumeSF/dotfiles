@@ -37,6 +37,10 @@ after so many runs
 - go get ...things
 - BrewFile https://github.com/Homebrew/homebrew-bundle
 
+- Yubikey and gpg setup
+
+If managing .zshrc, should I bootstrap in shell scripts???
+
 _*Create curl install script*_
 
 
