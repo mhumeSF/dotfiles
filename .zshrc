@@ -54,6 +54,7 @@ export PATH=$PATH:$HOME/bin
 
 PATH="$(brew --prefix coreutils)/gnubin:$PATH"
 
+# GPG + Yubikey
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
 gpg-connect-agent updatestartuptty /bye
@@ -67,14 +68,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # kubectl crew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/Users/finn/.homebrew/opt/nvm/nvm.sh" ] && . "/Users/finn/.homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/Users/finn/.homebrew/opt/nvm/etc/bash_completion" ] && . "/Users/finn/.homebrew/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
-# zprof
-function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 alias vi="nvim"
@@ -84,6 +77,7 @@ alias assume-role='function(){eval $(command assume-role -duration 12h0m0s $@);}
 export AWS_VAULT_KEYCHAIN_NAME=login
 export AWS_SESSION_TTL=12h
 export AWS_ASSUME_ROLE_TTL=12h
+export AWS_SDK_LOAD_CONFIG=true
 
 unset_aws() {
   for i in AWS_ACCESS_KEY_ID AWS_DEFAULT_REGION AWS_REGION AWS_SECRET_ACCESS_KEY AWS_SECURITY_TOKEN AWS_SESSION_TOKEN AWS_VAULT; do unset $i; done
@@ -100,6 +94,4 @@ if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 #
 # kubectl krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# PROMPT='$(kube_ps1)'$PROMPT
 
