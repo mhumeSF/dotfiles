@@ -31,7 +31,6 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  kube-ps1
 )
 
 source $ZSH/oh-my-zsh.sh
