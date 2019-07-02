@@ -11,10 +11,10 @@
     tool = vimdiff3
 [gpg]
     program = /usr/local/bin/gpg
-# [user]
-#     signingkey = 0x211A2F4F8337C791
-# [commit]
-#     gpgsign = true
+[user]
+    signingkey = 0x211A2F4F8337C791
+[commit]
+    gpgsign = true
 #}}}
 # color {{{
 [color]
