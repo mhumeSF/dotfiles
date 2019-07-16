@@ -6,7 +6,7 @@
 # core {{{
 [core]
   whitespace = trailing-space,space-before-tab
-  excludesfile = $HOME/.gitignore
+  excludesfile = ~/.gitignore
 [merge]
   tool = vimdiff3
 [gpg]
