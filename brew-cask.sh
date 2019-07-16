@@ -1,31 +1,28 @@
 #!/bin/bash
 
-brew tap caskroom/versions
-brew tap caskroom/fonts
+brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
 
 brew install brew-cask-completion
 
 apps=(
-    appcleaner
     backblaze
     caffeine
     docker
-    dropbox
     font-source-code-pro
     google-chrome
     hub
     keyboard-cleaner
     selfcontrol
-    sequel-pro
-    skitch
     slack
     spotify
     viscosity
     vlc
     wavebox
+    wireguard
 )
 
 for app in ${apps[@]}
 do
-    brew cask install $app
+    brew install --cask $app
 done

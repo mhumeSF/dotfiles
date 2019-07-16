@@ -42,6 +42,7 @@ tools=(
     dockutil
     fzf
     git
+    mas
     gnupg2
     go
     hub
@@ -50,7 +51,7 @@ tools=(
     mongodb
     neovim
     pv
-    python
+    pyenv
     rename
     the_silver_searcher
     tmux
