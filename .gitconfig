@@ -15,6 +15,7 @@
   signingkey = 0x211A2F4F8337C791
 [commit]
   gpgsign = true
+  template = ~/.gitmessage
 #}}}
 # color {{{
 [color]
@@ -38,3 +39,8 @@
   empty = commit --allow-empty -m
   ic = commit -m "Init commit 🍻"
 #}}}
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
