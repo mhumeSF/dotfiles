@@ -42,14 +42,15 @@ tools=(
     dockutil
     fzf
     git
-    mas
     gnupg2
     go
     hub
     jq
+    mas
     md5sha1sum
     mongodb
     neovim
+    pinentry-mac
     pv
     pyenv
     rename
