@@ -12,6 +12,7 @@ ln -s $HOME/dotfiles/.gitignore $HOME/.gitignore
 ln -s $HOME/dotfiles/.zshrc $HOME/.zshrc
 ln -s $HOME/dotfiles/.tmux.conf $HOME/.tmux.conf
 ln -s $HOME/dotfiles/.tmuxcolors.conf $HOME/.tmuxcolors.conf
+ln -s $HOME/dotfiles/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 mkdir -p $HOME/.config/nvim
 ln -s $HOME/dotfiles/init.vim ~/.config/nvim/init.vim
 
