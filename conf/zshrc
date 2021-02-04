@@ -95,3 +95,4 @@ if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 # kubectl krew
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
+PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
