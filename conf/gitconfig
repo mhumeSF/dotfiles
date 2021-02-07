@@ -5,7 +5,15 @@
   whitespace = trailing-space,space-before-tab
   excludesfile = ~/.gitignore
 [merge]
-  tool = vimdiff3
+  tool = vimdiff
+[mergetool]
+  prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[difftool]
+  prompt = false
+[diff]
+  tool = vimdiff
 [gpg]
   program = /opt/homebrew/bin/gpg
 [user]
@@ -31,6 +39,16 @@
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
   empty = commit --allow-empty -m
   ic = commit -m "Init commit 🍻"
+  br = branch
+  ci = commit
+  co = checkout
+  st = status
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+[branch "main"]
+  remote = origin
+  merge = refs/heads/master
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
