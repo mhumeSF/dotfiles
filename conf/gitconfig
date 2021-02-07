@@ -36,7 +36,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
-[url "https://github.com/"]
-  insteadOf = git@github.com:
+[url "git@github.com:"]
+  insteadOf = https://github.com/
 [diff "plist"]
   textconv = plutil -convert xml1 -o -
