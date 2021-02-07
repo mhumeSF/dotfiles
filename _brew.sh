@@ -18,43 +18,48 @@ print_result $? 'Homebrew'
 # BREW
 ###############################################################################
 
-brew update && brew upgrade
+brew update
+brew upgrade
 
-brew_install coreutils # GNU core utilities (those that come with OS X are outdated)
-brew_install findutils
+brews_installed=$(brew list)
+brews=(
+  ack
+  cmatrix
+  docker-clean
+  dockutil
+  fzf
+  git
+  gnupg2
+  gnu-sed
+  go
+  hub
+  jq
+  mas
+  md5sha1sum
+  neovim
+  pinentry-mac
+  pv
+  pyenv
+  rename
+  shfmt
+  tfenv
+  the_silver_searcher
+  tmux
+  tree
+  unrar
+  watch
+  wget
+  youtube-dl
+  zopfli
+  # GNU core utilities (those that come with OS X are outdated)
+  coreutils
+  findutils
+)
 
-brew_install ack
-brew_install cmatrix
-brew_install docker-clean
-brew_install dockutil
-brew_install fzf
-brew_install git
-brew_install gnupg2
-brew_install gnu-sed
-brew_install go
-brew_install hub
-brew_install jq
-brew_install mas
-brew_install md5sha1sum
-brew_install mongodb
-brew_install neovim
-brew_install pinentry-mac
-brew_install pv
-brew_install pyenv
-brew_install rename
-brew_install shfmt
-brew_install tfenv
-brew_install the_silver_searcher
-brew_install tmux
-brew_install tree
-brew_install unrar
-brew_install watch
-brew_install wget
-brew_install youtube-dl
-brew_install zopfli
-brew_install zsh
-
-brew cleanup
+brews=$(echo ${brews[@]} ${brews_installed[@]} | tr ' ' '\n' | sort | uniq -u)
+for brew in ${brews[@]}; do
+  brew install $brew || break
+done
 
 echo 'PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >>~/.zshrc
 
@@ -62,28 +67,31 @@ echo 'PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >>~/.zshrc
 # BREW CASK
 ###############################################################################
 
-#brew tap homebrew/cask-versions
-#brew tap homebrew/cask-fonts
-#
-#brew install brew-cask-completion
-#
-#apps=(
-#	backblaze
-#	caffeine
-#	docker
-#	font-source-code-pro
-#	google-chrome
-#	hub
-#	keyboard-cleaner
-#	selfcontrol
-#	slack
-#	spotify
-#	viscosity
-#	vlc
-#	wavebox
-#	wireguard
-#)
-#
-#for app in ${apps[@]}; do
-#	brew_install  $app
-#done
+brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
+
+casks_installed=$(brew cask list)
+casks=(
+  backblaze
+  caffeine
+  docker
+  font-source-code-pro
+  google-chrome
+  hub
+  keyboard-cleaner
+  selfcontrol
+  slack
+  spotify
+  viscosity
+  vlc
+  wavebox
+  wireguard
+)
+
+casks=$(echo ${casks[@]} ${casks_installed[@]} | tr ' ' '\n' | sort | uniq -u)
+for cask in ${casks[@]}; do
+  brew_cask_install $cask || break
+done
+
+brew doctor
+brew cleanup

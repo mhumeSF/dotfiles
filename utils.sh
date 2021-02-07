@@ -23,6 +23,14 @@ brew_install() {
   fi
 }
 
+brew_cask_install() {
+  if brew cask list $1 &>/dev/null; then
+    print_success "$1"
+  else
+    execute "brew install --cask $1"
+  fi
+}
+
 cmd_exists() {
   command -v "$1" &>/dev/null
 }
