@@ -2,35 +2,23 @@ For OSX:
 
 `git` to prompt xcode-select, then `./bootstrap.sh`
 
+https://github.com/alrra/dotfiles/blob/ff123ca9b9b9d3ede9983aab16ebddd43a61283d/os/os_x/installs/install_homebrew.sh
+
 # TODO:
 
 ### Auto-Update
 Figure away to auto upgrade pip, node, brew etc. Vim should run :bundleupdate,
 after so many runs
 
-### Brew
-
 ### OSX
 - Hot-Corner for expose
-- Fast-User switching
-- Default-Background
 - Two-finger tap for right click
-- Bluetooth Mouse, "Secondary Click (Click on right side)"
 - Move left a space (Command - 1)
 - Move right a space (Command - 3)
 - Start Divvy at Startup
-- Start Moon at Startup
 - Start Viscosity at Startup
 
-- virtualenv and mkvirtualenv
-- General oh-my-zsh setup
-
-### Misc
-- System-wide gitconfig && gitignore
-- Maybe some pip requirements like grip?
-
 ### TODO
-- better bootstrap of homebrew
 - continue bootstrap if been cancelled
 - Bootstrap neovim
 - Bootstrap coc in nvim
