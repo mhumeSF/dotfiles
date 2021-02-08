@@ -1,38 +1,42 @@
 #!/bin/bash
-print_in_green() {
-  printf "\e[0;32m$1\e[0m"
+
+print_in_color() {
+  printf "%b" \
+    "$(tput setaf "$2" 2>/dev/null)" \
+    "$1" \
+    "$(tput sgr0 2>/dev/null)"
 }
 
-print_success() {
-  print_in_green "  [✔] $1\n"
+print_in_green() {
+  print_in_color "$1" 2
+}
+
+print_in_purple() {
+  print_in_color "$1" 5
 }
 
 print_in_red() {
-  printf "\e[0;31m$1\e[0m"
+  print_in_color "$1" 1
+}
+
+print_in_yellow() {
+  print_in_color "$1" 3
+}
+
+print_success() {
+  print_in_green "   [✔] $1\n"
+}
+
+print_question() {
+  print_in_yellow "   [?] $1"
+}
+
+print_warning() {
+  print_in_yellow "   [!] $1\n"
 }
 
 print_error() {
   print_in_red "  [✖] $1 $2\n"
-}
-
-brew_install() {
-  if brew list $1 &>/dev/null; then
-    print_success "$1"
-  else
-    brew install $1
-  fi
-}
-
-brew_cask_install() {
-  if brew list --cask $1 &>/dev/null; then
-    print_success "$1"
-  else
-    brew install --cask $1
-  fi
-}
-
-cmd_exists() {
-  command -v "$1" &>/dev/null
 }
 
 print_result() {
@@ -45,6 +49,59 @@ print_result() {
 
   return "$1"
 
+}
+
+brew_install() {
+
+  declare -r ARGUMENTS="$3"
+  declare -r FORMULA="$2"
+  declare -r FORMULA_READABLE_NAME="$1"
+  declare -r TAP_VALUE="$4"
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # Check if `Homebrew` is installed.
+
+  if ! cmd_exists "brew"; then
+    print_error "$FORMULA_READABLE_NAME ('Homebrew' is not installed)"
+    return 1
+  fi
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # If `brew tap` needs to be executed,
+  # check if it executed correctly.
+
+  if [ -n "$TAP_VALUE" ]; then
+    if ! brew_tap "$TAP_VALUE"; then
+      print_error "$FORMULA_READABLE_NAME ('brew tap $TAP_VALUE' failed)"
+      return 1
+    fi
+  fi
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # Install the specified formula.
+
+  # shellcheck disable=SC2086
+  if brew list "$FORMULA" &>/dev/null; then
+    print_success "$FORMULA_READABLE_NAME"
+  else
+    execute \
+      "brew install $FORMULA $ARGUMENTS" \
+      "$FORMULA_READABLE_NAME"
+  fi
+
+}
+
+cmd_exists() {
+  command -v "$1" &>/dev/null
+}
+
+print_error_stream() {
+  while read -r line; do
+    print_error "↳ ERROR: $line"
+  done
 }
 
 execute() {
