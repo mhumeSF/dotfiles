@@ -21,21 +21,17 @@ print_result $? 'Homebrew'
 brew update
 brew upgrade
 
-brews_installed=$(brew list)
 brews=(
-  ack
   cmatrix
   docker-clean
   dockutil
   fzf
   git
   gnupg2
-  gnu-sed
   go
   hub
   jq
-  mas
-  md5sha1sum
+  # mas
   neovim
   pinentry-mac
   pv
@@ -46,19 +42,19 @@ brews=(
   the_silver_searcher
   tmux
   tree
-  unrar
   watch
+  wireguard-tools
   wget
   youtube-dl
   zopfli
   # GNU core utilities (those that come with OS X are outdated)
   coreutils
   findutils
+  gnu-sed
 )
 
-brews=$(echo ${brews[@]} ${brews_installed[@]} | tr ' ' '\n' | sort | uniq -u)
 for brew in ${brews[@]}; do
-  brew install $brew || break
+  brew_install $brew
 done
 
 echo 'PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >>~/.zshrc
@@ -70,27 +66,23 @@ echo 'PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"' >>~/.zshrc
 brew tap homebrew/cask-versions
 brew tap homebrew/cask-fonts
 
-casks_installed=$(brew cask list)
 casks=(
   backblaze
   caffeine
   docker
   font-source-code-pro
   google-chrome
-  hub
   keyboard-cleaner
+  rar
   selfcontrol
   slack
   spotify
   viscosity
   vlc
-  wavebox
-  wireguard
 )
 
-casks=$(echo ${casks[@]} ${casks_installed[@]} | tr ' ' '\n' | sort | uniq -u)
 for cask in ${casks[@]}; do
-  brew_cask_install $cask || break
+  brew_cask_install $cask
 done
 
 brew doctor

@@ -19,15 +19,15 @@ brew_install() {
   if brew list $1 &>/dev/null; then
     print_success "$1"
   else
-    execute "brew install $1"
+    brew install $1
   fi
 }
 
 brew_cask_install() {
-  if brew cask list $1 &>/dev/null; then
+  if brew list --cask $1 &>/dev/null; then
     print_success "$1"
   else
-    execute "brew install --cask $1"
+    brew install --cask $1
   fi
 }
 
