@@ -60,3 +60,5 @@
 	textconv = plutil -convert xml1 -o -
 [init]
 	defaultBranch = main
+[pull]
+	ff = only
