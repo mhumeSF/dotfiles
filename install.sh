@@ -13,6 +13,9 @@ ln -sf $HOME/dotfiles/conf/gitignore $HOME/.gitignore
 ln -sf $HOME/dotfiles/conf/tmux.conf $HOME/.tmux.conf
 ln -sf $HOME/dotfiles/conf/tmuxcolors.conf $HOME/.tmuxcolors.conf
 
+mkdir -p $HOME/.config/starship
+ln -sf $HOME/dotfiles/conf/starship.toml $HOME/.config/starship/starship.toml
+
 mkdir -p $HOME/.config/.gnupg
 ln -sf $HOME/dotfiles/conf/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
 ln -sf $HOME/dotfiles/conf/gpg.conf $HOME/.gnupg/gpg.conf
