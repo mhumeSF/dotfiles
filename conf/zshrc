@@ -96,3 +96,5 @@ if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+
+alias zreload="exec /bin/zsh -l"
