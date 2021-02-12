@@ -1,3 +1,6 @@
+export AWS_VAULT_KEYCHAIN_NAME=login
+export AWS_SDK_LOAD_CONFIG=1
+
 unset_aws() {
   AWS_VARS=(
     AWS_ROLE_ARN
@@ -21,9 +24,9 @@ assume() {
     export AWS_PROFILE=$1
   fi
 }
+
 # AWS Profile switcher
 # https://inodes.org/2018/09/21/switching-aws-profiles/
-
 _aws_profile_completer() {
   # Remove first and last character 's/.$//;s/^.//'
   _commands=$(cat ~/.aws/config | grep '^\[' | sed 's/.$//;s/^.//' | grep -v '_source')
