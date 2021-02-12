@@ -1,9 +1,16 @@
 [user]
 	name = Mike Hume
-	email = EMAIL
+	email = mhumesf@gmail.com
+	signingkey = 0x211A2F4F8337C791
 [core]
 	whitespace = trailing-space,space-before-tab
 	excludesfile = ~/.gitignore
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
+[url "git@github.com:"]
+	insteadOf = https://github.com/
 [merge]
 	tool = vimdiff
 [mergetool]
@@ -14,10 +21,6 @@
 	prompt = false
 [diff]
 	tool = vimdiff
-[gpg]
-	program = /opt/homebrew/bin/gpg
-[user]
-	signingkey = 0x211A2F4F8337C791
 [commit]
 	gpgsign = true
 	template = ~/.gitmessage
@@ -36,6 +39,7 @@
 	new = green bold
 	whitespace = red reverse
 [alias]
+	dmerged = "git branch --merged master | grep -v master | xargs git branch -d"
 	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 	empty = commit --allow-empty -m
 	ic = commit -m "Init commit 🍻"
@@ -48,17 +52,11 @@
 	merge = refs/heads/master
 [branch "main"]
 	remote = origin
-	merge = refs/heads/master
+	merge = refs/heads/main
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [diff "plist"]
 	textconv = plutil -convert xml1 -o -
-[init]
-	defaultBranch = main
-[pull]
-	ff = only
