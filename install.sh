@@ -29,6 +29,7 @@ ln -sf $HOME/dotfiles/conf/k8s.plugin.zsh ~/.zsh/plugins/k8s.plugin.zsh
 ln -sf $HOME/dotfiles/conf/aws.plugin.zsh ~/.zsh/plugins/aws.plugin.zsh
 ln -sf $HOME/dotfiles/conf/tf.plugin.zsh ~/.zsh/plugins/tf.plugin.zsh
 ln -sf $HOME/dotfiles/conf/spinnaker.plugin.zsh ~/.zsh/plugins/spinnaker.plugin.zsh
+ln -sf $HOME/dotfiles/conf/git.plugin.zsh ~/.zsh/plugins/git.plugin.zsh
 
 ./_brew.sh
 print_in_green '\n  ---\n\n'
