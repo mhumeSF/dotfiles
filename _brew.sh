@@ -37,6 +37,8 @@ printf "\n"
 printf "Installing brews..."
 printf "\n\n"
 
+brew_install "bat" bat
+brew_install "dust" dust
 brew_install "cmatrix" cmatrix
 brew_install "dockutil" dockutil
 brew_install "command-line fuzzy finder" fzf
