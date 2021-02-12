@@ -11,7 +11,7 @@ export LANG=en_US.UTF-8
 #  * The actual colors are configured through the `LSCOLORS`
 #    environment variable (built-in defaults are used if this
 #    variable is not set).
-alias ls="ls -G"
+alias ls="ls --color=auto"
 
 LSCOLORS=""
 
@@ -28,6 +28,8 @@ LSCOLORS+="cx" # Directory writable to others, with sticky bit
 LSCOLORS+="cx" # Directory writable to others, without sticky bit
 
 export LSCOLORS
+export CLICOLOR=1
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #
@@ -75,6 +77,8 @@ fi
 # https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-not-working/43087047
 bindkey -e
 
+PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+
 # Home bin folder for various
 export PATH=$PATH:$HOME/bin
 
@@ -89,6 +93,7 @@ export GOROOT="$(brew --prefix)/opt/go/libexec"
 export GOCACHE=$GOPATH/cache
 
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+PATH="$(brew --prefix)/opt/go/libexec/gnubin:$PATH"
 
 # Misc aliases
 alias vi="nvim"
@@ -109,8 +114,6 @@ alias u="sudo softwareupdate --install --all \
             && npm install -g npm \
             && npm update -g"
 
-PATH="$(brew --prefix)/opt/go/libexec/gnubin:$PATH"
-PATH="$(brew --prefix)/opt/coreutils/gnubin:$PATH"
 
 # https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92
 nvm() {
