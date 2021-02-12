@@ -13,7 +13,7 @@ format = 'k8:[$symbol$context( \($namespace\))]($style)'
 
 [aws]
 symbol = ""
-format = ' // aws:[$symbol$profile\[$region\]]($style)'
+format = ' // aws:[$symbol$profile\($region\)]($style)'
 style = "bold white"
 
 [custom.tfenv]
