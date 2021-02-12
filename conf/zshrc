@@ -112,6 +112,16 @@ alias u="sudo softwareupdate --install --all \
 PATH="$(brew --prefix)/opt/go/libexec/gnubin:$PATH"
 PATH="$(brew --prefix)/opt/coreutils/gnubin:$PATH"
 
+# https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92
+nvm() {
+  echo "🚨 NVM not loaded! Loading now..."
+  unset -f nvm
+  export NVM_PREFIX=$(brew --prefix nvm)
+  [ -s "$NVM_PREFIX/nvm.sh" ] && . "$NVM_PREFIX/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  nvm "$@"
+}
+
 # For the `complete` command to be available in zsh
 # https://github.com/eddiezane/lunchy/issues/57#issuecomment-121173592
 autoload bashcompinit && bashcompinit
