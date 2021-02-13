@@ -32,6 +32,8 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go'
 
+Plug 'cespare/vim-toml'
+
 Plug 'hashivim/vim-terraform'
 Plug 'pedrohdz/vim-yaml-folds'
 
