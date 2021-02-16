@@ -1,5 +1,5 @@
+# ([#](blue) $kubernetes$aws${custom.tfenv})
 format = """
-[#](blue) $kubernetes$aws${custom.tfenv}
 [#](blue) $directory$git_branch${custom.parse_git_clean}${custom.parse_git_dirty}
 $character"""
 
@@ -9,7 +9,8 @@ add_newline = true
 symbol = ""
 style = "bold white"
 disabled = false
-format = 'k8:[$symbol$context( \($namespace\))]($style)'
+when = "[ -f ~/.kube/config ]"
+format = '[$symbol$context(\($namespace\))]($style)'
 
 [aws]
 symbol = ""
@@ -18,7 +19,7 @@ style = "bold white"
 
 [custom.tfenv]
 command = "source $HOME/.functions && resolve_tfenv_version"
-when = "true"
+when = "resolve_tfenv_version"
 description = "Returns current terraform version"
 format = " // tf:[$symbol($output )]($style)"
 style = "bold white"
@@ -45,7 +46,6 @@ disabled = false
 [directory]
 truncation_length = 0
 style = "bold red"
-# format = "in [$path]($style)[$read_only]($read_only_style) "
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]

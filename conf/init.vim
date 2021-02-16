@@ -33,6 +33,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'fatih/vim-go'
 
 Plug 'cespare/vim-toml'
+Plug 'darfink/vim-plist'
 
 Plug 'hashivim/vim-terraform'
 Plug 'pedrohdz/vim-yaml-folds'
@@ -198,16 +199,25 @@ set dictionary=/usr/share/dict/words
 " _. CSS {{{
 " }}}
 " }}}
-"{{{ coc.nvim default settings
 
+" COC Settings
+" https://github.com/neoclide/coc.nvim/tree/3bdfdd2a86046d7b0938da6e0f940ec39f999bca#example-vim-configuration
 " if hidden is not set, TextEdit might fail.
 set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
 " Better display for messages
 set cmdheight=2
+
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
+
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
+
 " always show signcolumns
 set signcolumn=yes
 
@@ -227,6 +237,10 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -237,8 +251,19 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use U to show documentation in preview window
-nnoremap <silent> U :call <SID>show_documentation()<CR>
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -246,6 +271,46 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+vmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+
+
+" Using CocList
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
@@ -263,5 +328,31 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-"
-"}}}
+""" Plist
+function! s:ConvertBinaryPlist()
+  silent! execute '%d'
+  call plutil#Read(1)
+  call plutil#ReadPost()
+  set fileencoding=utf-8
+
+  augroup BinaryPlistWrite
+    autocmd! BufWriteCmd,FileWriteCmd <buffer>
+    autocmd BufWriteCmd,FileWriteCmd <buffer> call plist#Write()
+  augroup END
+endfunction
+augroup BinaryPlistRead
+  autocmd!
+  autocmd BufRead *
+        \ if getline(1) =~# '^bplist' |
+        \   call s:ConvertBinaryPlist() |
+        \ endif
+  autocmd BufNewFile *.plist
+        \ if !get(b:, 'plist_original_format') |
+        \   let b:plist_original_format = 'xml' |
+        \ endif
+augroup END
+" Disable default autocmds
+let g:loaded_plist = 1
+let g:plist_display_format = 'xml'
+let g:plist_save_format = ''
+let g:plist_json_filetype = 'json'

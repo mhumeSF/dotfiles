@@ -44,21 +44,8 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # Disable local Time Machine snapshots
 sudo tmutil disablelocal
 
-# Disable spotlight searching mail and files
-
 # When performing a search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-# Avoid creating .DS_Store files on network volumes
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
-# Automatically open a new Finder window when a volume is mounted
-defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
-defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
-defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
-
-# Show Full Path in Finder Title
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
 # Ask for password immediately after sleep
 defaults write com.apple.screensaver askForPasswordDelay 0.0
@@ -80,7 +67,7 @@ defaults write com.apple.AppleMultitouchMouse MouseButtonMode -string "TwoButton
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad MouseButtonMode -string "TwoButton"
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string "TwoButton"
 
-# Disable “natural” (Lion-style) scrolling
+# Disable "natural" (Lion-style) scrolling
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Disable press-and-hold for keys in favor of key repeat
