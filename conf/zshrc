@@ -77,7 +77,8 @@ fi
 # https://stackoverflow.com/questions/23128353/zsh-shortcut-ctrl-a-not-working/43087047
 bindkey -e
 
-PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
 
 # Home bin folder for various
 export PATH=$PATH:$HOME/bin
@@ -93,13 +94,14 @@ export GOROOT="$(brew --prefix)/opt/go/libexec"
 export GOCACHE=$GOPATH/cache
 
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
-PATH="$(brew --prefix)/opt/go/libexec/gnubin:$PATH"
 
 # Misc aliases
 alias vi="nvim"
 alias k="kubectl"
 alias kc="kubectx"
 alias kn="kubens"
+alias t="terraform"
+alias tf="terraform"
 alias docker="DOCKER_BUILDKIT=1 docker"
 alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed'
 alias m="molecule"
@@ -130,12 +132,12 @@ nvm() {
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
-source ~/.zsh/plugins/aws.plugin.zsh
-source ~/.zsh/plugins/k8s.plugin.zsh
-source ~/.zsh/plugins/tf.plugin.zsh
-source ~/.zsh/plugins/spinnaker.plugin.zsh
-source ~/.zsh/plugins/git.plugin.zsh
-source ~/.fzf.zsh
+source $HOME/.zsh/plugins/aws.plugin.zsh
+source $HOME/.zsh/plugins/k8s.plugin.zsh
+source $HOME/.zsh/plugins/tf.plugin.zsh
+source $HOME/.zsh/plugins/spinnaker.plugin.zsh
+source $HOME/.zsh/plugins/git.plugin.zsh
+source $HOME/.fzf.zsh
 
 export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --preview 'bat --theme=gruvbox --color=always --style=header,grid --line-range :300 {}'"
 export FZF_DEFAULT_COMMAND='fd -HI --type file'
@@ -145,11 +147,19 @@ export TERM=xterm-256color
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$PATH:~/bin"
+export PATH="$PATH:$HOME/bin"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
 eval "$(starship init zsh)"
+
+
+# Created by `pipx` on 2021-08-17 23:03:20
+export PATH="$PATH:/Users/mhume/.local/bin"
