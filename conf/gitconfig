@@ -60,3 +60,5 @@
 	required = true
 [diff "plist"]
 	textconv = plutil -convert xml1 -o -
+[diff "sopsdiffer"]
+	textconv = sops -d
