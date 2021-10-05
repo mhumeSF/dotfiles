@@ -11,6 +11,10 @@ style = "bold white"
 disabled = false
 format = 'k8:[$symbol$context( \($namespace\))]($style)'
 
+# [kubernetes.context_aliases]
+# # Example arn: arn:aws:eks:us-west-2:668645637391:cluster/pii-dev-eks
+# "^arn:(?P<Partition>[^:\n]*):(?P<Service>[^:\n]*):(?P<Region>[^:\n]*):(?P<AccountID>[^:\n]*):(?P<Resource>.*)$" = "($AccountID) $Resource"
+
 [aws]
 symbol = ""
 format = ' // aws:[$symbol$profile\($region\)]($style)'
