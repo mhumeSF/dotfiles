@@ -103,6 +103,9 @@ alias gds='git diff --staged'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdw='git diff --word-diff'
 
+# From Nic
+alias git-show-default='git remote show origin  | grep "HEAD branch"'
+
 function gdnolock() {
   git diff "$@" ":(exclude)package-lock.json" ":(exclude)*.lock"
 }
