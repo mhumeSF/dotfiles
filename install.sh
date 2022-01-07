@@ -18,8 +18,9 @@ ln -sf $HOME/dotfiles/conf/starship.toml $HOME/.config/starship/starship.toml
 
 mkdir -p $HOME/.config/.gnupg
 cp $HOME/dotfiles/conf/gpg-agent.conf $HOME/.gnupg/gpg-agent.conf
-echo "pinentry-program $(brew --prefix)/bin/pinentry-mac" >> gpg-agent.conf
+echo "pinentry-program $(brew --prefix)/bin/pinentry-mac" >> $HOME/.gnupg/gpg-agent.conf
 ln -sf $HOME/dotfiles/conf/gpg.conf $HOME/.gnupg/gpg.conf
+ln -sf $HOME/dotfiles/conf/scdaemon.conf $HOME/.gnupg/scdaemon.conf
 
 mkdir -p $HOME/.config/nvim
 ln -sf $HOME/dotfiles/conf/init.vim ~/.config/nvim/init.vim
