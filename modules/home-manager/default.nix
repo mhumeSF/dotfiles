@@ -5,10 +5,9 @@
   home.packages = with pkgs; [ neovim ripgrep fd curl less lf ];
   # home.packages = with pkgs; [ bottom curl du-dust fd htop jq kubectl less neofetch neovim pv ripgrep silver-searcher tmux tree wireguard-tools zopfli ];
   home.sessionPath = [
-    "$GOBIN"
     "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
-    "$HOME/.go/bin:/opt/homebrew/opt/go/libexec"
+    "$HOME/.go/bin"
   ];
   home.sessionVariables = {
     PAGER = "less";
