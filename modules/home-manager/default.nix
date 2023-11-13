@@ -1,15 +1,36 @@
 { pkgs, ... }: {
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
   home.stateVersion = "23.11";
+
   # specify my home-manager configs
-  home.packages = with pkgs; [ neovim ripgrep fd curl less lf ];
-  # home.packages = with pkgs; [ bottom curl du-dust fd htop jq kubectl less neofetch neovim pv ripgrep silver-searcher tmux tree wireguard-tools zopfli ];
+  home.packages = with pkgs; [
+    bats
+    bottom
+    curl
+    du-dust
+    fd
+    htop
+    jq
+    kubectl
+    kubectx
+    kubernetes-helm
+    less
+    neofetch
+    pv
+    ripgrep
+    silver-searcher
+    tmux
+    tree
+    wireguard-tools
+    zopfli
+  ];
   home.sessionPath = [
     "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
-    "$HOME/.go/bin"
+    "$HOME/go/bin"
   ];
   home.sessionVariables = {
+    HUGO_CACHEDIR = "$HOME/.local/share/hugo";
     PAGER = "less";
     CLICOLOR = 1;
     EDITOR = "nvim";

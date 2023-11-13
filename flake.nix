@@ -1,7 +1,5 @@
 {
-  description = "Mememe flake";
-
-  inputs = {
+  description = "Mememe flake"; inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,4 +25,3 @@
     };
   };
 }
-
