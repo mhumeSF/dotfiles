@@ -24,11 +24,13 @@
     NSGlobalDomain.AppleShowAllExtensions = true;
     NSGlobalDomain.InitialKeyRepeat = 14;
     NSGlobalDomain.KeyRepeat= 1;
-    # Disable AutoFill in Safari
-    # "com.apple.Safari".AutoFillFromAddressBook = false;
-    # "com.apple.Safari".AutoFillPasswords = false;
-    # "com.apple.Safari".AutoFillCreditCardData = false;
-    # "com.apple.Safari".AutoFillMiscellaneousForms = false;
+    CustomSystemPreferences = {
+      # Disable AutoFill in Safari
+      "com.apple.Safari".AutoFillFromAddressBook = false;
+      "com.apple.Safari".AutoFillPasswords = false;
+      "com.apple.Safari".AutoFillCreditCardData = false;
+      "com.apple.Safari".AutoFillMiscellaneousForms = false;
+    };
   };
   # backwards compat; don't change
   system.stateVersion = 4;
