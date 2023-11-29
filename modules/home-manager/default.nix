@@ -23,10 +23,14 @@
     tree
     wireguard-tools
     zopfli
+
+    nixos-generators
   ];
   home.sessionPath = [
     "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
+    "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
+    "/opt/homebrew/opt/coreutils/libexec/gnubin"
     "$HOME/go/bin"
   ];
   home.sessionVariables = {
@@ -75,11 +79,12 @@
 
     u = "sudo softwareupdate --install --all";
     k = "kubectl";
+    kc = "kubectx";
 
     gst = "git status";
 
     # gnu rust replacements
-    cat = "bat";
+    cat = "bat --style=plain --no-pager";
     top = "btm";
     htop = "btm";
     watch = "viddy ";
