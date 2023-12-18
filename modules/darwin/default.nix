@@ -18,6 +18,7 @@
   fonts.fonts =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
   services.nix-daemon.enable = true;
   system.defaults = {
+    # universalaccess.reduceMotion = 1;
     finder.AppleShowAllExtensions = true;
     finder._FXShowPosixPathInTitle = true;
     dock.autohide = true;

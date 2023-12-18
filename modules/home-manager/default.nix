@@ -80,6 +80,7 @@
     u = "sudo softwareupdate --install --all";
     k = "kubectl";
     kc = "kubectx";
+    kn = "kubens";
 
     gst = "git status";
 
