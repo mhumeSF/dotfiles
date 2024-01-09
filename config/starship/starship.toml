@@ -1,5 +1,9 @@
+# format = """
+# [#](blue) $kubernetes$aws${custom.tfenv}
+# [#](blue) $directory$git_branch${custom.parse_git_clean}${custom.parse_git_dirty}
+# $character"""
+
 format = """
-[#](blue) $kubernetes$aws${custom.tfenv}
 [#](blue) $directory$git_branch${custom.parse_git_clean}${custom.parse_git_dirty}
 $character"""
 
@@ -20,12 +24,12 @@ symbol = ""
 format = ' // aws:[$symbol$profile\($region\)]($style)'
 style = "bold white"
 
-[custom.tfenv]
-command = "source $HOME/.functions && resolve_tfenv_version"
-when = "true"
-description = "Returns current terraform version"
-format = " // tf:[$symbol($output )]($style)"
-style = "bold white"
+# [custom.tfenv]
+# command = "source $HOME/.functions && resolve_tfenv_version"
+# when = "true"
+# description = "Returns current terraform version"
+# format = " // tf:[$symbol($output )]($style)"
+# style = "bold white"
 
 [terraform]
 disabled = true
