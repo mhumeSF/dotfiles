@@ -5,7 +5,9 @@
   environment = {
     shells = with pkgs; [ bash zsh ];
     loginShell = pkgs.zsh;
-    systemPackages = [ pkgs.coreutils ];
+    systemPackages = [ 
+      pkgs.coreutils 
+    ];
     pathsToLink = [ "/Applications" ];
   };
   nix.extraOptions = ''
@@ -18,7 +20,7 @@
   fonts.fonts =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
   services.nix-daemon.enable = true;
   system.defaults = {
-    # universalaccess.reduceMotion = 1;
+    # universalaccess.reduceMotion = true;
     finder.AppleShowAllExtensions = true;
     finder._FXShowPosixPathInTitle = true;
     dock.autohide = true;

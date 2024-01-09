@@ -7,18 +7,18 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs@{ nixpkgs, home-manager, darwin, ... }: {
-    darwinConfigurations.finn = darwin.lib.darwinSystem {
+    darwinConfigurations.Michaels-MacBook-Pro = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       pkgs = import nixpkgs { system = "aarch64-darwin"; };
       modules = [
         ./modules/darwin
         home-manager.darwinModules.home-manager
         {
-          users.users.finn.home = "/Users/finn";
+          users.users.michaelhume.home = "/Users/michaelhume";
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.finn.imports = [ ./modules/home-manager ];
+            users.michaelhume.imports = [ ./modules/home-manager ];
           };
         }
       ];

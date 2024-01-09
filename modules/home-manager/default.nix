@@ -6,8 +6,10 @@
   home.packages = with pkgs; [
     bats
     bottom
+    colima
     curl
     du-dust
+    direnv
     fd
     htop
     jq
@@ -23,6 +25,8 @@
     tree
     wireguard-tools
     zopfli
+
+    dockutil
 
     nixos-generators
   ];
@@ -67,8 +71,8 @@
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
     # nix
-    nixswitch = "darwin-rebuild switch --flake ~/src/system-config";
-    nixup = "pushd ~/src/system-config; nix flake update; nixswitch; popd";
+    nixswitch = "darwin-rebuild switch --flake ~/system-config";
+    nixup = "pushd ~/system-config; nix flake update; nixswitch; popd";
 
     # Misc aliases
     vi = "nvim";
@@ -177,7 +181,7 @@
           white = "0xebdbb2";
         };
       };
-      key_bindings = [
+      keyboard.bindings = [
         { key = "Left";     mods = "Alt";     chars =  "\x1bb";                        } # Skip word left
         { key = "Right";    mods = "Alt";     chars =  "\x1bf";                        } # Skip word right
         { key = "Left";     mods = "Command"; chars =  "\x1bOH";   mode = "AppCursor"; } # Home
@@ -185,8 +189,8 @@
         { key = "Back";     mods = "Command"; chars =  "\x15";                         } # Delete line
         { key = "Back";     mods = "Alt";     chars =  "\x1b\x7f";                     } # Delete word
       ];
-      animation = "EaseOutExpo";
-      duration = 0;
+      # animation = "EaseOutExpo";
+      # duration = 0;
     };
   };
   home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
