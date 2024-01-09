@@ -82,6 +82,8 @@
     zreload = "exec /bin/zsh -l";
 
     u = "sudo softwareupdate --install --all";
+    c = "colima";
+    l = "limactl";
     k = "kubectl";
     kc = "kubectx";
     kn = "kubens";
