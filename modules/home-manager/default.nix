@@ -6,16 +6,18 @@
   home.packages = with pkgs; [
     bats
     bottom
-    colima
+    cmatrix
     curl
     du-dust
     direnv
     fd
+    fzf
+    ipcalc
     htop
+    git
+    gh
     jq
-    kubectl
-    kubectx
-    kubernetes-helm
+    yq-go
     less
     neofetch
     pv
@@ -23,8 +25,28 @@
     silver-searcher
     tmux
     tree
+    tree-sitter
     wireguard-tools
     zopfli
+
+    # GNU Tools
+    gnugrep
+    gnused
+    gnutar
+    coreutils
+
+    # Docker tools
+    colima
+    lima-bin
+    docker-client
+    docker-buildx
+    docker-compose
+
+    # Kubernetes tools
+    kind
+    kubectl
+    kubectx
+    kubernetes-helm
 
     dockutil
 
@@ -44,6 +66,7 @@
     EDITOR = "nvim";
     SSH_AUTH_SOCK="$HOME/.1password/agent.sock";
     STARSHIP_CONFIG="$HOME/.config/starship/starship.toml";
+    OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
   };
   programs.atuin.enable = true;
   programs.atuin.enableZshIntegration = true;
@@ -80,6 +103,8 @@
     flushdns = "sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed";
     uuid = "python3 -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo";
     zreload = "exec /bin/zsh -l";
+
+    gs = ""; # Alias gs so ghostscript doesn't get invoked
 
     u = "sudo softwareupdate --install --all";
     c = "colima";
