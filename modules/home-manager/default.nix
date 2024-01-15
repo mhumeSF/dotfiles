@@ -138,7 +138,7 @@
     ".DocumentRevisions-V100"
     ".fseventsd"
     ".Spotlight-V100"
-    ".TemporaryItems"
+    ".TemporaryItms"
     ".Trashes"
     ".VolumeIcon.icns"
 

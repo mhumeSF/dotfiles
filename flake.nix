@@ -17,40 +17,20 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, ... }: {
+  outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs: let
+    mksystem = import ./lib/mksystem.nix { inherit nixpkgs inputs; };
+  in {
 
-    darwinConfigurations.finn = darwin.lib.darwinSystem {
+    darwinConfigurations.finn = mksystem "finn" {
       system = "aarch64-darwin";
-      pkgs = import nixpkgs { system = "aarch64-darwin"; };
-      modules = [
-        ./modules/darwin
-        home-manager.darwinModules.home-manager
-        {
-          users.users.finn.home = "/Users/finn";
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.finn.imports = [ ./modules/home-manager ];
-          };
-        }
-      ];
+      user = "finn";
+      darwin = true;
     };
 
-    darwinConfigurations.Michaels-MacBook-Pro = darwin.lib.darwinSystem {
+    darwinConfigurations.Michaels-MacBook-Pro = mksystem "Michaels-MacBook-Pro" {
       system = "aarch64-darwin";
-      pkgs = import nixpkgs { system = "aarch64-darwin"; };
-      modules = [
-        ./modules/darwin
-        home-manager.darwinModules.home-manager
-        {
-          users.users.michaelhume.home = "/Users/michaelhume";
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.michaelhume.imports = [ ./modules/home-manager ];
-          };
-        }
-      ];
+      user = "michaelhume";
+      darwin = true;
     };
 
   };
