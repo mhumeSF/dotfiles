@@ -2,34 +2,39 @@
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
   home.stateVersion = "23.11";
 
+  xdg.enable = true;
+
   # specify my home-manager configs
   home.packages = with pkgs; [
-    bats
+    age
+    bat
     bottom
     cmatrix
     curl
-    du-dust
     direnv
+    du-dust
     fd
     fzf
-    ipcalc
-    htop
-    git
     gh
+    git
+    htop
+    ipcalc
     jq
-    yq-go
     less
     neofetch
     pv
     ripgrep
     silver-searcher
+    sops
     tmux
     tree
     tree-sitter
+    watch
     wireguard-tools
+    yq-go
     zopfli
 
-    # GNU Tools
+    # GNU tools
     gnugrep
     gnused
     gnutar
@@ -46,11 +51,17 @@
     kind
     kubectl
     kubectx
+    kubectl-neat
     kubernetes-helm
+    fluxcd
 
+    # OSX tools
     dockutil
 
+    # NIX tools
     nixos-generators
+    # nixos-anywhere
+    # disko
   ];
   home.sessionPath = [
     "$HOME/.cargo/bin"

@@ -24,10 +24,18 @@
     finder.AppleShowAllExtensions = true;
     finder._FXShowPosixPathInTitle = true;
     dock.autohide = true;
-    NSGlobalDomain.AppleShowAllExtensions = true;
-    NSGlobalDomain.InitialKeyRepeat = 14;
-    NSGlobalDomain.KeyRepeat= 1;
-    CustomSystemPreferences = {
+    NSGlobalDomain = {
+      AppleFontSmoothing = 2;
+      AppleShowAllExtensions = true;
+      AppleInterfaceStyle = "Dark";
+      InitialKeyRepeat = 14;
+      KeyRepeat= 1;
+      "com.apple.swipescrolldirection" = true; 
+      "com.apple.keyboard.fnState" = true;
+      "com.apple.trackpad.enableSecondaryClick" = true;
+    };
+    CustomSystemPreferences = {};
+    CustomUserPreferences = {
       # Disable AutoFill in Safari
       "com.apple.Safari".AutoFillFromAddressBook = false;
       "com.apple.Safari".AutoFillPasswords = false;
