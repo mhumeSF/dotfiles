@@ -5,9 +5,6 @@
   environment = {
     shells = with pkgs; [ bash zsh ];
     loginShell = pkgs.zsh;
-    systemPackages = [ 
-      pkgs.coreutils 
-    ];
     pathsToLink = [ "/Applications" ];
   };
   nix.extraOptions = ''
@@ -31,7 +28,6 @@
       InitialKeyRepeat = 14;
       KeyRepeat= 1;
       "com.apple.swipescrolldirection" = true; 
-      "com.apple.keyboard.fnState" = true;
       "com.apple.trackpad.enableSecondaryClick" = true;
     };
     CustomSystemPreferences = {};
