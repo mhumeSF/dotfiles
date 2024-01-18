@@ -28,8 +28,8 @@ let
       # End Nix
       '';
   };
-  systemFunc = if darwin then inputs.darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
-  home-manager = if darwin then inputs.home-manager.darwinModules else inputs.home-manager.nixosModules;
+  systemFunc = inputs.darwin.lib.darwinSystem;
+  home-manager = inputs.home-manager.darwinModules;
 in systemFunc rec {
   inherit system;
   pkgs = import nixpkgs { system = system; };
@@ -37,17 +37,10 @@ in systemFunc rec {
     ../modules/darwin
     home-manager.home-manager {
       users.users.${user}.home = "/Users/${user}";
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.${user}.imports = [ ../modules/home-manager ];
-    }
-
-    {
-      config._module.args = {
-        currentSystem = system;
-        currentSystemName = name;
-        currentSystemUser = user;
-        inputs = inputs;
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user}.imports = [ ../modules/home-manager ];
       };
     }
   ];
