@@ -27,7 +27,7 @@
       AppleInterfaceStyle = "Dark";
       InitialKeyRepeat = 14;
       KeyRepeat= 1;
-      "com.apple.swipescrolldirection" = true; 
+      "com.apple.swipescrolldirection" = false;
       "com.apple.trackpad.enableSecondaryClick" = true;
     };
     CustomSystemPreferences = {};
