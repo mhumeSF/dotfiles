@@ -115,7 +115,7 @@
     uuid = "python3 -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo";
     zreload = "exec /bin/zsh -l";
 
-    ag = "ripgrep";
+    ag = "rg";
     gs = ""; # Alias gs so ghostscript doesn't get invoked
 
     u = "sudo softwareupdate --install --all";
