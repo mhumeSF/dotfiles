@@ -64,10 +64,8 @@
     # disko
   ];
   home.sessionPath = [
-    "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
-    "/opt/homebrew/opt/gnu-sed/libexec/gnubin"
-    "/opt/homebrew/opt/coreutils/libexec/gnubin"
+    "$HOME/.cargo/bin"
     "$HOME/go/bin"
   ];
   home.sessionVariables = {
@@ -96,12 +94,6 @@
   programs.git.lfs.enable = true;
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
-  # programs.zsh.plugins = [
-  #   { name = "aws"; src = ".config/zsh/aws.plugin.zsh"; }
-  #   { name = "git"; src = ".config/zsh/git.plugin.zsh"; }
-  #   { name = "k8s"; src = ".config/zsh/k8s.plugin.zsh"; }
-  #   { name = "tf";  src = ".config/zsh/tf.plugin.zsh"; }
-  # ];
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
     # nix
@@ -198,8 +190,6 @@
         { key = "Back";     mods = "Command"; chars =  "\x15";                         } # Delete line
         { key = "Back";     mods = "Alt";     chars =  "\x1b\x7f";                     } # Delete word
       ];
-      # animation = "EaseOutExpo";
-      # duration = 0;
     };
   };
   home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
