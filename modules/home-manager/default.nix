@@ -41,7 +41,6 @@
     coreutils
 
     # Docker tools
-    colima
     lima-bin
     docker-client
     docker-buildx
@@ -111,7 +110,6 @@
     gs = ""; # Alias gs so ghostscript doesn't get invoked
 
     u = "sudo softwareupdate --install --all";
-    c = "colima";
     l = "limactl";
     k = "kubectl";
     kc = "kubectx";
