@@ -134,36 +134,6 @@
     watch = "viddy ";
     du = "dust";
   };
-  programs.git.ignores = [
-    ### OSX ###
-    ".DS_Store"
-    ".AppleDouble"
-    ".LSOverride"
-
-    # Icon must end with two \r
-    "Icon"
-
-    "# Thumbnails"
-    "._*"
-
-    # Files that might appear in the root of a volume
-    ".DocumentRevisions-V100"
-    ".fseventsd"
-    ".Spotlight-V100"
-    ".TemporaryItms"
-    ".Trashes"
-    ".VolumeIcon.icns"
-
-    # Directories potentially created on remote AFP share
-    ".AppleDB"
-    ".AppleDesktop"
-    "Network Trash Folder"
-    "Temporary Items"
-    ".apdisk"
-
-    ".idea"
-
-  ];
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
   programs.alacritty = {
@@ -233,4 +203,6 @@
     };
   };
   home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
+  home.file.".config/git/ignore".source = ../../config/git/ignore;
+  home.file.".editorconfig".source = ../../config/home/editorconfig;
 }
