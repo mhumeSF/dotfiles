@@ -29,10 +29,15 @@
     tmux
     tree
     tree-sitter
+    viddy
     watch
     wireguard-tools
     yq-go
     zopfli
+
+    ansible
+    ansible-language-server
+    ansible-lint
 
     # GNU tools
     gnugrep
