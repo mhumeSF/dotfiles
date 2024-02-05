@@ -94,8 +94,6 @@
   programs.eza.extraOptions = [
     "--group-directories-first"
   ];
-  programs.git.enable = true;
-  programs.git.lfs.enable = true;
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
@@ -197,5 +195,6 @@
   };
   home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
   home.file.".config/git/ignore".source = ../../config/git/ignore;
+  home.file.".config/git/config".source = ../../config/git/config;
   home.file.".editorconfig".source = ../../config/home/editorconfig;
 }

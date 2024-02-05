@@ -17,7 +17,7 @@
   fonts.fonts =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
   services.nix-daemon.enable = true;
   system.defaults = {
-    # universalaccess.reduceMotion = true;
+    universalaccess.reduceMotion = true;
     finder.AppleShowAllExtensions = true;
     finder._FXShowPosixPathInTitle = true;
     dock.autohide = true;
@@ -25,6 +25,7 @@
       AppleFontSmoothing = 2;
       AppleShowAllExtensions = true;
       AppleInterfaceStyle = "Dark";
+      AppleInterfaceStyleSwitchesAutomatically = false;
       InitialKeyRepeat = 14;
       KeyRepeat= 1;
       "com.apple.swipescrolldirection" = false;

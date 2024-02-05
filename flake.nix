@@ -27,9 +27,9 @@
       darwin = true;
     };
 
-    darwinConfigurations.Michaels-MacBook-Pro = mksystem "Michaels-MacBook-Pro" {
+    darwinConfigurations.Mikes-MacBook-Pro = mksystem "Mikes-MacBook-Pro" {
       system = "aarch64-darwin";
-      user = "michaelhume";
+      user = "mike";
       darwin = true;
     };
 
