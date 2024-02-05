@@ -197,4 +197,6 @@
   home.file.".config/git/ignore".source = ../../config/git/ignore;
   home.file.".config/git/config".source = ../../config/git/config;
   home.file.".editorconfig".source = ../../config/home/editorconfig;
+  home.file.".tmux.conf".source = ../../config/home/tmux.conf;
+  home.file.".tmuxcolors.conf".source = ../../config/home/tmuxcolors.conf;
 }
