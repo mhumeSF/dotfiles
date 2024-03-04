@@ -35,6 +35,8 @@
     yq-go
     zopfli
 
+    tig
+
     ansible
     ansible-language-server
     ansible-lint
@@ -122,8 +124,6 @@
 
     # gnu rust replacements
     cat = "bat --style=plain --no-pager";
-    top = "btm";
-    htop = "btm";
     watch = "viddy ";
     du = "dust";
   };
