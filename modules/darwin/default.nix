@@ -11,6 +11,15 @@
     extra-platforms = aarch64-darwin x86_64-darwin
     experimental-features = nix-command flakes
   '';
+
+  homebrew = {
+    enable = true;
+    caskArgs.no_quarantine = true;
+    global.brewfile = true;
+    masApps = { };
+    casks = [ "alacritty" ];
+  };
+
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
   fonts.fontDir.enable = true; # DANGER
