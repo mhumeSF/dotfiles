@@ -1,7 +1,8 @@
-{ nixpkgs, inputs }:
-
-name:
 {
+  nixpkgs,
+  inputs
+}:
+name: {
   system,
   user,
   darwin ? false,
@@ -30,9 +31,13 @@ let
   };
   systemFunc = inputs.darwin.lib.darwinSystem;
   home-manager = inputs.home-manager.darwinModules;
+
+  pkgs = import nixpkgs {
+    system = system;
+  };
+
 in systemFunc rec {
   inherit system;
-  pkgs = import nixpkgs { system = system; };
   modules = [
     ../modules/darwin
     home-manager.home-manager {
