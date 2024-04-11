@@ -26,6 +26,7 @@ in {
     htop
     ipcalc
     jq
+    neovim
     less
     neofetch
     pv
@@ -43,6 +44,7 @@ in {
     zopfli
 
     tig
+    lf
 
     ansible
     ansible-language-server
