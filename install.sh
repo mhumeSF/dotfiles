@@ -20,4 +20,11 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 echo "Y" | ./result/bin/darwin-installer
 
+source /etc/static/bashrc
+
+nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs
+nix-channel --update
+
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles ~/system-config"
+
+darwin-rebuild switch --flake ~/system-config#$(hostname)
