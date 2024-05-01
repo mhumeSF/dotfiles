@@ -2,7 +2,7 @@
 let
   agenix = builtins.fetchTarball {
     url = "https://github.com/ryantm/agenix/archive/main.tar.gz";
-    sha256 = "1ypp731d2h7i8fj5g2pdapwcrrk6ycxwzpvam045qxiajjdp01rw";
+    sha256 = "165am10r61wl5v4hz169zrlljvj929hgnhr9sn7ak3bz73cr1m86";
   };
 in {
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
