@@ -6,6 +6,8 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 brew install Alacritty --cask
+xattr -d com.apple.quarantine /Applications/Alacritty.app
+
 # Open Security & Privacy preferences
 open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
 
