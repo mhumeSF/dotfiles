@@ -49,6 +49,7 @@
       ApplePressAndHoldEnabled = false;
       InitialKeyRepeat = 14;
       KeyRepeat= 1;
+      _HIHideMenuBar = true;
       "com.apple.swipescrolldirection" = false;
       "com.apple.trackpad.enableSecondaryClick" = true;
     };
