@@ -1,6 +1,14 @@
 [user]
 	name = Mike Hume
 	email = mhumesf@gmail.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjkND6b+zYkXSG5YlUmbD4ammjF60qv+A/3f+nslQIq
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+  allowedSignersFile = "~/.ssh/allowed_signers"
+[commit]
+  gpgsign = true
 [core]
 	whitespace = trailing-space,space-before-tab
 	excludesfile = ~/.config/git/ignore
