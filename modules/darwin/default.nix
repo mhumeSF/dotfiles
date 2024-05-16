@@ -22,8 +22,11 @@
     };
     casks = [
       "1password"
+      "1password-cli"
       "alacritty"
       "raycast"
+      "Spotify"
+      "Discord"
     ];
   };
 
@@ -56,10 +59,22 @@
     CustomSystemPreferences = {};
     CustomUserPreferences = {
       # Disable AutoFill in Safari
-      "com.apple.Safari".AutoFillFromAddressBook = false;
-      "com.apple.Safari".AutoFillPasswords = false;
-      "com.apple.Safari".AutoFillCreditCardData = false;
-      "com.apple.Safari".AutoFillMiscellaneousForms = false;
+      "com.apple.Safari" = {
+        AutoFillFromAddressBook = false;
+        AutoFillPasswords = false;
+        AutoFillCreditCardData = false;
+        AutoFillMiscellaneousForms = false;
+        DebugSnapshotsUpdatePolicy = 2;
+      };
+
+      # Disable click wallpaper to reveal desktop
+      "com.apple.WindowManager" = {
+        EnableStandardClickToShowDesktop = 0;
+        StandardHideDesktopIcons = 0; # Show items on desktop
+        HideDesktop = 0; # Do not hide items on desktop & stage manager
+        StageManagerHideWidgets = 0;
+        StandardHideWidgets = 0;
+      };
     };
   };
   # backwards compat; don't change

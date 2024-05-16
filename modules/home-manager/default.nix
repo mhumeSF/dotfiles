@@ -13,6 +13,7 @@ in {
   # specify my home-manager configs
   home.packages = with pkgs; [
     age
+    awscli2
     bat
     bottom
     cmatrix
@@ -29,6 +30,7 @@ in {
     neovim
     less
     neofetch
+    pyenv
     pv
     ripgrep
     silver-searcher
@@ -45,6 +47,8 @@ in {
 
     tig
     lf
+
+    go
 
     ansible
     ansible-language-server
@@ -135,6 +139,16 @@ in {
     watch = "viddy ";
     du = "dust";
   };
+  programs.zsh.initExtra = ''
+    # pyenv currently managed outside Nix
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+
+    # 1Password cli setup
+    eval "$(op signin)"
+    source /Users/finn/.config/op/plugins.sh
+  '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
 
@@ -142,7 +156,9 @@ in {
   home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
   home.file.".config/git/ignore".source = ../../config/git/ignore;
   home.file.".config/git/config".source = ../../config/git/config;
+  home.file.".ssh/allowed_signers".source = ../../config/ssh/allowed_signers;
   home.file.".editorconfig".source = ../../config/home/editorconfig;
   home.file.".tmux.conf".source = ../../config/home/tmux.conf;
   home.file.".tmuxcolors.conf".source = ../../config/home/tmuxcolors.conf;
+
 }
