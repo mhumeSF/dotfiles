@@ -16,13 +16,16 @@
     enable = true;
     caskArgs.no_quarantine = true;
     global.brewfile = true;
+    # mas search <app> to get "<app> = xxx"
     masApps = {
       "1Password for Safari" = 1569813296;
       "Divvy" = 413857545;
+      "WireGuard" = 1451685025;
     };
     casks = [
       "1password"
       "1password-cli"
+      "google-chrome"
       "alacritty"
       "raycast"
       "Spotify"

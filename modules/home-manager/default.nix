@@ -13,7 +13,6 @@ in {
   # specify my home-manager configs
   home.packages = with pkgs; [
     age
-    awscli2
     bat
     bottom
     cmatrix
@@ -44,6 +43,9 @@ in {
     wireguard-tools
     yq-go
     zopfli
+
+    awscli2
+    google-cloud-sdk
 
     tig
     lf
