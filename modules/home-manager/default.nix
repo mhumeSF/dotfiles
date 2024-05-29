@@ -149,7 +149,7 @@ in {
 
     # 1Password cli setup
     eval "$(op signin)"
-    source /Users/finn/.config/op/plugins.sh
+    source /Users/$USER/.config/op/plugins.sh
   '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
