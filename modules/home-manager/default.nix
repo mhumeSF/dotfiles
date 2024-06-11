@@ -29,7 +29,6 @@ in {
     neovim
     less
     neofetch
-    pyenv
     pv
     ripgrep
     silver-searcher
@@ -43,6 +42,9 @@ in {
     wireguard-tools
     yq-go
     zopfli
+
+    pyenv
+    nodejs_22
 
     awscli2
     google-cloud-sdk
@@ -115,8 +117,8 @@ in {
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
     # nix
-    nixswitch = "darwin-rebuild switch --flake ~/system-config";
-    nixup = "pushd ~/system-config; nix flake update; nixswitch; popd";
+    nixswitch = "darwin-rebuild switch --flake ~/dotfiles";
+    nixup = "pushd ~/dotfiles; nix flake update; nixswitch; popd";
 
     # Misc aliases
     vi = "nvim";

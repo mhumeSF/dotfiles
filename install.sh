@@ -27,6 +27,6 @@ source /etc/static/bashrc
 nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs
 nix-channel --update
 
-nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles ~/system-config"
+nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
-darwin-rebuild switch --flake ~/system-config#$(hostname)
+darwin-rebuild switch --flake $HOME/dotfiles#$(hostname)
