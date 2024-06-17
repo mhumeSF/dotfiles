@@ -35,8 +35,7 @@
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
-  fonts.fontDir.enable = true; # DANGER
-  fonts.fonts =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
+  fonts.packages =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
   services.nix-daemon.enable = true;
   system.defaults = {
     universalaccess.reduceMotion = true;
