@@ -57,6 +57,7 @@
       _HIHideMenuBar = true;
       "com.apple.swipescrolldirection" = false;
       "com.apple.trackpad.enableSecondaryClick" = true;
+      NSAutomaticSpellingCorrectionEnabled = false; # disable autocorrect while typing
     };
     CustomSystemPreferences = {};
     CustomUserPreferences = {
