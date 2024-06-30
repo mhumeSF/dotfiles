@@ -33,6 +33,7 @@
       "raycast"
       "Spotify"
       "Discord"
+      "notunes"
     ];
   };
 
