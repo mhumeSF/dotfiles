@@ -22,6 +22,9 @@
       "Divvy" = 413857545;
       "WireGuard" = 1451685025;
     };
+    brews = [
+      "dockutil"
+    ];
     casks = [
       "1password"
       "1password-cli"
@@ -93,10 +96,10 @@
     defaults write com.apple.TextEdit RichText -int 0
 
     # Remove all 'pinned' apps on dock
-    ${pkgs.dockutil}/bin/dockutil --remove all --no-restart
+    /opt/homebrew/bin/dockutil --remove all --no-restart
 
     # Re-add downloads folder
-    ${pkgs.dockutil}/bin/dockutil --add '~/Downloads' --view grid --display folder
+    /opt/homebrew/bin/dockutil --add '~/Downloads' --view grid --display folder
 
     # Disable local Time Machine backups
     hash tmutil &> /dev/null && sudo tmutil disable

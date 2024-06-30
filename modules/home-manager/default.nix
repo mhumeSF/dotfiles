@@ -78,9 +78,6 @@ in {
     kubernetes-helm
     fluxcd
 
-    # OSX tools
-    dockutil
-
     # NIX tools
     nixos-generators
     # nixos-anywhere
