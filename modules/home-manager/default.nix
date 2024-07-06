@@ -154,14 +154,16 @@ in {
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
 
-  home.file.".config/alacritty/alacritty.toml".source = ../../config/alacritty/alacritty.toml;
-  home.file.".config/starship/starship.toml".source = ../../config/starship/starship.toml;
-  home.file.".config/git/ignore".source = ../../config/git/ignore;
-  home.file.".config/git/config".source = ../../config/git/config;
-  home.file.".ssh/allowed_signers".source = ../../config/ssh/allowed_signers;
-  home.file.".editorconfig".source = ../../config/home/editorconfig;
-  home.file.".tmux.conf".source = ../../config/home/tmux.conf;
-  home.file.".tmuxcolors.conf".source = ../../config/home/tmuxcolors.conf;
-  home.file.".zsh/plugins/aws.plugins.zsh".source = ../../config/home/zsh/plugins/aws.plugin.zsh;
-
+  home.file = {
+    ".aws/op-cred-helper.sh".source           = ../../home/.aws/op-cred-helper.sh;
+    ".config/alacritty/alacritty.toml".source = ../../home/.config/alacritty/alacritty.toml;
+    ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
+    ".config/git/ignore".source               = ../../home/.config/git/ignore;
+    ".config/git/config".source               = ../../home/.config/git/config;
+    ".ssh/allowed_signers".source             = ../../home/.ssh/allowed_signers;
+    ".editorconfig".source                    = ../../home/.editorconfig;
+    ".tmux.conf".source                       = ../../home/.tmux.conf;
+    ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
+    ".zsh/plugins/aws.plugins.zsh".source     = ../../home/.zsh/plugins/aws.plugin.zsh;
+  };
 }
