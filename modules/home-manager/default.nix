@@ -149,6 +149,7 @@ in {
     # 1Password cli setup
     eval "$(op signin)"
     source /Users/$USER/.config/op/plugins.sh
+    source /Users/$USER/.zsh/plugins/aws.plugins.zsh
   '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
@@ -161,5 +162,6 @@ in {
   home.file.".editorconfig".source = ../../config/home/editorconfig;
   home.file.".tmux.conf".source = ../../config/home/tmux.conf;
   home.file.".tmuxcolors.conf".source = ../../config/home/tmuxcolors.conf;
+  home.file.".zsh/plugins/aws.plugins.zsh".source = ../../config/home/zsh/plugins/aws.plugin.zsh;
 
 }
