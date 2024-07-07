@@ -1,6 +1,9 @@
+# Enable AWS SDK to use the config file
 export AWS_SDK_LOAD_CONFIG=1
 
+# Function to unset all AWS-related environment variables
 unset_aws() {
+  # List of AWS environment variables to unset
   AWS_VARS=(
     AWS_ROLE_ARN
     AWS_ACCESS_KEY_ID
@@ -12,14 +15,18 @@ unset_aws() {
     AWS_VAULT
     AWS_PROFILE
   )
+  # Unset each variable in the list
   for i in ${AWS_VARS[@]}; do unset $i; done
 }
 
+# Function to assume an AWS role or profile
 assume() {
-  unset_aws
+  unset_aws  # Clear existing AWS environment variables
   if [[ "$2" == "env" ]]; then
+    # If 'env' is specified, use credential_process from ~/.aws/config
     $($(grep -A 2 $1\] ~/.aws/config | grep credential_process | sed 's/credential_process=//' | sed 's/--org/--environment --no-aws-cache --org/') | perl -pe 's/ && /\n/g' | sed "s/\'//g")
   else
+    # Otherwise, set AWS_PROFILE
     export AWS_PROFILE=$1
   fi
 }
@@ -32,8 +39,8 @@ _aws_profile_completer() {
   local cur prev
   COMPREPLY=()
   cur="${COMP_WORDS[COMP_CWORD]}"
+  # Generate completion matches
   COMPREPLY=( $(compgen -W "${_commands}" -- ${cur}) )
-
   return 0
 }
 

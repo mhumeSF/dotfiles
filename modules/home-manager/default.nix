@@ -148,7 +148,6 @@ in {
 
     # 1Password cli setup
     eval "$(op signin)"
-    source /Users/$USER/.config/op/plugins.sh
     source /Users/$USER/.zsh/plugins/aws.plugins.zsh
   '';
   programs.starship.enable = true;
