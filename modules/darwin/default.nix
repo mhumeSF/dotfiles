@@ -28,12 +28,18 @@
     casks = [
       "1password"
       "1password-cli"
-      "google-chrome"
-      "alacritty"
-      "raycast"
-      "Spotify"
       "Discord"
       "notunes"
+      "Spotify"
+      "alacritty"
+      "google-chrome"
+      "keyboard-cleaner"
+      "rar"
+      "raycast"
+      "slack"
+      "spotify"
+      "telegram"
+      "wireshark"
     ];
   };
 

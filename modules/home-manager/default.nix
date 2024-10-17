@@ -1,8 +1,8 @@
 { pkgs, ... }:
 let
   agenix = builtins.fetchTarball {
-    url = "https://github.com/ryantm/agenix/archive/main.tar.gz";
-    sha256 = "1h66zapc6im07k3kcgvhy3lhzahb70vd6m2ijhz4i0v6mn5l3fk9";
+    url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
+    sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
   };
 in {
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
@@ -44,7 +44,6 @@ in {
     zopfli
 
     pyenv
-    nodejs_22
 
     awscli2
     google-cloud-sdk
@@ -53,6 +52,8 @@ in {
     lf
 
     go
+
+    direnv
 
     ansible
     ansible-language-server
@@ -65,7 +66,7 @@ in {
     coreutils
 
     # Docker tools
-    lima-bin
+    # lima-bin
     docker-client
     docker-buildx
     docker-compose
@@ -105,7 +106,7 @@ in {
   programs.fzf.enable = true;
   programs.fzf.enableZshIntegration = true;
   programs.eza.enable = true;
-  programs.eza.icons = true;
+  programs.eza.icons = "always";
   programs.eza.extraOptions = [
     "--group-directories-first"
   ];
@@ -119,7 +120,6 @@ in {
 
     # Misc aliases
     vi = "nvim";
-    docker = "DOCKER_BUILDKIT=1 docker";
     flushdns = "sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;say cache flushed";
     uuid = "python3 -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo";
     zreload = "exec /bin/zsh -l";
@@ -149,6 +149,9 @@ in {
     # 1Password cli setup
     eval "$(op signin)"
     source /Users/$USER/.zsh/plugins/aws.plugins.zsh
+
+    # direnv
+    eval "$(direnv hook zsh)"
   '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
