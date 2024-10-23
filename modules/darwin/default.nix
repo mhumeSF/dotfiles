@@ -23,6 +23,7 @@
       "WireGuard" = 1451685025;
     };
     brews = [
+      "awscli"
       "dockutil"
     ];
     casks = [
@@ -38,7 +39,6 @@
       "raycast"
       "slack"
       "spotify"
-      "telegram"
       "wireshark"
     ];
   };

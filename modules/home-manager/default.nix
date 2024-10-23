@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   agenix = builtins.fetchTarball {
     url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
     sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
   };
+  unstable = import <nixpkgs-unstable> {};
 in {
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
   home.stateVersion = "23.11";
@@ -17,22 +18,18 @@ in {
     bottom
     cmatrix
     curl
-    direnv
     du-dust
     fd
     fzf
     gh
-    git
     htop
     ipcalc
     jq
-    neovim
     less
     neofetch
     pv
     ripgrep
     silver-searcher
-    (pkgs.callPackage "${agenix}/pkgs/agenix.nix" {})
     sops
     tmux
     tree
@@ -45,7 +42,6 @@ in {
 
     pyenv
 
-    awscli2
     google-cloud-sdk
 
     tig
@@ -83,7 +79,10 @@ in {
     nixos-generators
     # nixos-anywhere
     # disko
+  ] ++ [
+    unstable.neovim
   ];
+
   home.sessionPath = [
     "/opt/homebrew/bin"
     "$HOME/.cargo/bin"
@@ -102,20 +101,30 @@ in {
   programs.atuin.enableZshIntegration = true;
   programs.atuin.settings.style = "compact";
   programs.atuin.settings.inline_height = 26;
+
   programs.bat.enable = true;
+
+  programs.direnv.enable = true;
+
   programs.fzf.enable = true;
   programs.fzf.enableZshIntegration = true;
+
   programs.eza.enable = true;
-  programs.eza.icons = "always";
+  programs.eza.icons = true;
+  # programs.eza.icons = "always";
   programs.eza.extraOptions = [
     "--group-directories-first"
   ];
+
+  # DO NOT ENABLE IF SETTING THIS FILE MANUALLY => ".config/git/config"
+  # programs.git.enable = true;
+
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
     # nix
-    nixswitch = "darwin-rebuild switch --flake ~/dotfiles";
+    nixswitch = "darwin-rebuild switch --flake ~/dotfiles --impure";
     nixup = "pushd ~/dotfiles; nix flake update; nixswitch; popd";
 
     # Misc aliases
@@ -149,9 +158,6 @@ in {
     # 1Password cli setup
     eval "$(op signin)"
     source /Users/$USER/.zsh/plugins/aws.plugins.zsh
-
-    # direnv
-    eval "$(direnv hook zsh)"
   '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
@@ -167,5 +173,6 @@ in {
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
     ".zsh/plugins/aws.plugins.zsh".source     = ../../home/.zsh/plugins/aws.plugin.zsh;
+    ".zsh/plugins/cargo.plugins.zsh".source   = ../../home/.zsh/plugins/cargo.plugin.zsh;
   };
 }

@@ -1,6 +1,7 @@
 {
   nixpkgs,
-  inputs
+  nixpkgs-unstable,
+  inputs,
 }:
 name: {
   system,
@@ -12,7 +13,7 @@ let
   # The config files for this system.
   # machineConfig = ../machines/${name}.nix;
   # userOSConfig = ../users/${user}/${if darwin then "darwin" else "nixos" }.nix;
-  # userHMConfig = ../users/${user}/home-manager.nix;
+  userHMConfig = ../users/${user}/home-manager.nix;
 
   machineConfig = {
     nix.useDaemon = true;
@@ -36,6 +37,10 @@ let
     system = system;
   };
 
+  pkgsUnstable = import nixpkgs-unstable {
+    system = system;
+  };
+
 in systemFunc rec {
   inherit system;
   modules = [
@@ -45,7 +50,7 @@ in systemFunc rec {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.${user}.imports = [ ../modules/home-manager ];
+        users.${user}.imports = [ ../modules/home-manager ] ++ [ userHMConfig ];
       };
     }
   ];

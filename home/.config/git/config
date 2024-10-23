@@ -41,7 +41,8 @@
 	new = green bold
 	whitespace = red reverse
 [alias]
-	dmerged = "git branch --merged master | grep -v master | xargs git branch -d"
+	cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|main\\|develop' | xargs -n 1 -r git branch -d";"
+  info = "config --list"
 	i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 	empty = commit --allow-empty -m
 	ic = commit -m "Init commit 🍻"

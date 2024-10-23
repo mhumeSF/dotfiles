@@ -24,7 +24,8 @@ echo "Y" | ./result/bin/darwin-installer
 
 source /etc/static/bashrc
 
-nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs
+nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs-unstable
+nix-channel --add https://channels.nixos.org/nixpkgs-24.05-darwin nixpkgs
 nix-channel --update
 
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
