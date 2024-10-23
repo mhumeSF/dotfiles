@@ -25,6 +25,7 @@
     brews = [
       "awscli"
       "dockutil"
+      "git-delta"
     ];
     casks = [
       "1password"
