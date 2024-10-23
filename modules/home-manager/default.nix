@@ -119,6 +119,9 @@ in {
   # DO NOT ENABLE IF SETTING THIS FILE MANUALLY => ".config/git/config"
   # programs.git.enable = true;
 
+  # programs.neovim.enable = true;
+  # programs.neovim.package = unstable.neovim;
+
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
