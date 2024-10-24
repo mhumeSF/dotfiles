@@ -121,6 +121,9 @@ in {
 
   # programs.neovim.enable = true;
   # programs.neovim.package = unstable.neovim;
+  # programs.ssh.extraConfig = ''
+  #   IdentityAgent "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  # '';
 
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = true;
@@ -171,7 +174,6 @@ in {
     ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
     ".config/git/ignore".source               = ../../home/.config/git/ignore;
     ".config/git/config".source               = ../../home/.config/git/config;
-    ".ssh/allowed_signers".source             = ../../home/.ssh/allowed_signers;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;

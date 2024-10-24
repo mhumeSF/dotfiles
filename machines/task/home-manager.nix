@@ -2,6 +2,6 @@
 
 {
   home.file = {
-    ".ssh/allowed_signers".source = "./allowed_signers";
+    ".ssh/allowed_signers".source = ./allowed_signers;
   };
 }

@@ -13,7 +13,7 @@ let
   # The config files for this system.
   # machineConfig = ../machines/${name}.nix;
   # userOSConfig = ../users/${user}/${if darwin then "darwin" else "nixos" }.nix;
-  userHMConfig = ../users/${user}/home-manager.nix;
+  userHMConfig = ../machines/${name}/home-manager.nix;
 
   machineConfig = {
     nix.useDaemon = true;

@@ -28,7 +28,7 @@
       darwin = true;
     };
 
-    darwinConfigurations.Mikes-MacBook-Pro = mksystem "Mikes-MacBook-Pro" {
+    darwinConfigurations.task = mksystem "task" {
       system = "aarch64-darwin";
       user = "mike";
       darwin = true;
