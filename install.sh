@@ -30,4 +30,4 @@ nix-channel --update
 
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
-darwin-rebuild switch --flake $HOME/dotfiles#$(hostname)
+darwin-rebuild switch --flake $HOME/dotfiles#$(hostname) --impure
