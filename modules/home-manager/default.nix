@@ -54,9 +54,6 @@ in {
 
     go
 
-    direnv
-
-    ansible
     ansible-language-server
     ansible-lint
 
@@ -109,7 +106,11 @@ in {
 
   programs.bat.enable = true;
 
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 
   programs.fzf.enable = true;
   programs.fzf.enableZshIntegration = true;
