@@ -16,6 +16,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Second time I have tried to add this thinking I needed it. IGNORE
+    # _1password-shell-plugins.url = "github:1Password/shell-plugins";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, ... }@inputs: let

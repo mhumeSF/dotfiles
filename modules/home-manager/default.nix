@@ -8,10 +8,13 @@ let
   # homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + "${user}";
 in {
   imports = [
-    ./gitaliases.nix
-    ./delta.nix
-    ./gitignores.nix
+    ./git.nix
+    ./git-delta.nix
+    ./git-aliases.nix
+    ./git-ignores.nix
+    ./gh.nix
   ];
+
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
   home.stateVersion = "23.11";
 
@@ -22,7 +25,6 @@ in {
     age
     cmatrix
     fzf
-    gh
     htop
     ipcalc
 
@@ -69,11 +71,8 @@ in {
     unstable.neovim
   ];
 
-  home.sessionPath = [
-    "/opt/homebrew/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/go/bin"
-  ];
+  home.sessionPath = [ "/opt/homebrew/bin" ];
+
   home.sessionVariables = {
     HUGO_CACHEDIR = "$HOME/.local/share/hugo";
     PAGER = "less";
@@ -83,6 +82,7 @@ in {
     STARSHIP_CONFIG="$HOME/.config/starship/starship.toml";
     OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
   };
+
   programs.atuin.enable = true;
   programs.atuin.enableZshIntegration = true;
   programs.atuin.settings.style = "compact";
@@ -108,105 +108,7 @@ in {
     "--group-directories-first"
   ];
 
-  programs.git = {
-    enable = true;
-    extraConfig = {
-      user = {
-        name = "Mike Hume";
-        email = "mhumesf@gmail.com";
-      };
-      gpg = {
-        format = "ssh";
-        ssh = {
-          program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-          allowedSignersFile = "~/.ssh/allowed_signers";
-        };
-      };
-      commit = {
-        gpgsign = true;
-      };
-
-      core = {
-        whitespace = "trailing-space,space-before-tab";
-        excludesfile = "~/.config/git/ignore";
-      };
-
-      init = {
-        defaultBranch = "main";
-      };
-
-      pull = {
-        ff = "only";
-      };
-
-      merge = {
-        tool = "vimdiff";
-      };
-
-      mergetool = {
-        prompt = true;
-        vimdiff = {
-          cmd = "nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
-        };
-      };
-
-      difftool = {
-        prompt = false;
-      };
-
-      diff = {
-        tool = "vimdiff";
-        plist = {
-          textconv = "plutil -convert xml1 -o -";
-        };
-        sopsdiffer = {
-          textconv = "sops -d";
-        };
-      };
-
-      color = {
-        ui = true;
-        diff-highlight = {
-          oldNormal = "red bold";
-          oldHighlight = "red bold 52";
-          newNormal = "green bold";
-          newHighlight = "green bold 22";
-        };
-        diff = {
-          meta = "yellow";
-          frag = "magenta bold";
-          commit = "yellow bold";
-          old = "red bold";
-          new = "green bold";
-          whitespace = "red reverse";
-        };
-      };
-
-      branch = {
-        master = {
-          remote = "origin";
-          merge = "refs/heads/master";
-        };
-        main = {
-          remote = "origin";
-          merge = "refs/heads/main";
-        };
-      };
-
-      filter = {
-        lfs = {
-          clean = "git-lfs clean -- %f";
-          smudge = "git-lfs smudge -- %f";
-          process = "git-lfs filter-process";
-          required = true;
-        };
-      };
-    };
-  };
-
-
-  # DO NOT ENABLE IF SETTING THIS FILE MANUALLY => ".config/git/config"
-  # programs.git.enable = true;
+  programs.gh.enable = true;
 
   # programs.neovim.enable = true;
   # programs.neovim.package = unstable.neovim;
@@ -218,6 +120,12 @@ in {
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
+
+    # 1password
+    sops = "op run -- sops";
+    aws = "op run -- aws";
+    gh = "op run -- gh";
+
     # nix
     nixswitch = "darwin-rebuild switch --flake ~/dotfiles --impure";
     nixup = "pushd ~/dotfiles; nix flake update; nixswitch; popd";
