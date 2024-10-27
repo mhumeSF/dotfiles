@@ -5,6 +5,7 @@ let
     sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
   };
   unstable = import <nixpkgs-unstable> {};
+  # homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + "${user}";
 in {
   imports = [
     ./gitaliases.nix
@@ -19,40 +20,28 @@ in {
   # specify my home-manager configs
   home.packages = with pkgs; [
     age
-    bat
-    bottom
     cmatrix
-    curl
-    du-dust
-    fd
     fzf
     gh
     htop
     ipcalc
+
     jq
-    less
-    neofetch
-    pv
+    yq-go
+
     ripgrep
-    silver-searcher
     sops
     tmux
     tree
-    tree-sitter
     viddy
-    watch
     wireguard-tools
-    yq-go
-    zopfli
 
-    pyenv
+    curl
+    less
+
+    du-dust
 
     google-cloud-sdk
-
-    tig
-    lf
-
-    go
 
     ansible-language-server
     ansible-lint
@@ -76,11 +65,6 @@ in {
     kubectl-neat
     kubernetes-helm
     fluxcd
-
-    # NIX tools
-    nixos-generators
-    # nixos-anywhere
-    # disko
   ] ++ [
     unstable.neovim
   ];
@@ -107,6 +91,8 @@ in {
   programs.bat.enable = true;
 
   programs.direnv = {
+    config.global.hide_env_diff = true;
+    config.whitelist.prefix = [ "~/Workspace/" ];
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
@@ -259,14 +245,7 @@ in {
     du = "dust";
   };
   programs.zsh.initExtra = ''
-    # pyenv currently managed outside Nix
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-
-    # 1Password cli setup
     eval "$(op signin)"
-    source /Users/$USER/.zsh/plugins/aws.plugins.zsh
   '';
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
