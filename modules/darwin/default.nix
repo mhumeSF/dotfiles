@@ -7,6 +7,7 @@
     loginShell = pkgs.zsh;
     pathsToLink = [ "/Applications" ];
   };
+
   nix.extraOptions = ''
     extra-platforms = aarch64-darwin x86_64-darwin
     experimental-features = nix-command flakes
@@ -23,19 +24,17 @@
       "WireGuard" = 1451685025;
     };
     brews = [
-      "awscli"
       "dockutil"
-      "git-delta"
     ];
     casks = [
       "1password"
       "1password-cli"
       "Discord"
-      "notunes"
       "Spotify"
       "alacritty"
       "google-chrome"
       "keyboard-cleaner"
+      "notunes"
       "rar"
       "raycast"
       "slack"
@@ -46,7 +45,7 @@
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
-  fonts.packages =  with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
+  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
   services.nix-daemon.enable = true;
   system.defaults = {
     universalaccess.reduceMotion = true;
@@ -110,7 +109,7 @@
     /opt/homebrew/bin/dockutil --add '~/Downloads' --view grid --display folder
 
     # Disable local Time Machine backups
-    hash tmutil &> /dev/null && sudo tmutil disable
+    # hash tmutil &> /dev/null && sudo tmutil disable
 
     # Prevent Time Machine from prompting to use new hard drives as backup volume
     defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
