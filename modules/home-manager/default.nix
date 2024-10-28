@@ -165,6 +165,5 @@ in {
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
     ".zsh/plugins/aws.plugins.zsh".source     = ../../home/.zsh/plugins/aws.plugin.zsh;
-    ".zsh/plugins/cargo.plugins.zsh".source   = ../../home/.zsh/plugins/cargo.plugin.zsh;
   };
 }
