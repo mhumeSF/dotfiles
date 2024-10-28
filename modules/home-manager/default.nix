@@ -159,7 +159,6 @@ in {
   programs.starship.enableZshIntegration = true;
 
   home.file = {
-    ".aws/op-cred-helper.sh".source           = ../../home/.aws/op-cred-helper.sh;
     ".config/alacritty/alacritty.toml".source = ../../home/.config/alacritty/alacritty.toml;
     ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
     ".editorconfig".source                    = ../../home/.editorconfig;
