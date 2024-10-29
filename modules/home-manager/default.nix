@@ -13,6 +13,7 @@ in {
     ./git-aliases.nix
     ./git-ignores.nix
     ./gh.nix
+    ./starship.nix
   ];
 
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
@@ -160,7 +161,6 @@ in {
 
   home.file = {
     ".config/alacritty/alacritty.toml".source = ../../home/.config/alacritty/alacritty.toml;
-    ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;

@@ -1,0 +1,84 @@
+{
+  programs.starship.settings = {
+    format = ''
+      [#](blue) $directory$git_branch${custom.parse_git_clean}${custom.parse_git_dirty}
+      $character
+    '';
+
+    add_newline = true;
+
+    kubernetes = {
+      symbol = "";
+      style = "bold white";
+      disabled = false;
+      format = ''k8:[$symbol$context( \($namespace\))]($style)'';
+    };
+
+    aws = {
+      symbol = "";
+      format = '' // aws:[$symbol$profile\($region\)]($style)'';
+      style = "bold white";
+    };
+
+    # custom.tfenv = {
+    #   command = "source $HOME/.functions && resolve_tfenv_version";
+    #   when = "true";
+    #   description = "Returns current terraform version";
+    #   format = " // tf:[$symbol($output )]($style)";
+    #   style = "bold white";
+    # };
+
+    terraform = {
+      disabled = true;
+      symbol = "";
+      format = "$version ";
+    };
+
+    username = {
+      style_user = "white bold";
+      style_root = "black bold";
+      format = "[$user]($style) ";
+      disabled = false;
+      show_always = true;
+    };
+
+    hostname = {
+      ssh_only = false;
+      format = "on [$hostname](bold red) ";
+      trim_at = ".companyname.com";
+      style = "bold dimmed red";
+      disabled = false;
+    };
+
+    directory = {
+      truncation_length = 0;
+      style = "bold red";
+      format = "[$path]($style)[$read_only]($read_only_style) ";
+    };
+
+    git_branch = {
+      symbol = "";
+      format = "[on](white) git:[$symbol$branch]($style) ";
+      style = "bold yellow";
+    };
+
+    custom.parse_git_clean = {
+      command = "if [[ $(git status --porcelain) == \"\" ]]; then echo \"o\"; fi";
+      when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1";
+      style = "green";
+    };
+
+    custom.parse_git_dirty = {
+      command = "if [[ -n $(git status --porcelain) ]]; then echo \"✖\"; fi";
+      when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1";
+      style = "red";
+    };
+
+    character = {
+      format = "$symbol";
+      success_symbol = "[➜](bold green) ";
+      error_symbol = "[✖](bold red) ";
+    };
+  };
+}
+
