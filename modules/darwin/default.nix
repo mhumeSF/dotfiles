@@ -4,7 +4,6 @@
   # See https://daiderd.com/nix-darwin/manual/index.html
   environment = {
     shells = with pkgs; [ bash zsh ];
-    loginShell = pkgs.zsh;
     pathsToLink = [ "/Applications" ];
   };
 
@@ -106,7 +105,7 @@
     /opt/homebrew/bin/dockutil --remove all --no-restart
 
     # Re-add downloads folder
-    /opt/homebrew/bin/dockutil --add '~/Downloads' --view grid --display folder
+    /opt/homebrew/bin/dockutil --add "$HOME/Downloads" --view grid --display folder
 
     # Disable local Time Machine backups
     # hash tmutil &> /dev/null && sudo tmutil disable
