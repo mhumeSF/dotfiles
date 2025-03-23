@@ -14,20 +14,20 @@ open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
 # Wait for user input
 read -p "Press Enter to continue"
 
-# Install nix
+# Install recommended vanilla using determinate.systems install script as
+# perscribed by nix-darwin. Say no when prompted to install Determinate Nix.
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
-# Install nix-darwin
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-echo "Y" | ./result/bin/darwin-installer
-
-source /etc/static/bashrc
-
 nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs-unstable
-nix-channel --add https://channels.nixos.org/nixpkgs-24.05-darwin nixpkgs
+nix-channel --add https://channels.nixos.org/nixpkgs-24.11-darwin nixpkgs
 nix-channel --update
 
+# Clone dotfiles to home
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
-darwin-rebuild switch --flake $HOME/dotfiles#$(hostname) --impure
+# Use nix to invoke nix-darwin to install dotfiles
+nix run nix-darwin/master#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch --flake  ~/dotfiles/ --impure
+
+# Uninstall nix
+# /nix/nix-installer uninstall
