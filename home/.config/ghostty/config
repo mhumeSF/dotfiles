@@ -1,7 +1,8 @@
 term = xterm-256color
 
 confirm-close-surface = false
-# font-family = BerkeleyMono Nerd Font Mono
+# font-family = "SauceCodePro Nerd Font"
+font-family = "SF Mono Font"
 font-size = 16
 fullscreen = true
 mouse-hide-while-typing = true
