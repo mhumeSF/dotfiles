@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+
   programs.zsh.enable = true;
   # Here go the darwin preferences and configuration options
   # See https://daiderd.com/nix-darwin/manual/index.html
@@ -44,8 +45,7 @@
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
-  fonts.packages = with pkgs; [ (nerdfonts.override { fonts = [ "SourceCodePro" ]; }) ];
-  services.nix-daemon.enable = true;
+  # fonts.packages = [ pkgs.nerdfonts.source-code-pro ];
   system.defaults = {
     universalaccess.reduceMotion = true;
     finder.AppleShowAllExtensions = true;
@@ -89,8 +89,7 @@
       };
     };
   };
-  # backwards compat; don't change
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 
   system.activationScripts.postUserActivation.text = ''
 

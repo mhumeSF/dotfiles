@@ -169,6 +169,8 @@ in {
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
 
+  home.enableNixpkgsReleaseCheck = false;
+
   home.file = {
     ".config/alacritty/alacritty.toml".source = ../../home/.config/alacritty/alacritty.toml;
     ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
