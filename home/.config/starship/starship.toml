@@ -41,6 +41,9 @@ trim_at = ".companyname.com"
 style = "bold dimmed red"
 disabled = false
 
+[direnv]
+disabled = false
+
 [directory]
 truncation_length = 0
 style = "bold red"
