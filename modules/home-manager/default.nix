@@ -79,13 +79,15 @@ in {
   ];
 
   home.sessionVariables = {
-    HUGO_CACHEDIR = "$HOME/.local/share/hugo";
     PAGER = "less";
     CLICOLOR = 1;
     EDITOR = "nvim";
     SSH_AUTH_SOCK="$HOME/.1password/agent.sock";
     STARSHIP_CONFIG="$HOME/.config/starship/starship.toml";
-    OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
+    # Move this variable to anything with ansible
+    # OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
+    DIRENV_WARN_TIMEOUT = "1m";
+    DIRENV_LOG_FORMAT = "";
   };
 
   programs.atuin.enable = true;
@@ -102,13 +104,13 @@ in {
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
+  programs.direnv.silent = true;
 
   programs.fzf.enable = true;
   programs.fzf.enableZshIntegration = true;
 
   programs.eza.enable = true;
-  programs.eza.icons = true;
-  # programs.eza.icons = "always";
+  programs.eza.icons = "auto";
   programs.eza.extraOptions = [
     "--group-directories-first"
   ];
@@ -160,6 +162,8 @@ in {
   programs.zsh.initExtra = ''
     eval "$(op signin)"
     source "$HOME/.cargo/env"
+
+    source ~/.zsh/plugins/aws.plugins.zsh
 
     # pyenv currently managed outside Nix
     export PYENV_ROOT="$HOME/.pyenv"
