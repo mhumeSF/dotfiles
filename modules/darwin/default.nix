@@ -8,6 +8,19 @@
     pathsToLink = [ "/Applications" ];
   };
 
+  environment.systemPackages = with pkgs; [
+    (pkgs.writeShellScriptBin "dvt" ''
+      #!${pkgs.stdenv.shell}
+      nix flake init -t "github:the-nix-way/dev-templates#$1"
+      direnv allow
+    '')
+    (pkgs.writeShellScriptBin "dvd" ''
+      #!${pkgs.stdenv.shell}
+      echo "use flake \"github:the-nix-way/dev-templates?dir=$1\"" >> .envrc
+      direnv allow
+    '')
+  ];
+
   nix.extraOptions = ''
     extra-platforms = aarch64-darwin x86_64-darwin
     experimental-features = nix-command flakes
