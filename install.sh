@@ -29,5 +29,11 @@ nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/
 # Use nix to invoke nix-darwin to install dotfiles
 nix run nix-darwin/master#darwin-rebuild --extra-experimental-features "nix-command flakes" -- switch --flake  ~/dotfiles/ --impure
 
+# Uninstall nix-darwin
+# nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller
+
 # Uninstall nix
 # /nix/nix-installer uninstall
+
+rm -rf "/Users/${USER}/.local/state/nix/profiles/home-manager*"
+rm -rf "/Users/${USER}/.local/state/home-manager/gcroots/current-home"
