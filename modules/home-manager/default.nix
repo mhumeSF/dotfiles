@@ -31,6 +31,7 @@ in {
     jq
     yq-go
 
+    rsync
     ripgrep
     sops
     tmux
