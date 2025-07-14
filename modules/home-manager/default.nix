@@ -178,7 +178,6 @@ in {
   home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
-    ".config/alacritty/alacritty.toml".source = ../../home/.config/alacritty/alacritty.toml;
     ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
     ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
     ".editorconfig".source                    = ../../home/.editorconfig;
