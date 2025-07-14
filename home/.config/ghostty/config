@@ -1,7 +1,8 @@
 term = xterm-256color
 
 confirm-close-surface = false
-font-family = "Iosevka Term Extended"
+# font-family = "Iosevka Term Extended"
+font-family = "Berkeley Mono"
 font-size = 16
 fullscreen = true
 mouse-hide-while-typing = true

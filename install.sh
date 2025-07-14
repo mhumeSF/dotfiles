@@ -19,15 +19,15 @@ read -p "Press Enter to continue"
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
-nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs-unstable
-nix-channel --add https://channels.nixos.org/nixpkgs-24.11-darwin nixpkgs
-nix-channel --update
+sudo nix-channel --add https://channels.nixos.org/nixpkgs-unstable nixpkgs-unstable
+sudo nix-channel --add https://channels.nixos.org/nixpkgs-24.11-darwin nixpkgs
+sudo nix-channel --update
 
 # Clone dotfiles to home
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
 # Use nix to invoke nix-darwin to install dotfiles
-nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch --flake  ~/dotfiles/ --impure
+sudo nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch --flake  ~/dotfiles/ --impure
 
 # Uninstall nix-darwin
 # nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller
