@@ -75,6 +75,7 @@ in {
   ];
 
   home.sessionPath = [
+    "$HOME/go/bin"
     "/opt/homebrew/bin"
     "$HOME/.cargo/bin"
   ];
