@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, user, ... }:
+{
 
   programs.zsh.enable = true;
   # Here go the darwin preferences and configuration options
@@ -58,6 +59,7 @@
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
+  system.primaryUser = "${user}";
   # fonts.packages = [ pkgs.nerdfonts.source-code-pro ];
   system.defaults = {
     universalaccess.reduceMotion = true;
@@ -104,7 +106,9 @@
   };
   system.stateVersion = 5;
 
-  system.activationScripts.postUserActivation.text = ''
+  system.activationScripts.postrActivation.text = ''
+
+    sudo -u ${user} bash <<EOF
 
     # -----------------------------------------------------------------------------
     # Some misc stuff from my old dotfiles
@@ -147,5 +151,6 @@
     # Set cmd+e as global shortcut
     defaults write com.mizage.Divvy globalHotkey -dict keyCode -string 14 modifiers -string 256
     defaults write com.mizage.Divvy.plist useGlobalHotkey -bool true
+    EOF
   '';
 }

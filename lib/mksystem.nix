@@ -54,4 +54,5 @@ in systemFunc rec {
       };
     }
   ];
+  specialArgs = { inherit user; };
 }

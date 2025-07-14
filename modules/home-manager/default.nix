@@ -160,7 +160,7 @@ in {
     watch = "viddy ";
     du = "dust";
   };
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     eval "$(op signin)"
     source "$HOME/.cargo/env"
 
