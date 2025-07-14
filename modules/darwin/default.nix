@@ -57,6 +57,9 @@
     ];
   };
 
+  # Enable touchid for sudo
+  security.pam.services.sudo_local.touchIdAuth = true;
+
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
   system.primaryUser = "${user}";
