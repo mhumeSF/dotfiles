@@ -69,9 +69,9 @@ in {
     kubectx
     kubectl-neat
     kubernetes-helm
-    fluxcd
   ] ++ [
     unstable.neovim
+    unstable.fluxcd
   ];
 
   home.sessionPath = [

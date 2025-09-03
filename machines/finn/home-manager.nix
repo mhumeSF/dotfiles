@@ -16,6 +16,12 @@
   programs.alacritty = {
     enable = true;
     settings = {
+<<<<<<< Updated upstream
+=======
+      window = {
+        decorations = "none";
+      };
+>>>>>>> Stashed changes
       font = {
         normal = {
           family = "SauceCodePro Nerd Font";
