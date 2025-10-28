@@ -5,7 +5,7 @@
 
       user = {
         name = "Mike Hume";
-        email = "mhumesf@gmail.com";
+        email = "1088457+mhumeSF@users.noreply.github.com";
       };
 
       gpg = {
