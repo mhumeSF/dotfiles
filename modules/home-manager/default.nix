@@ -58,7 +58,6 @@ in {
     coreutils
 
     # Docker tools
-    # lima-bin
     docker-client
     docker-buildx
     docker-compose
@@ -72,6 +71,7 @@ in {
   ] ++ [
     unstable.neovim
     unstable.fluxcd
+    unstable.lima
   ];
 
   home.sessionPath = [
@@ -87,7 +87,7 @@ in {
     SSH_AUTH_SOCK="$HOME/.1password/agent.sock";
     STARSHIP_CONFIG="$HOME/.config/starship/starship.toml";
     # Move this variable to anything with ansible
-    # OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
+    OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
     DIRENV_WARN_TIMEOUT = "1m";
     DIRENV_LOG_FORMAT = "";
   };
@@ -134,6 +134,8 @@ in {
     sops = "op run -- sops";
     aws = "op run -- aws";
     gh = "op run -- gh";
+
+    ts = "tailscale";
 
     # nix
     nixswitch = "darwin-rebuild switch --flake ~/dotfiles --impure";

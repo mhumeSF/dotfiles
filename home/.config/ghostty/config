@@ -2,12 +2,13 @@ term = xterm-256color
 
 confirm-close-surface = false
 # font-family = "Iosevka Term Extended"
-font-family = "Berkeley Mono"
+font-family = "BerkeleyMono Nerd Font Mono"
 font-size = 16
-fullscreen = true
+fullscreen = false
 mouse-hide-while-typing = true
 window-decoration = true
 macos-non-native-fullscreen = false
 macos-titlebar-style = hidden
 
-theme = gruvbox-material
+# theme = "Material Design Colors"
+theme = "Popping And Locking"

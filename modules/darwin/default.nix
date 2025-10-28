@@ -45,7 +45,6 @@
       "1password-cli"
       "Discord"
       "Spotify"
-      "alacritty"
       "google-chrome"
       "keyboard-cleaner"
       "notunes"
