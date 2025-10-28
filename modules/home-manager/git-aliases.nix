@@ -14,7 +14,7 @@
     pushf = "push --force-with-lease";
     mom = "merge origin/main --no-edit";
     pum = "pull upstream main";
-    cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|main\\|develop' | xargs -n 1 -r git branch -d";
+    cleanup = "!git branch --merged | grep -v '\\*' | grep  -v 'master' | grep -v 'main' | grep -v 'develop' | xargs -n 1 -r git branch -d";
     info = "config --list";
     i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
     empty = "commit --allow-empty -m";
