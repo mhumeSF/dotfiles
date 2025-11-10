@@ -1,10 +1,10 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, pkgs-unstable, ... }:
 let
   agenix = builtins.fetchTarball {
     url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
     sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
   };
-  unstable = import <nixpkgs-unstable> {};
+  unstable = pkgs-unstable;
   # homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + "${user}";
 in {
   imports = [

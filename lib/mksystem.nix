@@ -50,9 +50,10 @@ in systemFunc rec {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        extraSpecialArgs = { pkgs-unstable = pkgsUnstable; };
         users.${user}.imports = [ ../modules/home-manager ] ++ [ userHMConfig ];
       };
     }
   ];
-  specialArgs = { inherit user; };
+  specialArgs = { inherit user; pkgs-unstable = pkgsUnstable; };
 }
