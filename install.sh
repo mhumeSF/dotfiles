@@ -27,7 +27,7 @@ sudo nix-channel --update
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
 # Use nix to invoke nix-darwin to install dotfiles
-sudo nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake  ~/dotfiles/ --impure
+sudo nix -i run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-25.05#darwin-rebuild -- switch --flake  ~/dotfiles/ --impure
 
 # Uninstall nix-darwin
 # nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller
