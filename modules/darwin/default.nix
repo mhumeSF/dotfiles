@@ -53,6 +53,9 @@
       "slack"
       "spotify"
       "wireshark"
+      "ghostty"
+      "tailscale-app"
+      "viscosity"
     ];
   };
 
@@ -108,7 +111,7 @@
   };
   system.stateVersion = 5;
 
-  system.activationScripts.postrActivation.text = ''
+  system.activationScripts.postActivation.text = ''
 
     sudo -u ${user} bash <<EOF
 
