@@ -68,6 +68,9 @@ in {
     kubectx
     kubectl-neat
     kubernetes-helm
+
+    # ai
+    claude-code
   ] ++ [
     unstable.neovim
     unstable.fluxcd
