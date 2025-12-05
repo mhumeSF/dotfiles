@@ -115,6 +115,8 @@
 
     sudo -u ${user} bash <<EOF
 
+    echo ${user}
+
     # -----------------------------------------------------------------------------
     # Some misc stuff from my old dotfiles
     # -----------------------------------------------------------------------------
@@ -126,7 +128,7 @@
     /opt/homebrew/bin/dockutil --remove all --no-restart
 
     # Re-add downloads folder
-    /opt/homebrew/bin/dockutil --add "$HOME/Downloads" --view grid --display folder
+    /opt/homebrew/bin/dockutil --add "/Users/${user}/Downloads" --view grid --display folder
 
     # Disable local Time Machine backups
     # hash tmutil &> /dev/null && sudo tmutil disable
@@ -140,9 +142,11 @@
     # Reload dock
     killall Dock
 
+    echo ${user}
+
     # Setup 1password SSH agent.sock
-    mkdir -p ~/.1password
-    ln -sf ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+    mkdir -p /Users/${user}/.1password
+    ln -sf /Users/${user}/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock /Users/${user}/.1password/agent.sock
 
     open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 
