@@ -1,5 +1,5 @@
 {
-  programs.git.aliases = {
+  programs.git.settings.alias = {
     rs = "reset --soft HEAD^";
     s = "status";
     co = "checkout";

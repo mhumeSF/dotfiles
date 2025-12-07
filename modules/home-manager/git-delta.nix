@@ -1,6 +1,7 @@
 {
-  programs.git.delta = {
+  programs.delta = {
     enable = true;
+    enableGitIntegration = true;
     options = {
       #author: https://github.com/AirOnSkin
       chameleon = {

@@ -40,11 +40,12 @@ in {
     wireguard-tools
 
     pyenv
+    nodejs
 
     curl
     less
 
-    du-dust
+    dust
 
     google-cloud-sdk
 
@@ -87,18 +88,53 @@ in {
     PAGER = "less";
     CLICOLOR = 1;
     EDITOR = "nvim";
-    SSH_AUTH_SOCK="$HOME/.1password/agent.sock";
-    STARSHIP_CONFIG="$HOME/.config/starship/starship.toml";
+    SSH_AUTH_SOCK = "$HOME/.1password/agent.sock";
     # Move this variable to anything with ansible
-    OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"; # https://github.com/ansible/ansible/issues/76322
+    OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"; # https://github.com/ansible/ansible/issues/76322
     DIRENV_WARN_TIMEOUT = "1m";
     DIRENV_LOG_FORMAT = "";
   };
 
   programs.atuin.enable = true;
   programs.atuin.enableZshIntegration = true;
-  programs.atuin.settings.style = "compact";
-  programs.atuin.settings.inline_height = 26;
+  programs.atuin.settings = {
+    style = "compact";
+    inline_height = 26;
+    max_history_length = 1000000;
+
+    # Filter out trivial/frequent commands
+    history_filter = [
+      "^ls$"
+      "^ll$"
+      "^la$"
+      "^l$"
+      "^cd$"
+      "^cd ..$"
+      "^clear$"
+      "^pwd$"
+      "^exit$"
+      "^gst$"        # git status alias
+      "^vi$"         # vi without arguments
+      "^cat$"        # cat without arguments
+      "^which "
+      "^echo \\$"    # echo $VAR commands
+      "^alias$"
+      "^alias "
+      "^history"
+      "^env$"
+      "^type "
+      "^fg$"
+      "^bg$"
+      "^jobs$"
+    ];
+
+    # Other useful settings
+    search_mode = "fuzzy";
+    filter_mode = "global";
+    show_preview = true;
+    store_failed = false;
+    secrets_filter = true;
+  };
 
   programs.bat.enable = true;
 
@@ -166,6 +202,7 @@ in {
     watch = "viddy ";
     du = "dust";
   };
+
   programs.zsh.initContent = ''
     eval "$(op signin)"
     source "$HOME/.cargo/env"
@@ -177,10 +214,11 @@ in {
     [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
   '';
+
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
 
-  home.enableNixpkgsReleaseCheck = false;
+  # home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
     ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;

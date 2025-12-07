@@ -1,7 +1,7 @@
 {
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
 
       user = {
         name = "Mike Hume";
