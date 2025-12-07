@@ -46,6 +46,7 @@ in systemFunc rec {
   modules = [
     ../modules/darwin
     { nixpkgs.config.allowUnfree = true; }
+    { nix.enable = false; }
     home-manager.home-manager {
       users.users.${user}.home = "/Users/${user}";
       home-manager = {

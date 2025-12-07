@@ -217,11 +217,12 @@ in {
 
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
+  programs.starship.configPath = "$HOME/.config/starship/starship.toml";
 
   # home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
-    ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
+    ".config/starship/starship.toml".source            = ../../home/.config/starship/starship.toml;
     ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;

@@ -16,7 +16,7 @@ open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
 read -p "Press Enter to continue"
 
 # Use --prefer-upstream-nix for vanilla linux
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --prefer-upstream-nix
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 # Clone dotfiles to home
