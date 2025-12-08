@@ -208,6 +208,7 @@ in {
     source "$HOME/.cargo/env"
 
     source ~/.zsh/plugins/aws.plugins.zsh
+    source ~/.zsh/plugins/lima.plugins.zsh
 
     # pyenv currently managed outside Nix
     export PYENV_ROOT="$HOME/.pyenv"
@@ -222,11 +223,12 @@ in {
   # home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
-    ".config/starship/starship.toml".source            = ../../home/.config/starship/starship.toml;
+    ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
     ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
     ".zsh/plugins/aws.plugins.zsh".source     = ../../home/.zsh/plugins/aws.plugin.zsh;
+    ".zsh/plugins/lima.plugins.zsh".source    = ../../home/.zsh/plugins/lima.plugin.zsh;
   };
 }
