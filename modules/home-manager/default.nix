@@ -41,6 +41,7 @@ in {
 
     pyenv
     nodejs
+    go
 
     curl
     less
@@ -132,7 +133,7 @@ in {
     search_mode = "fuzzy";
     filter_mode = "global";
     show_preview = true;
-    store_failed = false;
+    store_failed = true;
     secrets_filter = true;
   };
 

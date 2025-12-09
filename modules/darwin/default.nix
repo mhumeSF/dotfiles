@@ -107,22 +107,41 @@
         StageManagerHideWidgets = 0;
         StandardHideWidgets = 0;
       };
+
+      # Use Plain Text Mode as Default in TextEdit
+      "com.apple.TextEdit" = {
+        RichText = 0;
+      };
+
+      # Prevent Time Machine from prompting to use new hard drives as backup volume
+      "com.apple.TimeMachine" = {
+        DoNotOfferNewDisksForBackup = true;
+      };
+
+      # Show Bluetooth in Control Center
+      # "com.apple.controlcenter" = {
+      #   "NSStatusItem Visible Bluetooth" = 1;
+      # };
+
+      "com.apple.systemuiserver" = {
+        "NSStatusItem Visible com.apple.menuextra.bluetooth" = true;
+      };
+
+      loginwindow = {
+        SHOWFULLNAME = false;
+        GuestEnabled = false;
+        DisableConsoleAccess = true;
+      };
     };
   };
   system.stateVersion = 5;
 
   system.activationScripts.postActivation.text = ''
-
     sudo -u ${user} bash <<EOF
 
-    echo ${user}
-
     # -----------------------------------------------------------------------------
-    # Some misc stuff from my old dotfiles
+    # Dock configuration
     # -----------------------------------------------------------------------------
-
-    # Use Plain Text Mode as Default
-    defaults write com.apple.TextEdit RichText -int 0
 
     # Remove all 'pinned' apps on dock
     /opt/homebrew/bin/dockutil --remove all --no-restart
@@ -130,25 +149,13 @@
     # Re-add downloads folder
     /opt/homebrew/bin/dockutil --add "/Users/${user}/Downloads" --view grid --display folder
 
-    # Disable local Time Machine backups
-    # hash tmutil &> /dev/null && sudo tmutil disable
-
-    # Prevent Time Machine from prompting to use new hard drives as backup volume
-    defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
-
-    # Use Plain Text Mode as Default
-    defaults write com.apple.TextEdit RichText -int 0
-
-    # Reload dock
-    killall Dock
-
-    echo ${user}
+    # -----------------------------------------------------------------------------
+    # 1Password SSH agent setup
+    # -----------------------------------------------------------------------------
 
     # Setup 1password SSH agent.sock
     mkdir -p /Users/${user}/.1password
     ln -sf /Users/${user}/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock /Users/${user}/.1password/agent.sock
-
-    open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 
     # -----------------------------------------------------------------------------
     # Divvy.app
@@ -160,6 +167,7 @@
     # Set cmd+e as global shortcut
     defaults write com.mizage.Divvy globalHotkey -dict keyCode -string 14 modifiers -string 256
     defaults write com.mizage.Divvy.plist useGlobalHotkey -bool true
+
     EOF
   '';
 }
