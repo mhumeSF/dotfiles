@@ -1,4 +1,4 @@
-local() {
+lv() {
   case "$1" in
     up)
       local name="${2:-local}"
@@ -24,11 +24,11 @@ local() {
       limactl start "$name"
       ;;
     *)
-      echo "Usage: local {up|down|reset} [name] [cpus] [memory]"
-      echo "  local up          - create/reset 'local' VM"
-      echo "  local down        - stop and delete 'local' VM"
-      echo "  local reset       - alias for 'up' (recreate VM)"
-      echo "  local up myvm 4 8 - create 'myvm' with 4 CPUs and 8GB RAM"
+      echo "Usage: lv {up|down|reset} [name] [cpus] [memory]"
+      echo "  lv up          - create/reset 'local' VM"
+      echo "  lv down        - stop and delete 'local' VM"
+      echo "  lv reset       - alias for 'up' (recreate VM)"
+      echo "  lv up myvm 4 8 - create 'myvm' with 4 CPUs and 8GB RAM"
       return 1
       ;;
   esac
