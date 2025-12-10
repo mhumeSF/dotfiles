@@ -1,7 +1,13 @@
 { pkgs, user, ... }:
 {
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+    enableCompletion = true;
+  };
+
   # Here go the darwin preferences and configuration options
   # See https://daiderd.com/nix-darwin/manual/index.html
   environment = {
@@ -29,6 +35,11 @@
 
   homebrew = {
     enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
     caskArgs.no_quarantine = true;
     global.brewfile = true;
     # mas search <app> to get "<app> = xxx"
@@ -52,7 +63,7 @@
       "raycast"
       "slack"
       "spotify"
-      "wireshark"
+      "wireshark-app"
       "ghostty"
       "tailscale-app"
       "viscosity"

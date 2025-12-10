@@ -48,6 +48,7 @@ in {
 
     dust
 
+    awscli2
     google-cloud-sdk
 
     # ansible-language-server
@@ -224,7 +225,7 @@ in {
   # home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
-    ".config/starship/starship.toml".source   = ../../home/.config/starship/starship.toml;
+    ".config/starship/starship.toml".source            = ../../home/.config/starship/starship.toml;
     ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
