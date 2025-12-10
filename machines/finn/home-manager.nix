@@ -2,7 +2,7 @@
 
 {
   programs.git = {
-    extraConfig = {
+    settings = {
       user = {
         signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFjkND6b+zYkXSG5YlUmbD4ammjF60qv+A/3f+nslQIq";
       };
