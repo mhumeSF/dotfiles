@@ -179,6 +179,10 @@
     defaults write com.mizage.Divvy globalHotkey -dict keyCode -string 14 modifiers -string 256
     defaults write com.mizage.Divvy.plist useGlobalHotkey -bool true
 
+    # Force reload of preference cache to apply trackpad settings
+    # See: https://github.com/nix-darwin/nix-darwin/issues/1572
+    killall cfprefsd 2>/dev/null || true
+
     EOF
   '';
 }
