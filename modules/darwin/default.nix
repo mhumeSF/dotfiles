@@ -50,6 +50,7 @@
     # };
     brews = [
       "dockutil"
+      "tfenv"
     ];
     casks = [
       "1password"
