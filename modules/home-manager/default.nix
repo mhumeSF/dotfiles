@@ -42,6 +42,7 @@ in {
     pyenv
     nodejs
     go
+    rustup
 
     curl
     less
@@ -83,7 +84,6 @@ in {
   home.sessionPath = [
     "$HOME/go/bin"
     "/opt/homebrew/bin"
-    "$HOME/.cargo/bin"
   ];
 
   home.sessionVariables = {
@@ -95,6 +95,9 @@ in {
     OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"; # https://github.com/ansible/ansible/issues/76322
     DIRENV_WARN_TIMEOUT = "1m";
     DIRENV_LOG_FORMAT = "";
+
+    RUSTUP_HOME = "$HOME/.rustup";
+    CARGO_HOME = "$HOME/.cargo";
   };
 
   programs.atuin.enable = true;
@@ -207,7 +210,7 @@ in {
 
   programs.zsh.initContent = ''
     eval "$(op signin)"
-    source "$HOME/.cargo/env"
+    [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
     source ~/.zsh/plugins/aws.plugins.zsh
     source ~/.zsh/plugins/lima.plugins.zsh
