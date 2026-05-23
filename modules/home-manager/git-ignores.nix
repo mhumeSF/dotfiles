@@ -17,5 +17,9 @@
     "Temporary Items"
     ".apdisk"
     ".idea"
+
+    ".envrc"
+    ".direnv"
+    ".claude"
   ];
 }
