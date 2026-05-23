@@ -1,4 +1,5 @@
-lv() {
+# lima helper - wraps limactl with custom up/down/reset commands
+l() {
   case "$1" in
     up)
       local name="${2:-local}"
@@ -24,12 +25,7 @@ lv() {
       limactl start "$name"
       ;;
     *)
-      echo "Usage: lv {up|down|reset} [name] [cpus] [memory]"
-      echo "  lv up          - create/reset 'local' VM"
-      echo "  lv down        - stop and delete 'local' VM"
-      echo "  lv reset       - alias for 'up' (recreate VM)"
-      echo "  lv up myvm 4 8 - create 'myvm' with 4 CPUs and 8GB RAM"
-      return 1
+      limactl "$@"
       ;;
   esac
 }

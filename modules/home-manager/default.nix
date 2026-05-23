@@ -195,7 +195,6 @@ in {
     gs = ""; # Alias gs so ghostscript doesn't get invoked
 
     u = "sudo softwareupdate --install --all";
-    l = "limactl";
     k = "kubectl";
     kc = "kubectx";
     kn = "kubens";
