@@ -46,6 +46,8 @@ in {
 
     curl
     less
+    glow
+    certigo
 
     dust
 
@@ -65,9 +67,13 @@ in {
     docker-client
     docker-buildx
     docker-compose
+    crane
+    skopeo
+    dive
 
     # Kubernetes tools
     kind
+    kustomize
     kubectl
     kubectx
     kubectl-neat
@@ -75,6 +81,8 @@ in {
 
     # ai
     claude-code
+
+    # foundry
   ] ++ [
     unstable.neovim
     unstable.fluxcd
@@ -83,7 +91,9 @@ in {
 
   home.sessionPath = [
     "$HOME/go/bin"
+    "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
+    "$HOME/.config/.foundry/bin"
   ];
 
   home.sessionVariables = {
