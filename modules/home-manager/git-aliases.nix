@@ -23,5 +23,7 @@
     ic = "commit -m \"Init commit 🍻\"";
     br = "branch";
     st = "status";
+    # fb: fuzzy-find and checkout a local branch, sorted by most recent commit
+    fb = "!git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)' | fzf | xargs git checkout";
   };
 }
