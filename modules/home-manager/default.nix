@@ -80,13 +80,13 @@ in {
     kubernetes-helm
 
     # ai
-    claude-code
 
     # foundry
   ] ++ [
     unstable.neovim
     unstable.fluxcd
     unstable.lima
+    unstable.claude-code
   ];
 
   home.sessionPath = [

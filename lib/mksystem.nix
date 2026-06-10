@@ -39,6 +39,7 @@ let
 
   pkgsUnstable = import nixpkgs-unstable {
     system = system;
+    config.allowUnfree = true;
   };
 
 in systemFunc rec {
