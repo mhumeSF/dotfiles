@@ -48,6 +48,7 @@ in {
     less
     glow
     certigo
+    step-cli
 
     dust
 
@@ -63,10 +64,9 @@ in {
     gnutar
     coreutils
 
-    # Docker tools
-    docker-client
-    docker-buildx
-    docker-compose
+    # Podman tools (Docker replacement)
+    podman
+    podman-compose
     crane
     skopeo
     dive
@@ -78,6 +78,7 @@ in {
     kubectx
     kubectl-neat
     kubernetes-helm
+    cilium-cli
 
     # ai
 
@@ -213,6 +214,10 @@ in {
     kn = "kubens";
 
     gst = "git status";
+
+    # Docker -> Podman
+    docker = "podman";
+    docker-compose = "podman-compose";
 
     # gnu rust replacements
     cat = "bat --style=plain --no-pager";
