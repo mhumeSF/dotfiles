@@ -1,4 +1,4 @@
-{ pkgs, inputs, pkgs-unstable, ... }:
+{ config, pkgs, inputs, pkgs-unstable, ... }:
 let
   agenix = builtins.fetchTarball {
     url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
@@ -180,6 +180,9 @@ in {
   # '';
 
   programs.zsh.enable = true;
+  # Lock in the legacy default (home dir) for zsh dotfiles; new default moves
+  # to XDG config dir once home.stateVersion >= "26.05".
+  programs.zsh.dotDir = config.home.homeDirectory;
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {

@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ config, lib, pkgs, user, ... }:
 {
 
   programs.zsh = {
@@ -37,7 +37,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap";
+      # cleanup = "zap";
       upgrade = true;
     };
     caskArgs.no_quarantine = true;
