@@ -181,9 +181,10 @@ in {
   # '';
 
   programs.zsh.enable = true;
-  # Lock in the legacy default (home dir) for zsh dotfiles; new default moves
-  # to XDG config dir once home.stateVersion >= "26.05".
-  programs.zsh.dotDir = config.home.homeDirectory;
+  # Keep zsh dotfiles under the XDG config dir (~/.config/zsh). home-manager
+  # writes a ~/.zshenv bootstrap that points ZDOTDIR here, so login shells
+  # still find the config.
+  programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
   programs.zsh.shellAliases = {
@@ -229,9 +230,9 @@ in {
     eval "$(op signin)"
     [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-    source ~/.zsh/plugins/aws.plugins.zsh
-    source ~/.zsh/plugins/lima.plugins.zsh
-    source ~/.zsh/plugins/git-worktree.plugin.zsh
+    source $ZDOTDIR/plugins/aws.plugins.zsh
+    source $ZDOTDIR/plugins/lima.plugins.zsh
+    source $ZDOTDIR/plugins/git-worktree.plugin.zsh
 
     # pyenv currently managed outside Nix
     export PYENV_ROOT="$HOME/.pyenv"
@@ -251,8 +252,8 @@ in {
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
     ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
-    ".zsh/plugins/aws.plugins.zsh".source         = ../../home/.zsh/plugins/aws.plugin.zsh;
-    ".zsh/plugins/lima.plugins.zsh".source        = ../../home/.zsh/plugins/lima.plugin.zsh;
-    ".zsh/plugins/git-worktree.plugin.zsh".source = ../../home/.zsh/plugins/git-worktree.plugin.zsh;
+    ".config/zsh/plugins/aws.plugins.zsh".source         = ../../home/.zsh/plugins/aws.plugin.zsh;
+    ".config/zsh/plugins/lima.plugins.zsh".source        = ../../home/.zsh/plugins/lima.plugin.zsh;
+    ".config/zsh/plugins/git-worktree.plugin.zsh".source = ../../home/.zsh/plugins/git-worktree.plugin.zsh;
   };
 }
