@@ -48,6 +48,7 @@ in {
     less
     glow
     certigo
+    step-cli
 
     dust
 
@@ -77,6 +78,7 @@ in {
     kubectx
     kubectl-neat
     kubernetes-helm
+    cilium-cli
 
     # ai
     claude-code
