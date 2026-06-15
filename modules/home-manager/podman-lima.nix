@@ -42,6 +42,18 @@ let
         set -eux -o pipefail
         command -v podman >/dev/null 2>&1 && test -e /etc/lima-podman && exit 0
         dnf -y install --best podman && touch /etc/lima-podman
+    - mode: system
+      script: |
+        #!/bin/bash
+        set -eux -o pipefail
+        # Resolve unqualified image names (e.g. `alpine`) against Docker Hub.
+        # With a single search registry, enforcing mode resolves directly
+        # without prompting, so non-interactive pulls still work.
+        mkdir -p /etc/containers/registries.conf.d
+        printf '%s\n' \
+          'unqualified-search-registries = ["docker.io"]' \
+          'short-name-mode = "enforcing"' \
+          >/etc/containers/registries.conf.d/99-lima.conf
     - mode: user
       script: |
         #!/bin/bash
