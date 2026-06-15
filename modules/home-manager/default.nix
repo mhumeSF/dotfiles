@@ -13,6 +13,7 @@ in {
     ./git-aliases.nix
     ./git-ignores.nix
     ./gh.nix
+    ./podman-lima.nix
   ];
 
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
@@ -106,6 +107,9 @@ in {
     OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"; # https://github.com/ansible/ansible/issues/76322
     DIRENV_WARN_TIMEOUT = "1m";
     DIRENV_LOG_FORMAT = "";
+
+    # Silence podman-compose's noisy warning banner
+    PODMAN_COMPOSE_WARNING_LOGS = "false";
 
     RUSTUP_HOME = "$HOME/.rustup";
     CARGO_HOME = "$HOME/.cargo";
