@@ -1,0 +1,10 @@
+{
+    "type": "group",
+    "actions": [
+        { "key": "1", "type": "url", "label": "Left",           "value": "rectangle://execute-action?name=left-half" },
+        { "key": "3", "type": "url", "label": "Right",          "value": "rectangle://execute-action?name=right-half" },
+        { "key": "c", "type": "url", "label": "Center",         "value": "rectangle://execute-action?name=center" },
+        { "key": "s", "type": "url", "label": "Smaller Center", "value": "rectangle://execute-action?name=center-half" },
+        { "key": "f", "type": "url", "label": "Maximize",       "value": "rectangle://execute-action?name=maximize" }
+    ]
+}

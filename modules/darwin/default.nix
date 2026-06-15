@@ -63,6 +63,7 @@
       "Spotify"
       "google-chrome"
       "keyboard-cleaner"
+      "leader-key"
       "notunes"
       "rar"
       "raycast"
@@ -144,6 +145,14 @@
         "NSStatusItem Visible com.apple.menuextra.bluetooth" = true;
       };
 
+      # Leader Key activation shortcut = cmd+e.
+      # KeyboardShortcuts stores the shortcut as a JSON string under
+      # KeyboardShortcuts_<name>; "activate" is Leader Key's shortcut name.
+      # carbonKeyCode 14 = E, carbonModifiers 256 = cmd.
+      "com.brnbw.Leader-Key" = {
+        KeyboardShortcuts_activate = ''{"carbonKeyCode":14,"carbonModifiers":256}'';
+      };
+
       loginwindow = {
         SHOWFULLNAME = false;
         GuestEnabled = false;
@@ -173,18 +182,6 @@
     # Setup 1password SSH agent.sock
     mkdir -p /Users/${user}/.1password
     ln -sf /Users/${user}/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock /Users/${user}/.1password/agent.sock
-
-    # -----------------------------------------------------------------------------
-    # Rectangle.app
-    # -----------------------------------------------------------------------------
-
-    # Window snapping shortcuts (cmd+ctrl+<key>, mirroring the old Divvy bindings)
-    defaults write com.knollsoft.Rectangle maximize -dict-add keyCode -float 3 modifierFlags -float 1310720
-    defaults write com.knollsoft.Rectangle center -dict-add keyCode -float 8 modifierFlags -float 1310720
-    defaults write com.knollsoft.Rectangle almostMaximize -dict-add keyCode -float 8 modifierFlags -float 1835008
-    defaults write com.knollsoft.Rectangle leftHalf -dict-add keyCode -float 18 modifierFlags -float 1310720
-    defaults write com.knollsoft.Rectangle rightHalf -dict-add keyCode -float 20 modifierFlags -float 1310720
-    defaults write com.knollsoft.Rectangle bottomLeft -dict-add keyCode -float 6 modifierFlags -float 1310720
 
     # Force reload of preference cache to apply trackpad settings
     # See: https://github.com/nix-darwin/nix-darwin/issues/1572

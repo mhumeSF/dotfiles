@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, pkgs-unstable, ... }:
+{ config, pkgs, lib, inputs, pkgs-unstable, ... }:
 let
   agenix = builtins.fetchTarball {
     url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
@@ -260,4 +260,16 @@ in {
     ".config/zsh/plugins/lima.plugins.zsh".source        = ../../home/.zsh/plugins/lima.plugin.zsh;
     ".config/zsh/plugins/git-worktree.plugin.zsh".source = ../../home/.zsh/plugins/git-worktree.plugin.zsh;
   };
+
+  # Leader Key shortcut config (window management via Rectangle URL scheme).
+  # Leader Key reads config.json from Application Support and rewrites it
+  # atomically on GUI edits, which would clobber a read-only home.file symlink
+  # (and break activation). So we copy the repo file into place — repo is the
+  # source of truth, reapplied on every switch — and leave it writable so the
+  # app keeps working. Edit the map in home/leader-key/config.json.
+  home.activation.leaderKeyConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    cfgDir="$HOME/Library/Application Support/Leader Key"
+    $DRY_RUN_CMD mkdir -p "$cfgDir"
+    $DRY_RUN_CMD install -m 0644 ${../../home/leader-key/config.json} "$cfgDir/config.json"
+  '';
 }
