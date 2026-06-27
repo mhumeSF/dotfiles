@@ -80,17 +80,6 @@
         };
       };
 
-      branch = {
-        master = {
-          remote = "origin";
-          merge = "refs/heads/master";
-        };
-        main = {
-          remote = "origin";
-          merge = "refs/heads/main";
-        };
-      };
-
       filter = {
         lfs = {
           clean = "git-lfs clean -- %f";

@@ -88,7 +88,10 @@ in {
     unstable.neovim
     unstable.fluxcd
     unstable.lima
+
+    # 🤖🤖🤖
     unstable.claude-code
+    unstable.codex
   ];
 
   home.sessionPath = [
