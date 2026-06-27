@@ -131,4 +131,20 @@ in
       disown || true
     fi
   '';
+
+  # Start the Lima VM at login so it survives reboots without a manual
+  # `podman-up`. `podman-up` is idempotent (creates if missing, starts if
+  # stopped, re-wires the system connection), so running it every login is
+  # safe. It exits once the VM is up — this is a one-shot, not a daemon, so we
+  # only RunAtLoad and never KeepAlive.
+  launchd.agents.podman-lima = {
+    enable = true;
+    config = {
+      ProgramArguments = [ "${podmanUp}/bin/podman-up" ];
+      RunAtLoad = true;
+      ProcessType = "Background";
+      StandardOutPath = "${config.home.homeDirectory}/.cache/podman-lima.log";
+      StandardErrorPath = "${config.home.homeDirectory}/.cache/podman-lima.log";
+    };
+  };
 }
