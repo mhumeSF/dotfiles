@@ -16,7 +16,7 @@
   programs.zsh.initContent = ''
     photo-import() {
       local event="''${1:-import}"
-      local server="media"
+      local server="media.local"
       local dest_root="/photos/inbox"
       local date safe_event src dest
 
