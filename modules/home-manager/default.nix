@@ -14,6 +14,7 @@ in {
     ./git-ignores.nix
     ./gh.nix
     ./podman-lima.nix
+    ./container-credentials.nix
   ];
 
   # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
