@@ -61,16 +61,16 @@ let
 
       rc=0
       for reg in "''${registries[@]}"; do
+        # Each 1Password item is titled by its plain registry host (e.g.
+        # docker.io), which is also the podman login host — no mapping needed.
         creds="$(printf '%s' "$reg" | docker-credential-1password get 2>/dev/null)" || creds=""
         if [ -z "$creds" ]; then echo "no 1Password credential for '$reg'" >&2; rc=1; continue; fi
         user="$(jq -r '.Username' <<<"$creds")"
         secret="$(jq -r '.Secret' <<<"$creds")"
-        # Docker Hub is stored under https://index.docker.io/v1/ but you log in to docker.io
-        host="$reg"; [ "$reg" = "https://index.docker.io/v1/" ] && host="docker.io"
-        if printf '%s' "$secret" | podman login "$host" --username "$user" --password-stdin >/dev/null; then
-          echo "logged in: $host (user=$user)"
+        if printf '%s' "$secret" | podman login "$reg" --username "$user" --password-stdin >/dev/null; then
+          echo "logged in: $reg (user=$user)"
         else
-          echo "login FAILED: $host" >&2; rc=1
+          echo "login FAILED: $reg" >&2; rc=1
         fi
       done
       exit "$rc"
