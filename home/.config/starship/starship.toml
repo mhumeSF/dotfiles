@@ -5,6 +5,12 @@ $character"""
 
 add_newline = true
 
+# The parse_git_clean/parse_git_dirty custom modules run in spawned shells.
+# In dirs with a heavy env (e.g. direnv loading 1Password secrets), that spawn
+# overhead can exceed the 500ms default even though git itself is fast, so give
+# custom commands more headroom.
+command_timeout = 2000
+
 [kubernetes]
 symbol = ""
 style = "bold white"
