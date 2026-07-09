@@ -60,6 +60,10 @@ _w_init() {
 
   git worktree add "$default_branch" "$default_branch"
 
+  # `git clone --bare` doesn't set branch tracking, so the default branch has
+  # no upstream (git pull would warn "no tracking information"). Set it here.
+  git branch --set-upstream-to="origin/$default_branch" "$default_branch"
+
   echo "Setup complete: $dir_name/$default_branch"
 }
 
