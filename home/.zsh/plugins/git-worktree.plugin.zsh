@@ -5,7 +5,12 @@
 #                             -g: include remote branches (default: local only)
 #   w co -b <branch> [base]   Create new branch and worktree
 #   w rm [-d] [query]         Remove a worktree (-d also deletes branch)
-#   w cleanup [-f]            Remove worktrees with merged branches
+#   w cleanup [-f] [--closed] [--dry-run]
+#                             Remove worktrees whose branch was merged (default).
+#                             --closed:  also remove worktrees whose PR was
+#                                        closed WITHOUT merging (needs gh)
+#                             --dry-run: show what would be removed, change nothing
+#                             -f:        force-remove dirty/locked worktrees
 #   w list                    List all worktrees
 
 w() {
@@ -150,19 +155,34 @@ _w_remove() {
   fi
 }
 
-# w cleanup [-f]
+# w cleanup [-f] [--closed] [--dry-run]
 _w_cleanup() {
-  local force=""
-  [[ "$1" == "-f" ]] && force="--force"
+  local force="" closed=false dry_run=false
+  while [[ "$1" == -* ]]; do
+    case "$1" in
+      -f|--force)   force="--force" ;;
+      --closed)     closed=true ;;
+      -n|--dry-run) dry_run=true ;;
+      *) echo "Unknown flag: $1" >&2; return 1 ;;
+    esac
+    shift
+  done
 
   local main_branch
   main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||') || main_branch="main"
 
   git fetch origin "$main_branch" --quiet
 
+  local have_gh=false
+  command -v gh >/dev/null 2>&1 && have_gh=true
+  if ! $have_gh; then
+    echo "Warning: gh not found; only fast-forward/true-merge detection available" >&2
+    $closed && echo "Warning: --closed requires gh; ignoring" >&2
+  fi
+
   local cleaned=0
+  local wt_path branch reason
   while IFS= read -r line; do
-    local wt_path branch
     wt_path=$(echo "$line" | awk '{print $1}')
     branch=$(echo "$line" | grep -o '\[.*\]' | tr -d '[]')
 
@@ -170,16 +190,41 @@ _w_cleanup() {
     [[ "$branch" == "$main_branch" ]] && continue
     [[ -z "$branch" ]] && continue
 
+    # Determine why (if at all) this worktree is a cleanup candidate.
+    reason=""
     if git merge-base --is-ancestor "$branch" "origin/$main_branch" 2>/dev/null; then
-      echo "Removing merged: $wt_path ($branch)"
-      git worktree remove $force "$wt_path" && ((cleaned++))
+      # commits already in main (fast-forward / true merge)
+      reason="merged"
+    elif $have_gh; then
+      # squash/rebase merges rewrite SHAs, so ask GitHub about the PR state
+      if [[ "$(gh pr list --head "$branch" --state merged --json number --jq 'length' 2>/dev/null)" -gt 0 ]]; then
+        reason="merged"
+      elif $closed && [[ "$(gh pr list --head "$branch" --state closed --json state --jq '[.[] | select(.state == "CLOSED")] | length' 2>/dev/null)" -gt 0 ]]; then
+        reason="closed"
+      fi
+    fi
+
+    [[ -z "$reason" ]] && continue
+
+    if $dry_run; then
+      echo "[dry-run] would remove $reason: $wt_path ($branch)"
+      ((cleaned++))
+      continue
+    fi
+
+    echo "Removing $reason: $wt_path ($branch)"
+    if git worktree remove $force "$wt_path"; then
+      git branch -D "$branch" 2>/dev/null && echo "  deleted branch: $branch"
+      ((cleaned++))
     fi
   done < <(git worktree list)
 
-  if ((cleaned > 0)); then
+  if $dry_run; then
+    ((cleaned > 0)) && echo "Dry run: $cleaned worktree(s) would be cleaned" || echo "Dry run: nothing to clean"
+  elif ((cleaned > 0)); then
     git worktree prune
     echo "Cleaned $cleaned worktree(s)"
   else
-    echo "No merged worktrees to clean"
+    echo "No worktrees to clean"
   fi
 }
