@@ -6,9 +6,11 @@
 #   w co -b <branch> [base]   Create new branch and worktree
 #   w rm [-d] [query]         Remove a worktree (-d also deletes branch)
 #   w cleanup [-f] [--closed] [--dry-run]
-#                             Remove worktrees whose branch was merged (default).
-#                             --closed:  also remove worktrees whose PR was
-#                                        closed WITHOUT merging (needs gh)
+#                             Remove worktrees AND local branches whose branch
+#                             was merged (default). Squash/rebase merges are
+#                             detected via the PR state when gh is available.
+#                             --closed:  also remove worktrees/branches whose PR
+#                                        was closed WITHOUT merging (needs gh)
 #                             --dry-run: show what would be removed, change nothing
 #                             -f:        force-remove dirty/locked worktrees
 #   w list                    List all worktrees
@@ -155,6 +157,29 @@ _w_remove() {
   fi
 }
 
+# Print why <branch> is safe to clean ("merged" or "closed"); fail if it isn't.
+# Squash/rebase merges rewrite SHAs, so when the ancestor check fails we ask
+# GitHub about the PR state instead.
+_w_merge_reason() {
+  local branch="$1" main_branch="$2" have_gh="$3" closed="$4"
+
+  if git merge-base --is-ancestor "$branch" "origin/$main_branch" 2>/dev/null; then
+    echo "merged"
+    return 0
+  fi
+  if [[ "$have_gh" == true ]]; then
+    if [[ "$(gh pr list --head "$branch" --state merged --json number --jq 'length' 2>/dev/null)" -gt 0 ]]; then
+      echo "merged"
+      return 0
+    fi
+    if [[ "$closed" == true && "$(gh pr list --head "$branch" --state closed --json state --jq '[.[] | select(.state == "CLOSED")] | length' 2>/dev/null)" -gt 0 ]]; then
+      echo "closed"
+      return 0
+    fi
+  fi
+  return 1
+}
+
 # w cleanup [-f] [--closed] [--dry-run]
 _w_cleanup() {
   local force="" closed=false dry_run=false
@@ -190,21 +215,7 @@ _w_cleanup() {
     [[ "$branch" == "$main_branch" ]] && continue
     [[ -z "$branch" ]] && continue
 
-    # Determine why (if at all) this worktree is a cleanup candidate.
-    reason=""
-    if git merge-base --is-ancestor "$branch" "origin/$main_branch" 2>/dev/null; then
-      # commits already in main (fast-forward / true merge)
-      reason="merged"
-    elif $have_gh; then
-      # squash/rebase merges rewrite SHAs, so ask GitHub about the PR state
-      if [[ "$(gh pr list --head "$branch" --state merged --json number --jq 'length' 2>/dev/null)" -gt 0 ]]; then
-        reason="merged"
-      elif $closed && [[ "$(gh pr list --head "$branch" --state closed --json state --jq '[.[] | select(.state == "CLOSED")] | length' 2>/dev/null)" -gt 0 ]]; then
-        reason="closed"
-      fi
-    fi
-
-    [[ -z "$reason" ]] && continue
+    reason=$(_w_merge_reason "$branch" "$main_branch" "$have_gh" "$closed") || continue
 
     if $dry_run; then
       echo "[dry-run] would remove $reason: $wt_path ($branch)"
@@ -219,12 +230,36 @@ _w_cleanup() {
     fi
   done < <(git worktree list)
 
+  # Second pass: merged/closed local branches that have no worktree (e.g. the
+  # worktree was removed by hand, or the branch never had one).
+  local wt_branches
+  wt_branches=$(git worktree list --porcelain | awk '$1 == "branch" { sub("refs/heads/", "", $2); print $2 }')
+
+  for branch in $(git for-each-ref refs/heads --format='%(refname:short)'); do
+    [[ "$branch" == "$main_branch" ]] && continue
+    [[ -n "$wt_branches" ]] && grep -qxF "$branch" <<<"$wt_branches" && continue
+
+    reason=$(_w_merge_reason "$branch" "$main_branch" "$have_gh" "$closed") || continue
+
+    if $dry_run; then
+      echo "[dry-run] would delete $reason branch: $branch"
+      ((cleaned++))
+      continue
+    fi
+
+    # -D not -d: squash/rebase merges leave commits git considers unmerged
+    if git branch -D "$branch" >/dev/null 2>&1; then
+      echo "Deleted $reason branch: $branch"
+      ((cleaned++))
+    fi
+  done
+
   if $dry_run; then
-    ((cleaned > 0)) && echo "Dry run: $cleaned worktree(s) would be cleaned" || echo "Dry run: nothing to clean"
+    ((cleaned > 0)) && echo "Dry run: $cleaned item(s) would be cleaned" || echo "Dry run: nothing to clean"
   elif ((cleaned > 0)); then
     git worktree prune
-    echo "Cleaned $cleaned worktree(s)"
+    echo "Cleaned $cleaned item(s)"
   else
-    echo "No worktrees to clean"
+    echo "Nothing to clean"
   fi
 }
