@@ -87,6 +87,7 @@ in {
     # foundry
   ] ++ [
     unstable.neovim
+    unstable.tree-sitter
     unstable.fluxcd
     unstable.lima
 
