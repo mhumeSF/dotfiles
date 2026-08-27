@@ -31,6 +31,11 @@
 
       push = {
         autoSetupRemote = true;
+        default = "current";
+      };
+
+      branch = {
+        autoSetupMerge = "simple";
       };
 
       pull = {
