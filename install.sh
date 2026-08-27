@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+HOST="${1:?usage: install.sh <finn|task>}"
+
 echo "=== Installing Homebrew ==="
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -16,12 +18,13 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 echo "=== Cloning dotfiles ==="
-nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
+[ -d "$HOME/dotfiles" ] || nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
 echo "=== Applying nix-darwin configuration ==="
-sudo -i nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake ~/dotfiles/
+sudo -i nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake ~/dotfiles/#"$HOST"
 
 echo "=== Installation complete! ==="
+echo "Restart your terminal to pick up the new shell environment."
 
 # UNINSTALL COMMANDS (commented out):
 # nix-darwin: nix --extra-experimental-features "nix-command flakes" run nix-darwin#darwin-uninstaller
