@@ -61,7 +61,6 @@
       "1password-cli"
       "Discord"
       "divvy"
-      "Spotify"
       "google-chrome"
       "keyboard-cleaner"
       "notunes"
@@ -79,6 +78,8 @@
   # Enable touchid for sudo
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  networking.applicationFirewall.enable = true;
+
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
   system.primaryUser = "${user}";
@@ -86,36 +87,59 @@
   system.defaults = {
     universalaccess.reduceMotion = true;
     finder.AppleShowAllExtensions = true;
+    finder.AppleShowAllFiles = true;
     finder._FXShowPosixPathInTitle = true;
+    finder.ShowPathbar = true;
+    finder.FXEnableExtensionChangeWarning = false;
+    finder.FXDefaultSearchScope = "SCcf"; # search current folder, not This Mac
+    finder.FXPreferredViewStyle = "Nlsv"; # list view by default
     dock.autohide = true;
-    dock.mineffect = "genie";
+    dock.autohide-delay = 0.0;
+    dock.mineffect = "scale";
     dock.orientation = "left";
     dock.tilesize = 36;
     dock.mouse-over-hilite-stack = true;
+    dock.show-recents = false;
+    dock.mru-spaces = false; # don't reorder Spaces by recent use
+    dock.expose-animation-duration = 0.1;
+    trackpad.Clicking = true; # tap to click
+    controlcenter.Bluetooth = true;
+    screensaver = {
+      askForPassword = true;
+      askForPasswordDelay = 0;
+    };
+    screencapture = {
+      location = "/Users/${user}/Pictures/screenshots";
+      disable-shadow = true;
+      type = "png";
+    };
+    loginwindow = {
+      GuestEnabled = false;
+      SHOWFULLNAME = false;
+      DisableConsoleAccess = true;
+    };
     NSGlobalDomain = {
-      AppleFontSmoothing = 2;
       AppleShowAllExtensions = true;
       AppleInterfaceStyle = "Dark";
       AppleInterfaceStyleSwitchesAutomatically = false;
       ApplePressAndHoldEnabled = false;
+      AppleKeyboardUIMode = 3; # full keyboard access in dialogs
       InitialKeyRepeat = 14;
       KeyRepeat= 1;
       _HIHideMenuBar = true;
       "com.apple.swipescrolldirection" = false;
       "com.apple.trackpad.enableSecondaryClick" = true;
+      "com.apple.mouse.tapBehavior" = 1; # tap to click
       NSAutomaticSpellingCorrectionEnabled = false; # disable autocorrect while typing
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSDocumentSaveNewDocumentsToCloud = false; # save to disk, not iCloud
+      NSNavPanelExpandedStateForSaveMode = true; # expanded save dialogs
+      NSNavPanelExpandedStateForSaveMode2 = true;
     };
-    CustomSystemPreferences = {};
     CustomUserPreferences = {
-      # Disable AutoFill in Safari
-      "com.apple.Safari" = {
-        AutoFillFromAddressBook = false;
-        AutoFillPasswords = false;
-        AutoFillCreditCardData = false;
-        AutoFillMiscellaneousForms = false;
-        DebugSnapshotsUpdatePolicy = 2;
-      };
-
       # Disable click wallpaper to reveal desktop
       "com.apple.WindowManager" = {
         EnableStandardClickToShowDesktop = 0;
@@ -133,21 +157,6 @@
       # Prevent Time Machine from prompting to use new hard drives as backup volume
       "com.apple.TimeMachine" = {
         DoNotOfferNewDisksForBackup = true;
-      };
-
-      # Show Bluetooth in Control Center
-      # "com.apple.controlcenter" = {
-      #   "NSStatusItem Visible Bluetooth" = 1;
-      # };
-
-      "com.apple.systemuiserver" = {
-        "NSStatusItem Visible com.apple.menuextra.bluetooth" = true;
-      };
-
-      loginwindow = {
-        SHOWFULLNAME = false;
-        GuestEnabled = false;
-        DisableConsoleAccess = true;
       };
     };
   };
@@ -169,6 +178,9 @@
     # -----------------------------------------------------------------------------
     # 1Password SSH agent setup
     # -----------------------------------------------------------------------------
+
+    # Screenshot location must exist before screencapture writes there
+    mkdir -p /Users/${user}/Pictures/screenshots
 
     # Setup 1password SSH agent.sock
     mkdir -p /Users/${user}/.1password
