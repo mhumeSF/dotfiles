@@ -5,12 +5,12 @@
     co = "checkout";
     cb = "checkout -b";
     llg = "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'";
-    dub = "fetch -p && git branch -vv | grep ': gone]' | awk '{print }' | xargs git branch -D";
+    dub = "fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D";
     lg = "llg -n25";
     d = "diff";
     c = "commit";
     ca = "commit --amend";
-    can = "commit -amend --no-edit";
+    can = "commit --amend --no-edit";
     pushf = "push --force-with-lease";
     mom = "merge origin/main --no-edit";
     pum = "pull upstream main";
