@@ -19,7 +19,7 @@ echo "=== Cloning dotfiles ==="
 nix-shell -p git --run "git clone https://github.com/mhumesf/nix-dotfiles $HOME/dotfiles"
 
 echo "=== Applying nix-darwin configuration ==="
-sudo -i nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake ~/dotfiles/ --impure
+sudo -i nix run --extra-experimental-features "nix-command flakes" nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake ~/dotfiles/
 
 echo "=== Installation complete! ==="
 

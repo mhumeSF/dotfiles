@@ -119,7 +119,6 @@ in {
   programs.atuin.settings = {
     style = "compact";
     inline_height = 26;
-    max_history_length = 1000000;
 
     # Filter out trivial/frequent commands
     history_filter = [
@@ -200,7 +199,7 @@ in {
     ts = "tailscale";
 
     # nix
-    nixswitch = "darwin-rebuild switch --flake ~/dotfiles --impure";
+    nixswitch = "darwin-rebuild switch --flake ~/dotfiles";
     nixup = "pushd ~/dotfiles; nix flake update; nixswitch; popd";
 
     # Misc aliases
@@ -230,16 +229,15 @@ in {
   };
 
   programs.zsh.initContent = ''
+    # Required for the 1Password SSH keychain — do not remove
     eval "$(op signin)"
     [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-    source $ZDOTDIR/plugins/aws.plugins.zsh
-    source $ZDOTDIR/plugins/lima.plugins.zsh
+    source $ZDOTDIR/plugins/aws.plugin.zsh
+    source $ZDOTDIR/plugins/lima.plugin.zsh
     source $ZDOTDIR/plugins/git-worktree.plugin.zsh
 
-    # pyenv currently managed outside Nix
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    # pyenv binary comes from Nix; shims/versions still live in ~/.pyenv
     eval "$(pyenv init -)"
   '';
 
@@ -254,9 +252,8 @@ in {
     ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
     ".editorconfig".source                    = ../../home/.editorconfig;
     ".tmux.conf".source                       = ../../home/.tmux.conf;
-    ".tmuxcolors.conf".source                 = ../../home/.tmuxcolors.conf;
-    ".config/zsh/plugins/aws.plugins.zsh".source         = ../../home/.zsh/plugins/aws.plugin.zsh;
-    ".config/zsh/plugins/lima.plugins.zsh".source        = ../../home/.zsh/plugins/lima.plugin.zsh;
+    ".config/zsh/plugins/aws.plugin.zsh".source          = ../../home/.zsh/plugins/aws.plugin.zsh;
+    ".config/zsh/plugins/lima.plugin.zsh".source         = ../../home/.zsh/plugins/lima.plugin.zsh;
     ".config/zsh/plugins/git-worktree.plugin.zsh".source = ../../home/.zsh/plugins/git-worktree.plugin.zsh;
   };
 }
