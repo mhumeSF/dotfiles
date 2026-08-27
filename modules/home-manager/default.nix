@@ -1,11 +1,6 @@
 { config, pkgs, inputs, pkgs-unstable, ... }:
 let
-  agenix = builtins.fetchTarball {
-    url = "https://github.com/ryantm/agenix/archive/refs/tags/0.15.0.tar.gz";
-    sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
-  };
   unstable = pkgs-unstable;
-  # homeDirectory = (if pkgs.stdenv.isDarwin then "/Users/" else "/home/") + "${user}";
 in {
   imports = [
     ./git.nix
@@ -17,7 +12,7 @@ in {
     ./container-credentials.nix
   ];
 
-  # Don't change this when you change package input. Leave it alone. backwards compat; don''t change this when you change package input. Leave it alone.
+  # Backwards compat; don't change this when you change package input. Leave it alone.
   home.stateVersion = "23.11";
 
   xdg.enable = true;
@@ -26,7 +21,6 @@ in {
   home.packages = with pkgs; [
     age
     cmatrix
-    fzf
     htop
     ipcalc
 

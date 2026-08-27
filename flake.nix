@@ -21,7 +21,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, ... }@inputs: let
-    mksystem = import ./lib/mksystem.nix { inherit nixpkgs nixpkgs-unstable inputs; };
+    mksystem = import ./lib/mksystem.nix { inherit nixpkgs-unstable inputs; };
   in {
 
     darwinConfigurations.finn = mksystem "finn" {

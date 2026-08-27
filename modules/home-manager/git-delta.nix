@@ -43,9 +43,6 @@
         zero-style = "syntax";
       };
       features = "chameleon";
-      syntax-theme = "TwoDark";
-      side-by-side = true;
-      line-numbers = true;
     };
   };
 }
