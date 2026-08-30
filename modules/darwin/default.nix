@@ -63,7 +63,6 @@
       "raycast"
       "slack"
       "spotify"
-      "wireshark-app"
       "ghostty"
       "tailscale-app"
       "viscosity"
