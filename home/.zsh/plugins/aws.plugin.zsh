@@ -1,6 +1,10 @@
 # Enable AWS SDK to use the config file
 export AWS_SDK_LOAD_CONFIG=1
 
+# Drop into the AWS CLI interactive prompt when a command is incomplete;
+# it completes resource names server-side (e.g. s3:// bucket names)
+export AWS_CLI_AUTO_PROMPT=on-partial
+
 # Function to unset all AWS-related environment variables
 unset_aws() {
   # List of AWS environment variables to unset
@@ -46,3 +50,6 @@ _aws_profile_completer() {
 
 # Enable autocompletion for the 'assume' function
 complete -F _aws_profile_completer assume
+
+# Tab completion for aws subcommands and flags
+complete -C aws_completer aws
