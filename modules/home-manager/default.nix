@@ -114,6 +114,17 @@ in {
     CARGO_HOME = "$HOME/.cargo";
   };
 
+  # nix-darwin 26.05 has no nh module, so nh is configured here. Sets
+  # NH_DARWIN_FLAKE so `nh darwin switch` needs no --flake argument.
+  # clean.enable is deliberately off: the home-manager module passes
+  # clean.extraArgs to launchd as a single argv element, so anything longer
+  # than one token breaks, and nh's defaults (--keep 1) would leave no
+  # rollback. Use the nixclean alias instead.
+  programs.nh = {
+    enable = true;
+    darwinFlake = "$HOME/dotfiles";
+  };
+
   programs.atuin.enable = true;
   programs.atuin.enableZshIntegration = true;
   programs.atuin.settings = {
@@ -199,8 +210,9 @@ in {
     ts = "tailscale";
 
     # nix
-    nixswitch = "darwin-rebuild switch --flake ~/dotfiles";
-    nixup = "pushd ~/dotfiles; nix flake update; nixswitch; popd";
+    nixswitch = "nh darwin switch";
+    nixup = "nh darwin switch --update";
+    nixclean = "nh clean all --keep 5 --keep-since 30d --ask";
 
     # Misc aliases
     vi = "nvim";
