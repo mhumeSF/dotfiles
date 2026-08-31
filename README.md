@@ -41,8 +41,9 @@ switch installs the 1Password app but can't click through its settings.
 
 ## Gotchas
 
-- Homebrew `cleanup` is off, so deleting a cask from the list doesn't uninstall
-  it. `autoUpdate`/`upgrade` are off too — run `brew upgrade` by hand.
+- Homebrew lists are authoritative (`cleanup = "zap"`): anything installed and
+  not declared is uninstalled on the next switch, so a hand-installed package
+  is temporary. `autoUpdate`/`upgrade` are off — run `brew upgrade` by hand.
 - `nix.enable = false`: Determinate owns `/etc/nix/nix.conf` and `nix.settings`
   does nothing. The hook is `/etc/nix/nix.custom.conf`.
 - Nothing garbage collects automatically; `nixclean` is manual.
