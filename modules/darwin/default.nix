@@ -31,9 +31,17 @@
   homebrew = {
     enable = true;
     onActivation = {
-      autoUpdate = true;
+      # Both off so a switch is deterministic: brew is not contacted for
+      # updates and installed versions only move when explicitly asked
+      # (`brew update && brew upgrade`). With these on, every nixswitch
+      # produced a different machine and paid a network round-trip.
+      autoUpdate = false;
+      upgrade = false;
+
+      # cleanup = "zap" would make the lists below authoritative, but 11
+      # installed packages are currently undeclared and would be destroyed.
+      # Reconcile those first (see TODO in commit) before enabling.
       # cleanup = "zap";
-      upgrade = true;
     };
     caskArgs.no_quarantine = false;
     global.brewfile = true;
@@ -42,10 +50,25 @@
       "1Password for Safari" = 1569813296;
       "WireGuard" = 1451685025;
     };
+    taps = [
+      "suzuki-shunsuke/pinact" # provides the pinact cask
+    ];
     brews = [
       "dockutil"
       "tfenv"
       "ccusage"
+
+      # Adopted from pre-existing manual installs so this list can become
+      # authoritative once cleanup is enabled.
+      "bun"
+      "container"
+      "gnupg"
+      "mise"
+      "opencode"
+      "qemu"
+      "regclient"
+      "tree-sitter-cli"
+      "zizmor"
       {
         name = "gettext";
         link = true;  # equivalent to: brew link --force gettext
@@ -66,6 +89,7 @@
       "ghostty"
       "tailscale-app"
       "viscosity"
+      "pinact"
     ];
   };
 
