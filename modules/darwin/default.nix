@@ -38,10 +38,11 @@
       autoUpdate = false;
       upgrade = false;
 
-      # cleanup = "zap" would make the lists below authoritative, but 11
-      # installed packages are currently undeclared and would be destroyed.
-      # Reconcile those first (see TODO in commit) before enabling.
-      # cleanup = "zap";
+      # The lists below are authoritative: anything installed by Homebrew and
+      # not declared here is uninstalled on switch, and for casks its leftover
+      # files are removed too. So installing something by hand is temporary —
+      # add it below to keep it.
+      cleanup = "zap";
     };
     caskArgs.no_quarantine = false;
     global.brewfile = true;
