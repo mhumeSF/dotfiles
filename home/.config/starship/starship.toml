@@ -1,6 +1,6 @@
 format = """
 [#](bold blue) $kubernetes$aws${custom.tf}
-[#](bold blue) $directory$git_branch$git_status${custom.git_clean}$git_state
+[#](bold blue) $directory$git_branch${custom.git_dirty}${custom.git_clean}$git_state
 $character"""
 
 # Rendered on the input line, flush right; disappears when the command wraps.
@@ -25,21 +25,20 @@ symbol = ""
 style = "bold yellow"
 format = "on [$symbol$branch]($style) "
 
-[git_status]
-format = '([$all_status$ahead_behind]($style) )'
-style = "red"
-conflicted = "="
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-stashed = "*${count}"
-modified = "✖"
-staged = "+"
-untracked = "?"
-deleted = "-"
+# git_status only offers per-type symbols (modified/staged/stash count/etc.),
+# not a single clean/dirty toggle, so this pair shells out to git instead.
+[custom.git_dirty]
+command = "echo ''"
+when = '''
+out=$(git status --porcelain --branch 2>/dev/null) || exit 1
+[ "$(printf '%s\n' "$out" | wc -l)" -gt 1 ] && exit 0
+printf '%s\n' "$out" | head -1 | grep -qE '\[(ahead|behind)' && exit 0
+[ -n "$(git stash list 2>/dev/null)" ]
+'''
+shell = ["bash", "--noprofile", "--norc"]
+format = "[✖]($style) "
+style = "bold red"
 
-# Shown only when git_status/ahead_behind would otherwise be empty: no
-# unstaged/staged/untracked changes, no unpushed/unpulled commits, no stash.
 [custom.git_clean]
 command = "echo ''"
 when = '''
