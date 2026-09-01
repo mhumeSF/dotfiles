@@ -1,6 +1,6 @@
 format = """
 [#](bold blue) $kubernetes$aws${custom.tf}
-[#](bold blue) $directory$git_branch$git_status$git_state
+[#](bold blue) $directory$git_branch$git_status${custom.git_clean}$git_state
 $character"""
 
 # Rendered on the input line, flush right; disappears when the command wraps.
@@ -21,7 +21,7 @@ read_only = " 󰌾"
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = " "
+symbol = ""
 style = "bold yellow"
 format = "on [$symbol$branch]($style) "
 
@@ -37,6 +37,20 @@ modified = "✖"
 staged = "+"
 untracked = "?"
 deleted = "-"
+
+# Shown only when git_status/ahead_behind would otherwise be empty: no
+# unstaged/staged/untracked changes, no unpushed/unpulled commits, no stash.
+[custom.git_clean]
+command = "echo ''"
+when = '''
+out=$(git status --porcelain --branch 2>/dev/null) || exit 1
+[ "$(printf '%s\n' "$out" | wc -l)" -eq 1 ] || exit 1
+printf '%s\n' "$out" | head -1 | grep -qE '\[(ahead|behind)' && exit 1
+[ -z "$(git stash list 2>/dev/null)" ]
+'''
+shell = ["bash", "--noprofile", "--norc"]
+format = "[✓]($style) "
+style = "bold green"
 
 [git_state]
 format = '[$state( $progress_current/$progress_total)]($style) '
