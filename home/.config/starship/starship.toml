@@ -1,79 +1,111 @@
 format = """
-[#](blue) $kubernetes$aws
-[#](blue) $directory$git_branch${custom.parse_git_clean}${custom.parse_git_dirty}
+[#](bold blue) $kubernetes$aws${custom.tf}
+[#](bold blue) $directory$git_branch$git_status$git_state
 $character"""
+
+# Rendered on the input line, flush right; disappears when the command wraps.
+right_format = "$cmd_duration$jobs$sudo$nix_shell$direnv"
 
 add_newline = true
 
-# The parse_git_clean/parse_git_dirty custom modules run in spawned shells.
-# In dirs with a heavy env (e.g. direnv loading 1Password secrets), that spawn
-# overhead can exceed the 500ms default even though git itself is fast, so give
-# custom commands more headroom.
+# custom.tf spawns a shell to run tfenv; in dirs with a heavy env (e.g. direnv
+# loading 1Password secrets) that can exceed the 500ms default even though
+# tfenv itself is fast.
 command_timeout = 2000
 
-[kubernetes]
-symbol = ""
-style = "bold white"
-disabled = false
-format = 'k8:[$symbol$context( $namespace)]($style)'
-
-[[kubernetes.contexts]]
-context_pattern = ".*prod.*"
-style = "black bg:yellow"
-
-[aws]
-symbol = ""
-format = ' // aws:[$symbol$profile\($region\)]($style)'
-style = "bold white"
-
-# [custom.tfenv]
-# command = "source $HOME/.functions && resolve_tfenv_version"
-# when = "true"
-# description = "Returns current terraform version"
-# format = " // tf:[$symbol($output )]($style)"
-# style = "bold white"
-
-[terraform]
-disabled = true
-symbol = ""
-format = "$version "
-
-[username]
-style_user = "white bold"
-style_root = "black bold"
-format = "[$user]($style) "
-disabled = false
-show_always = true
-
-[hostname]
-ssh_only = false
-format =  "on [$hostname](bold red) "
-trim_at = ".companyname.com"
-style = "bold dimmed red"
-disabled = false
-
-[direnv]
-disabled = false
-
 [directory]
-truncation_length = 0
-style = "bold red"
+truncation_length = 4
+truncate_to_repo = true
+style = "bold blue"
+read_only = " 󰌾"
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = ""
-format = "[on](white) git:[$symbol$branch]($style) "
+symbol = " "
 style = "bold yellow"
+format = "on [$symbol$branch]($style) "
 
-[custom.parse_git_clean]
-command = "if [[ $(git status --porcelain) == \"\" ]]; then echo \"o\"; fi"
-when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1"
-style = "green"
-
-[custom.parse_git_dirty]
-command = "if [[ -n $(git status --porcelain) ]]; then echo \"✖\"; fi"
-when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1"
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
 style = "red"
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+stashed = "*${count}"
+modified = "✖"
+staged = "+"
+untracked = "?"
+deleted = "-"
+
+[git_state]
+format = '[$state( $progress_current/$progress_total)]($style) '
+style = "bold red"
+
+[cmd_duration]
+min_time = 2000
+format = "[ $duration]($style) "
+style = "yellow"
+
+[jobs]
+symbol = "✦"
+format = "[$symbol$number]($style) "
+style = "bold purple"
+
+[sudo]
+disabled = false
+symbol = " "
+format = "[$symbol]($style)"
+style = "bold red"
+
+[nix_shell]
+symbol = " "
+format = "[$symbol]($style)"
+style = "bold blue"
+
+[direnv]
+disabled = false
+symbol = "󰌪 "
+# Quiet leaf when the .envrc is allowed; shouts only when it isn't.
+format = "[$symbol$allowed]($style)"
+allowed_msg = ""
+not_allowed_msg = "✗not-allowed "
+denied_msg = "✗denied "
+style = "yellow"
+
+[kubernetes]
+disabled = false
+style = "bold cyan"
+format = 'k8s:[$context( \($namespace\))]($style) '
+
+# Prod first so it always gets the warning style, even for aliased clusters.
+[[kubernetes.contexts]]
+context_pattern = ".*prod.*"
+style = "bold black bg:yellow"
+
+# Shorten Tailscale FQDNs to the machine name: chi.tail08a730.ts.net -> chi
+[[kubernetes.contexts]]
+context_pattern = "(?P<cluster>[\\w-]+)\\.tail08a730\\.ts\\.net"
+context_alias = "$cluster"
+
+[aws]
+style = "bold white"
+format = '// aws:[$profile( \($region\))]($style) '
+
+# tfenv-resolved terraform version. Shown when TFENV_TERRAFORM_VERSION is set
+# or the current dir / repo root looks like terraform.
+[custom.tf]
+command = "tfenv version-name 2>/dev/null"
+shell = ["bash", "--noprofile", "--norc"]
+when = '''
+[ -n "$TFENV_TERRAFORM_VERSION" ] && exit 0
+ls *.tf >/dev/null 2>&1 && exit 0
+{ [ -f .terraform-version ] || [ -d .terraform ]; } && exit 0
+r=$(git rev-parse --show-toplevel 2>/dev/null) || exit 1
+[ -f "$r/.terraform-version" ] || ls "$r"/*.tf >/dev/null 2>&1
+'''
+style = "bold purple"
+format = "// tf:[$output]($style) "
 
 [character]
 format = "$symbol"
