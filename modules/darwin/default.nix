@@ -52,7 +52,9 @@
       "WireGuard" = 1451685025;
     };
     taps = [
-      "suzuki-shunsuke/pinact" # provides the pinact cask
+      # trusted: brew refuses to load casks from untrusted third-party taps,
+      # which makes the `brew cleanup` inside `brew bundle` fail on switch.
+      { name = "suzuki-shunsuke/pinact"; trusted = true; } # provides the pinact cask
     ];
     brews = [
       "dockutil"
