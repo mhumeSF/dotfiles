@@ -90,8 +90,6 @@ in {
     kubernetes-helm
     cilium-cli
 
-    # ai
-
     # foundry
   ] ++ [
     unstable.neovim
@@ -102,6 +100,8 @@ in {
     # 🤖🤖🤖
     unstable.claude-code
     unstable.codex
+    unstable.opencode
+    unstable.github-copilot-cli
   ];
 
   home.sessionPath = [
@@ -203,9 +203,6 @@ in {
 
   # programs.neovim.enable = true;
   # programs.neovim.package = unstable.neovim;
-  # programs.ssh.extraConfig = ''
-  #   IdentityAgent "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-  # '';
 
   programs.zsh.enable = true;
   # Keep zsh dotfiles under the XDG config dir (~/.config/zsh). home-manager
