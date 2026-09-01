@@ -1,6 +1,20 @@
 { config, pkgs, inputs, pkgs-unstable, ... }:
 let
   unstable = pkgs-unstable;
+
+  ghostty-cursor-shaders = pkgs.fetchFromGitHub {
+    owner = "sahaj-b";
+    repo = "ghostty-cursor-shaders";
+    rev = "0a274beac8b93ee6ce6b94402b7313a0417b8e38";
+    hash = "sha256-B7B6K7Ee4uJlW8zzLP3ILgddnbcIQyNimY+rVllzbR0=";
+  };
+
+  ghostty-shader-playground = pkgs.fetchFromGitHub {
+    owner = "KroneCorylus";
+    repo = "ghostty-shader-playground";
+    rev = "7295ebf717f236f114912ec5de0d8ce91661448f";
+    hash = "sha256-Z3jF76MnyEGQuzfeZNTyOhpGAiGfhm6rnkdeBIpsJck=";
+  };
 in {
   imports = [
     ./git.nix
@@ -260,10 +274,12 @@ in {
   # home.enableNixpkgsReleaseCheck = false;
 
   home.file = {
-    ".config/starship/starship.toml".source            = ../../home/.config/starship/starship.toml;
-    ".config/ghostty/config".source           = ../../home/.config/ghostty/config;
-    ".editorconfig".source                    = ../../home/.editorconfig;
-    ".tmux.conf".source                       = ../../home/.tmux.conf;
+    ".config/starship/starship.toml".source              = ../../home/.config/starship/starship.toml;
+    ".config/ghostty/config".source                      = ../../home/.config/ghostty/config;
+    ".config/ghostty/shaders".source                     = ghostty-cursor-shaders;
+    ".config/ghostty/shaders-playground".source          = "${ghostty-shader-playground}/public/shaders";
+    ".editorconfig".source                               = ../../home/.editorconfig;
+    ".tmux.conf".source                                  = ../../home/.tmux.conf;
     ".config/zsh/plugins/aws.plugin.zsh".source          = ../../home/.zsh/plugins/aws.plugin.zsh;
     ".config/zsh/plugins/lima.plugin.zsh".source         = ../../home/.zsh/plugins/lima.plugin.zsh;
     ".config/zsh/plugins/git-worktree.plugin.zsh".source = ../../home/.zsh/plugins/git-worktree.plugin.zsh;

@@ -10,3 +10,13 @@ macos-titlebar-style = hidden
 
 # theme = "Material Design Colors"
 theme = "Popping And Locking"
+
+# Cursor shaders, one at a time (both repos pinned via home-manager):
+#  shaders/            sahaj-b/ghostty-cursor-shaders: cursor_warp, cursor_sweep,
+#                      cursor_tail, sonic_boom_cursor, ripple_cursor,
+#                      rectangle_boom_cursor, ripple_rectangle_cursor
+#  shaders-playground/ KroneCorylus/ghostty-shader-playground: cursor_blaze,
+#                      cursor_blaze_no_trail, cursor_blaze_tapered, cursor_smear,
+#                      cursor_smear_fade, cursor_smear_rainbow, manga_slash, ...
+# custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders-playground/cursor_blaze.glsl
