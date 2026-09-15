@@ -41,6 +41,16 @@ switch installs the 1Password app but can't click through its settings.
 
 ## Gotchas
 
+- Projects require `direnv allow` after reviewing their `.envrc`, including
+  updates; `~/Workspace` is no longer implicitly trusted.
+- Switching preserves Docker's noncredential settings. Authentication remains
+  managed: inline `auths` are cleared, `credsStore` is set to `1password`, and
+  per-registry `credHelpers` overrides are removed. Invalid JSON stops activation
+  without replacing the existing file.
+- `w cleanup` accepts a squash/rebase-merged PR only when its head commit matches
+  the local branch tip and it targets the default branch in the same repository.
+  New commits after a merged/closed PR are kept. `w rm -d` respects Git's normal
+  branch deletion checks and does not fall back to force deletion.
 - Homebrew lists are authoritative (`cleanup = "zap"`): anything installed and
   not declared is uninstalled on the next switch, so a hand-installed package
   is temporary. `autoUpdate`/`upgrade` are off — run `brew upgrade` by hand.
@@ -49,3 +59,9 @@ switch installs the 1Password app but can't click through its settings.
 - Nothing garbage collects automatically; `nixclean` is manual.
 - Only one host gets built regularly. Check the other without switching:
   `nix build --dry-run .#darwinConfigurations.<host>.system`.
+
+## Helper checks
+
+Run `python3 -m unittest discover -s tests -v` for worktree and Docker config
+regressions. Tests use temporary repositories and mock GitHub responses; they
+require Git, Zsh, Bash and jq, and do not access the network or your credentials.

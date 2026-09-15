@@ -8,7 +8,7 @@
 #   w cleanup [-f] [--closed] [--dry-run]
 #                             Remove worktrees AND local branches whose branch
 #                             was merged (default). Squash/rebase merges are
-#                             detected via the PR state when gh is available.
+#                             detected via PR state and matching head commit.
 #                             --closed:  also remove worktrees/branches whose PR
 #                                        was closed WITHOUT merging (needs gh)
 #                             --dry-run: show what would be removed, change nothing
@@ -120,16 +120,35 @@ _w_checkout() {
 
   [[ -z "$branch" ]] && return
 
-  # Check if worktree already exists for this branch
-  local wt_path
-  wt_path=$(git worktree list --porcelain | grep -A2 "^worktree " | grep -B1 "branch refs/heads/$branch$" | head -1 | sed 's/^worktree //')
+  local wt_path wt_branch
+  while IFS= read -r -d '' wt_path && IFS= read -r -d '' wt_branch; do
+    if [[ "$wt_branch" == "$branch" ]]; then
+      cd "$wt_path"
+      return
+    fi
+  done < <(_w_worktrees)
 
-  if [[ -n "$wt_path" ]]; then
-    cd "$wt_path"
-  else
-    local dir="${branch//\//-}"
-    git worktree add "$dir" "$branch" && cd "$dir"
-  fi
+  local dir="${branch//\//-}"
+  git worktree add "$dir" "$branch" && cd "$dir"
+}
+
+# Emit NUL-delimited path/branch pairs, including detached worktrees, not bare repos.
+# Porcelain -z preserves spaces, tabs, newlines and literal backslashes in paths.
+_w_worktrees() {
+  local field wt_path="" branch="" bare=false
+  while IFS= read -r -d '' field; do
+    case "$field" in
+      'worktree '*) wt_path="${field#worktree }" ;;
+      'branch refs/heads/'*) branch="${field#branch refs/heads/}" ;;
+      bare) bare=true ;;
+      '')
+        if ! $bare && [[ -n "$wt_path" ]]; then
+          printf '%s\0%s\0' "$wt_path" "$branch"
+        fi
+        wt_path="" branch="" bare=false
+        ;;
+    esac
+  done < <(git worktree list --porcelain -z)
 }
 
 # w rm [-d] [query]
@@ -140,26 +159,35 @@ _w_remove() {
     shift
   fi
 
-  local line
-  line=$(git worktree list | grep -v '(bare)' | fzf --query="$1" --select-1) || return
-  [[ -z "$line" ]] && return
-
-  local wt_path branch
-  wt_path=$(echo "$line" | awk '{print $1}')
-  branch=$(echo "$line" | grep -o '\[.*\]' | tr -d '[]')
+  local wt_path branch entry
+  local -a wt_entries
+  local -A wt_paths wt_branches
+  while IFS= read -r -d '' wt_path && IFS= read -r -d '' branch; do
+    entry="$wt_path [${branch:-detached}]"
+    wt_entries+=("$entry")
+    wt_paths[$entry]="$wt_path"
+    wt_branches[$wt_path]="$branch"
+  done < <(_w_worktrees)
+  (( ${#wt_entries} )) || return 1
+  IFS= read -r -d '' entry < <(
+    printf '%s\0' "${wt_entries[@]}" | fzf --read0 --print0 --query="$1" --select-1
+  ) || return
+  wt_path="${wt_paths[$entry]}"
+  branch="${wt_branches[$wt_path]}"
 
   git worktree remove "$wt_path" || return
   echo "Removed worktree: $wt_path"
 
   if $delete_branch && [[ -n "$branch" ]]; then
-    git branch -d "$branch" 2>/dev/null || git branch -D "$branch"
+    git branch -d "$branch" || return
     echo "Deleted branch: $branch"
   fi
 }
 
 # Print why <branch> is safe to clean ("merged" or "closed"); fail if it isn't.
 # Squash/rebase merges rewrite SHAs, so when the ancestor check fails we ask
-# GitHub about the PR state instead.
+# GitHub about the PR state instead. Require the exact local tip, target branch,
+# and a same-repository PR: an old PR or a fork's namesake is not proof of safety.
 _w_merge_reason() {
   local branch="$1" main_branch="$2" have_gh="$3" closed="$4"
 
@@ -168,14 +196,23 @@ _w_merge_reason() {
     return 0
   fi
   if [[ "$have_gh" == true ]]; then
-    if [[ "$(gh pr list --head "$branch" --state merged --json number --jq 'length' 2>/dev/null)" -gt 0 ]]; then
-      echo "merged"
-      return 0
-    fi
-    if [[ "$closed" == true && "$(gh pr list --head "$branch" --state closed --json state --jq '[.[] | select(.state == "CLOSED")] | length' 2>/dev/null)" -gt 0 ]]; then
-      echo "closed"
-      return 0
-    fi
+    local tip prs pr_tip pr_base pr_state
+    tip=$(git rev-parse --verify "refs/heads/$branch") || return 1
+    prs=$(gh pr list --head "$branch" --state closed \
+      --json headRefOid,baseRefName,isCrossRepository,state \
+      --jq '.[] | select(.isCrossRepository == false) | [.headRefOid, .baseRefName, .state] | @tsv' \
+      2>/dev/null) || return 1
+    while IFS=$'\t' read -r pr_tip pr_base pr_state; do
+      [[ "$pr_tip" == "$tip" && "$pr_base" == "$main_branch" ]] || continue
+      if [[ "$pr_state" == MERGED ]]; then
+        echo "merged"
+        return 0
+      fi
+      if [[ "$closed" == true && "$pr_state" == CLOSED ]]; then
+        echo "closed"
+        return 0
+      fi
+    done <<<"$prs"
   fi
   return 1
 }
@@ -194,9 +231,10 @@ _w_cleanup() {
   done
 
   local main_branch
-  main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||') || main_branch="main"
+  main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null) || main_branch="refs/remotes/origin/main"
+  main_branch="${main_branch#refs/remotes/origin/}"
 
-  git fetch origin "$main_branch" --quiet
+  git fetch origin "+refs/heads/$main_branch:refs/remotes/origin/$main_branch" --quiet || return
 
   local have_gh=false
   command -v gh >/dev/null 2>&1 && have_gh=true
@@ -207,11 +245,7 @@ _w_cleanup() {
 
   local cleaned=0
   local wt_path branch reason
-  while IFS= read -r line; do
-    wt_path=$(echo "$line" | awk '{print $1}')
-    branch=$(echo "$line" | grep -o '\[.*\]' | tr -d '[]')
-
-    [[ "$line" == *"(bare)"* ]] && continue
+  while IFS= read -r -d '' wt_path && IFS= read -r -d '' branch; do
     [[ "$branch" == "$main_branch" ]] && continue
     [[ -z "$branch" ]] && continue
 
@@ -228,7 +262,7 @@ _w_cleanup() {
       git branch -D "$branch" 2>/dev/null && echo "  deleted branch: $branch"
       ((cleaned++))
     fi
-  done < <(git worktree list)
+  done < <(_w_worktrees)
 
   # Second pass: merged/closed local branches that have no worktree (e.g. the
   # worktree was removed by hand, or the branch never had one).

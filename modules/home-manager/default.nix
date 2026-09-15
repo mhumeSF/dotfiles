@@ -99,8 +99,8 @@ in {
 
     # 🤖🤖🤖
     unstable.claude-code
-    unstable.codex
-    unstable.opencode
+      # unstable.codex   -- installed with npm
+      # unstable.opencode -- installed with npm
     unstable.github-copilot-cli
   ];
 
@@ -183,7 +183,7 @@ in {
 
   programs.direnv = {
     config.global.hide_env_diff = true;
-    config.whitelist.prefix = [ "~/Workspace/" ];
+    # Review each project's .envrc with `direnv allow`, including updates.
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;

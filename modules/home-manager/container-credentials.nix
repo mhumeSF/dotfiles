@@ -31,13 +31,11 @@ let
       --suffix PATH : /opt/homebrew/bin
   '';
 
-  # Secret-free config: every registry's credentials go through the helper,
-  # so nothing is ever written to config.json in plaintext. (Consumed by the
-  # docker CLI / local podman; remote podman ignores helpers — see podman-login.)
-  dockerConfig = pkgs.writeText "docker-config.json" (builtins.toJSON {
-    auths = { };
-    credsStore = "1password";
-  });
+  updateDockerConfig = pkgs.writeShellApplication {
+    name = "update-docker-config";
+    runtimeInputs = [ pkgs.jq pkgs.coreutils ];
+    text = builtins.readFile ../../scripts/update-docker-config.sh;
+  };
 
   # Remote podman (Mac client -> lima VM) does NOT invoke credential helpers;
   # it only forwards *static* creds. So bridge 1Password -> podman: read creds
@@ -80,11 +78,9 @@ in
 {
   home.packages = [ docker-credential-1password podman-login ];
 
-  # Install ~/.docker/config.json via activation (writable, repo is source of
-  # truth) rather than a read-only symlink, so docker/podman can still update
-  # non-credential fields.
+  # Merge managed authentication fields; preserve contexts, plugins and other
+  # tool-owned settings. Invalid JSON aborts without replacing the original.
   home.activation.dockerCredentialConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    $DRY_RUN_CMD mkdir -p "$HOME/.docker"
-    $DRY_RUN_CMD install -m 0644 ${dockerConfig} "$HOME/.docker/config.json"
+    $DRY_RUN_CMD ${updateDockerConfig}/bin/update-docker-config "$HOME/.docker"
   '';
 }
