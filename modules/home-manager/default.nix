@@ -211,6 +211,7 @@ in {
   programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
   programs.zsh.enableCompletion = true;
   programs.zsh.syntaxHighlighting.enable = true;
+  programs.zsh.autosuggestion.enable = true;
   programs.zsh.shellAliases = {
 
     # 1password
@@ -252,8 +253,13 @@ in {
   };
 
   programs.zsh.initContent = ''
-    # Required for the 1Password SSH keychain — do not remove
-    eval "$(op signin)"
+    # `op signin` is only needed when the 1Password desktop-app integration
+    # is unavailable (e.g. over SSH). Locally, `op run`, op-ssh-sign and the
+    # credential helper all authenticate via the app, so skip the prompt
+    # there — it otherwise blocks every new shell while 1Password is locked.
+    if [[ -o interactive && -n "$SSH_CONNECTION" ]] && command -v op >/dev/null; then
+      eval "$(op signin)"
+    fi
     [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
     source $ZDOTDIR/plugins/aws.plugin.zsh

@@ -1,11 +1,14 @@
 { config, lib, pkgs, user, ... }:
 {
 
+  # Only register zsh as a login shell here. Completion, syntax highlighting
+  # and autosuggestions are owned by home-manager (modules/home-manager), so
+  # they aren't enabled twice (double compinit slows shell startup).
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
-    enableCompletion = true;
+    enableCompletion = false;
+    enableSyntaxHighlighting = false;
+    enableAutosuggestions = false;
   };
 
   # Here go the darwin preferences and configuration options
