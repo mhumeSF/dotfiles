@@ -109,6 +109,7 @@ in {
     "$HOME/.cargo/bin"
     "/opt/homebrew/bin"
     "$HOME/.config/.foundry/bin"
+    "$HOME/.pi/agent/bin"
   ];
 
   home.sessionVariables = {
