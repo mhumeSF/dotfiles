@@ -51,8 +51,8 @@
     global.brewfile = true;
     # mas search <app> to get "<app> = xxx"
     masApps = {
-      "1Password for Safari" = 1569813296;
-      "WireGuard" = 1451685025;
+      # "1Password for Safari" = 1569813296;
+      # "WireGuard" = 1451685025;
     };
     taps = [
       # trusted: brew refuses to load casks from untrusted third-party taps,
@@ -88,7 +88,7 @@
       "google-chrome"
       "keyboard-cleaner"
       "notunes"
-      "rar"
+      # "unar"
       "raycast"
       "slack"
       "spotify"
@@ -169,8 +169,8 @@
         EnableStandardClickToShowDesktop = 0;
         StandardHideDesktopIcons = 0; # Show items on desktop
         HideDesktop = 0; # Do not hide items on desktop & stage manager
-        StageManagerHideWidgets = 0;
-        StandardHideWidgets = 0;
+        StageManagerHideWidgets = 1; # hide widgets in stage manager
+        StandardHideWidgets = 1; # hide widgets on desktop (calendar, weather, photos, etc.)
       };
 
       # Use Plain Text Mode as Default in TextEdit
@@ -221,6 +221,13 @@
     # Set cmd+e as global shortcut
     defaults write com.mizage.direct.Divvy globalHotkey -dict keyCode -string 14 modifiers -string 256
     defaults write com.mizage.direct.Divvy useGlobalHotkey -bool true
+
+    # -----------------------------------------------------------------------------
+    # Tailscale
+    # -----------------------------------------------------------------------------
+
+    # Hide Dock icon (standalone system-extension build, bundle id io.tailscale.ipn.macsys)
+    defaults write io.tailscale.ipn.macsys HideDockIcon -bool true
 
     # Force reload of preference cache to apply trackpad settings
     # See: https://github.com/nix-darwin/nix-darwin/issues/1572
