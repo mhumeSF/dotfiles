@@ -32,7 +32,7 @@ class Worktrees(unittest.TestCase):
         return subprocess.run(["git", *args], cwd=cwd or self.repo, env=ENV,
                               text=True, capture_output=True, check=True)
 
-    def shell(self, body, prs=None, select="", fetch_fail=False):
+    def shell(self, body, prs=None, select="", fetch_fail=False, real_fetch=False):
         # Mock only GitHub, the interactive picker, and fetch; all local Git
         # operations (including worktree removal and branch deletion) are real.
         setup = r'''
@@ -57,7 +57,7 @@ fzf() {
   return 1
 }
 git() {
-  if [[ "$1" == fetch ]]; then
+  if [[ "$1" == fetch && "$REAL_FETCH" != 1 ]]; then
     [[ "$FETCH_FAIL" != 1 ]]
   else
     command git "$@"
@@ -66,7 +66,8 @@ git() {
 '''
         env = {**ENV, "PLUGIN": str(ROOT / "home/.zsh/plugins/git-worktree.plugin.zsh"),
                "PRS": json.dumps(prs or []), "SELECT": select,
-               "GH_FAIL": "0", "FETCH_FAIL": str(int(fetch_fail))}
+               "GH_FAIL": "0", "FETCH_FAIL": str(int(fetch_fail)),
+               "REAL_FETCH": str(int(real_fetch))}
         return subprocess.run(["zsh", "-f", "-c", setup + body], cwd=self.repo,
                               env=env, text=True, capture_output=True)
 
@@ -117,6 +118,20 @@ git() {
     def test_fetch_failure_aborts_cleanup(self):
         result = self.shell('_w_cleanup', [self.pr()], fetch_fail=True)
         self.assertNotEqual(result.returncode, 0)
+        self.assertTrue(self.wt.exists())
+
+    def test_cleanup_fetches_default_branch(self):
+        remote = self.root / "origin.git"
+        self.git("clone", "--bare", "--quiet", str(self.repo), str(remote))
+        self.git("remote", "add", "origin", str(remote))
+        self.git("update-ref", "-d", "refs/remotes/origin/main")
+
+        result = self.shell('_w_cleanup --dry-run', [self.pr()], real_fetch=True)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.git("rev-parse", "refs/remotes/origin/main").stdout,
+                         self.git("rev-parse", "main").stdout)
+        self.assertIn("would remove merged:", result.stdout)
         self.assertTrue(self.wt.exists())
 
     def test_dry_run_and_api_failure_preserve_worktree(self):
