@@ -234,7 +234,7 @@ _w_cleanup() {
   main_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null) || main_branch="refs/remotes/origin/main"
   main_branch="${main_branch#refs/remotes/origin/}"
 
-  git fetch origin "+refs/heads/$main_branch:refs/remotes/origin/$main_branch" --quiet || return
+  git fetch origin "+refs/heads/${main_branch}:refs/remotes/origin/${main_branch}" --quiet || return
 
   local have_gh=false
   command -v gh >/dev/null 2>&1 && have_gh=true
